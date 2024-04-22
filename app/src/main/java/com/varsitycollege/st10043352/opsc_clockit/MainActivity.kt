@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
                 // User authenticated successfully
                 Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
                 // Navigate to the home page
-                val intent = Intent(this, home_page::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, home_page::class.java)
+                )
                 // Finish the current activity so the user can't navigate back to the login screen using the back button
                 finish()
             } else {
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToRegisterPage() {
-        val intent = Intent(this, register_page::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, register_page::class.java))
        }
 }
