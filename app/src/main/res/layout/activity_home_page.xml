@@ -31,30 +31,47 @@
         android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ClockIT_background" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAddCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="71dp"
         android:layout_marginEnd="71dp"
-        android:layout_marginBottom="415dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="#1B232E"
-        android:text="   +   Add New Activity"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="navAddCategory"
+        android:text="   +   Add New Category"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddActivity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btnAddActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="71dp"
+        android:backgroundTint="#1B232E"
+        android:onClick="navAddActivity"
+        android:text="   +   Add New Activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/btnStatistics"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,8 +80,8 @@
 
     <ImageView
         android:id="@+id/btnInsights"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="31dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +90,7 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="43dp"
@@ -85,8 +102,8 @@
 
     <ImageView
         android:id="@+id/btnHome"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="43dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,8 +112,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
