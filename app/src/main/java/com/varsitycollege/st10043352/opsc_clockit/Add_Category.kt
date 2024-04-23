@@ -8,12 +8,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONArray
+import org.json.JSONObject
 
+// Activity for adding a new category
 class Add_Category : AppCompatActivity() {
 
     private lateinit var categoryNameEditText: EditText
     private lateinit var doneButton: Button
     private lateinit var colorViews: List<ImageView>
+    private var selectedColor: Int = Color.RED // Default to Color.WHITE or any other default color
 
     // SharedPreferences for storing category name and color
     private lateinit var sharedPreferences: SharedPreferences
@@ -36,14 +40,22 @@ class Add_Category : AppCompatActivity() {
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("CategoryPreferences", Context.MODE_PRIVATE)
 
+        // Set onClickListener for color options
+        for (i in 0 until colorViews.size) {
+            colorViews[i].setOnClickListener {
+                // Set the selected colour as the background colour of the EditText
+                categoryNameEditText.setBackgroundColor(getColorOption(i))
+                // Get the selected color
+                selectedColor = getColorOption(i)
+            }
+        }
         // Set onClickListener for the done button
         doneButton.setOnClickListener {
 
             // Get the category name entered by the user
             val categoryName = categoryNameEditText.text.toString().trim()
 
-            // Get the selected color
-            val selectedColor = getSelectedColor()
+
 
             // Save category name and color to SharedPreferences
             saveCategory(categoryName, selectedColor)
@@ -52,27 +64,12 @@ class Add_Category : AppCompatActivity() {
             finish()
         }
 
-        // Set onClickListener for color options
-        for (i in 0 until colorViews.size) {
-            colorViews[i].setOnClickListener {
 
-                // Set the selected colour as the background colour of the EditText
-                categoryNameEditText.setBackgroundColor(getColorOption(i))
-            }
-        }
     }
 
-    private fun getSelectedColor(): Int {
-        // Find the selected colour view
-        for (i in 0 until colorViews.size) {
-            if (colorViews[i].isSelected) {
-                return getColorOption(i)
-            }
-        }
-        // Default colour if no colour is selected
-        return Color.WHITE
-    }
+    // Function to get the selected color
 
+    // Function to get color option based on index
     private fun getColorOption(index: Int): Int {
         // Define your colour options here
         val colorOptions = listOf(
@@ -85,11 +82,28 @@ class Add_Category : AppCompatActivity() {
         return colorOptions[index]
     }
 
+    // Function to save category to SharedPreferences
     private fun saveCategory(categoryName: String, color: Int) {
-        // Save category name and colour to SharedPreferences
+        // Retrieve existing categories
+        val categoriesJsonString = sharedPreferences.getString("categories", null)
+        val categoriesArray = if (categoriesJsonString != null) {
+            JSONArray(categoriesJsonString)
+        } else {
+            JSONArray()
+        }
+
+        // Create JSON object for the new category
+        val categoryObject = JSONObject().apply {
+            put("categoryName", categoryName)
+            put("categoryColor", color)
+        }
+
+        // Append new category to the existing list
+        categoriesArray.put(categoryObject)
+
+        // Save updated categories to SharedPreferences
         val editor = sharedPreferences.edit()
-        editor.putString("categoryName", categoryName)
-        editor.putInt("categoryColor", color)
+        editor.putString("categories", categoriesArray.toString())
         editor.apply()
     }
 }

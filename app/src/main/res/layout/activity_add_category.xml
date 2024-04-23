@@ -39,7 +39,7 @@
         android:id="@+id/txtCategoryName"
         android:layout_width="359dp"
         android:layout_height="48dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="27dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="26dp"
         android:background="@drawable/round_buttons"
@@ -63,85 +63,99 @@
 
     <!-- Color option 5 -->
 
-    <ImageView
-        android:id="@+id/colorOption3"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/green"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintEnd_toStartOf="@+id/colorOption4"
-        app:layout_constraintStart_toEndOf="@id/colorOption2"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
-
-    <ImageView
-        android:id="@+id/colorOption5"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="70dp"
-        android:background="@color/magenta"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/colorOption4"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
-
-    <ImageView
-        android:id="@+id/colorOption1"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/red"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="194dp"
         android:text="Select a color for this category"
         android:textColor="#FEFEFE"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
+
+    <ImageView
+        android:id="@+id/colorOption3"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="221dp"
+        android:background="@color/green"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/colorOption5"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageView
+        android:id="@+id/colorOption1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="301dp"
+        android:background="@color/red"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colorOption3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <ImageView
         android:id="@+id/colorOption4"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="115dp"
         android:background="@color/yellow"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintEnd_toStartOf="@+id/colorOption5"
-        app:layout_constraintStart_toEndOf="@id/colorOption3"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/colorOption2"
+        app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
 
     <ImageView
         android:id="@+id/colorOption2"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginBottom="115dp"
         android:background="@color/blue"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintEnd_toStartOf="@+id/colorOption3"
-        app:layout_constraintStart_toEndOf="@id/colorOption1"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <ImageView
+        android:id="@+id/colorOption5"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="301dp"
+        android:background="@color/magenta"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="213dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginStart="159dp"
+        android:layout_marginEnd="159dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#1B232E"
         android:text="Done"
@@ -150,7 +164,6 @@
         android:textColorLink="#1B232E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorOption4" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

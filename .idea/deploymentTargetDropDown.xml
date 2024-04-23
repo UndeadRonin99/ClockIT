@@ -2,21 +2,11 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="Add_Category">
+        <State />
+      </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="6KK0220917000459" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-23T08:10:33.721968700Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>

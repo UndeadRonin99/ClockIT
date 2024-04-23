@@ -26,4 +26,16 @@ class home_page : AppCompatActivity() {
     fun navAddActivity(view: View) {
         startActivity(Intent(this, AddActivity::class.java))
     }
+
+    fun navInsights(view: View){
+        // Get the SharedPreferences editor
+        val editor = sharedPreferences.edit()
+
+// Clear all the data in SharedPreferences
+        editor.clear()
+
+// Apply the changes
+        editor.apply()
+        startActivity(Intent(this, home_page::class.java))
+    }
 }
