@@ -46,6 +46,7 @@
 
         android:layout_marginStart="21dp"
         android:layout_marginTop="9dp"
+        android:layout_marginEnd="21dp"
         android:backgroundTint="#1B232E"
         android:hapticFeedbackEnabled="false"
         android:shadowColor="#1B232E"
@@ -53,6 +54,7 @@
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEndTime"
         app:strokeColor="#1B232E" />
@@ -61,6 +63,7 @@
         android:id="@+id/txtEndTime"
         android:layout_width="369dp"
         android:layout_height="48dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="21dp"
         android:background="@drawable/round_buttons"
@@ -71,13 +74,15 @@
         android:textColorHint="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtStartTime" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginStart="159dp"
+        android:layout_marginEnd="159dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#1B232E"
         android:text="Done"
@@ -85,12 +90,14 @@
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/txtStartTime"
         android:layout_width="369dp"
         android:layout_height="48dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="21dp"
         android:background="@drawable/round_buttons"
@@ -101,13 +108,15 @@
         android:textColorHint="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
 
         android:id="@+id/textView19"
         android:layout_width="283dp"
         android:layout_height="48dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="64dp"
         android:text="Add new activity"
@@ -116,6 +125,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <EditText
@@ -136,20 +146,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-    <EditText
-        android:id="@+id/txtCategory"
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="369dp"
         android:layout_height="48dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="21dp"
         android:background="@drawable/round_buttons"
-        android:drawablePadding="8dp"
-        android:hint="Category"
-        android:padding="8dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="14sp"
+        android:foregroundTint="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
 

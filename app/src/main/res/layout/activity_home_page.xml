@@ -47,6 +47,7 @@
         android:backgroundTint="#1B232E"
         android:onClick="navAddCategory"
         android:text="   +   Add New Category"
+        android:textColor="#FEFEFE"
         app:layout_constraintBottom_toTopOf="@+id/btnAddActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -63,6 +64,7 @@
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
         android:text="   +   Add New Activity"
+        android:textColor="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,8 +72,8 @@
 
     <ImageView
         android:id="@+id/btnStatistics"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,8 +82,8 @@
 
     <ImageView
         android:id="@+id/btnInsights"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="31dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,20 +92,21 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="43dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:srcCompat="@drawable/nav_funstuff_unselected" />
 
     <ImageView
         android:id="@+id/btnHome"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="43dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -112,8 +115,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"

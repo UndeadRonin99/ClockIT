@@ -23,6 +23,7 @@
         android:id="@+id/textView19"
         android:layout_width="340dp"
         android:layout_height="45dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="36dp"
         android:text="Add new Category"
@@ -31,15 +32,16 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <EditText
         android:id="@+id/txtCategoryName"
-        android:layout_width="369dp"
+        android:layout_width="359dp"
         android:layout_height="48dp"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginEnd="26dp"
         android:background="@drawable/round_buttons"
         android:drawablePadding="8dp"
         android:hint="Category Name "
@@ -51,43 +53,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="18dp"
-        android:text="Select a color for this category"
-        android:textColor="#FEFEFE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
-
     <!-- Color option 1 -->
-    <ImageView
-        android:id="@+id/colorOption1"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/red"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <!-- Color option 2 -->
-    <ImageView
-        android:id="@+id/colorOption2"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/blue"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@id/colorOption1"
-        app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <!-- Color option 3 -->
+
+    <!-- Color option 4 -->
+
+    <!-- Color option 5 -->
+
     <ImageView
         android:id="@+id/colorOption3"
         android:layout_width="64dp"
@@ -96,10 +71,46 @@
         android:background="@color/green"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/colorOption4"
         app:layout_constraintStart_toEndOf="@id/colorOption2"
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
-    <!-- Color option 4 -->
+    <ImageView
+        android:id="@+id/colorOption5"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="70dp"
+        android:background="@color/magenta"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/colorOption4"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+    <ImageView
+        android:id="@+id/colorOption1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/red"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:text="Select a color for this category"
+        android:textColor="#FEFEFE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCategoryName" />
+
     <ImageView
         android:id="@+id/colorOption4"
         android:layout_width="64dp"
@@ -108,25 +119,28 @@
         android:background="@color/yellow"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/colorOption5"
         app:layout_constraintStart_toEndOf="@id/colorOption3"
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
-    <!-- Color option 5 -->
     <ImageView
-        android:id="@+id/colorOption5"
+        android:id="@+id/colorOption2"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
-        android:background="@color/magenta"
+        android:background="@color/blue"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintStart_toEndOf="@id/colorOption4"
+        app:layout_constraintEnd_toStartOf="@+id/colorOption3"
+        app:layout_constraintStart_toEndOf="@id/colorOption1"
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="93dp"
         android:layout_height="48dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="213dp"
         android:layout_marginEnd="168dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#1B232E"
@@ -135,6 +149,8 @@
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorOption4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
