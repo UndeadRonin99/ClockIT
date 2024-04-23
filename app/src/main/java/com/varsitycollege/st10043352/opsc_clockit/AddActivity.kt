@@ -2,10 +2,11 @@
 
 package com.varsitycollege.st10043352.opsc_clockit
 
-import android.content.SharedPreferences
-import android.graphics.Color
+
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -15,8 +16,11 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.util.Log
+import android.widget.ImageView
 
-// Activity for adding a new activity
 class AddActivity : AppCompatActivity() {
 
     private lateinit var colorBox: View
@@ -25,18 +29,24 @@ class AddActivity : AppCompatActivity() {
     private lateinit var doneButton: Button
     private lateinit var categoryColors: MutableList<Int>
 
+    // Constants for image selection
+    private val PICK_IMAGE_REQUEST = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+
         // Initialize elements
         colorBox = findViewById(R.id.colorBox)
         spinner = findViewById(R.id.spinner)
-        doneButton = findViewById(R.id.button2)
+        doneButton = findViewById(R.id.btnAddActivity)
+
         // Retrieve data from SharedPreferences
         val categoriesJsonString = sharedPreferences.getString("categories", null)
+
         // Populate spinner with retrieved data
         populateSpinner(categoriesJsonString)
 
@@ -47,6 +57,12 @@ class AddActivity : AppCompatActivity() {
 
         // Set up the spinner listener
         setupSpinnerListener()
+
+        // Set up click listener for the add photo button
+        val btnAddPhoto = findViewById<Button>(R.id.btnAddPhoto)
+        btnAddPhoto.setOnClickListener {
+            openImagePicker()
+        }
     }
 
     // Function to populate spinner with category names
@@ -105,4 +121,36 @@ class AddActivity : AppCompatActivity() {
             }
         }
     }
+
+    // Function to open image picker
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    // Function to handle result from image picker
+    // Function to handle result from image picker
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            // Get selected image URI
+            val imageUri: Uri? = data.data
+            // Display preview of selected image
+            if (imageUri != null) {
+                findViewById<ImageView>(R.id.imgPreview).apply {
+                    setImageURI(imageUri)
+                    visibility = View.VISIBLE // Show the preview ImageView
+                }
+            }
+            // Save the image URI to SharedPreferences or process it as needed
+            saveImageUri(imageUri)
+        }
+    }
+
+    // Function to save the image URI to SharedPreferences
+    private fun saveImageUri(imageUri: Uri?) {
+        // Save the image URI to SharedPreferences here
+        // You can use SharedPreferences to store the image URI as a string
+    }
 }
+
