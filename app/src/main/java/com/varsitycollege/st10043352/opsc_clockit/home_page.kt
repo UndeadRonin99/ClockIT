@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 
 class home_page : AppCompatActivity() {
@@ -14,6 +15,11 @@ class home_page : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
+        val sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        val allActivities = sharedPreferences.all
+        for ((key, value) in allActivities) {
+            Log.d("SharedPreferences", "Key: $key, Value: $value")
+        }
     }
 
 

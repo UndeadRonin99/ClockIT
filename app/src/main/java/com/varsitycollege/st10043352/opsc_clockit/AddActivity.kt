@@ -19,15 +19,23 @@ import org.json.JSONArray
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageView
 
 class AddActivity : AppCompatActivity() {
 
     private lateinit var colorBox: View
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedActivities: SharedPreferences
     private lateinit var spinner: Spinner
     private lateinit var doneButton: Button
     private lateinit var categoryColors: MutableList<Int>
+    private lateinit var txtActivityName: EditText
+    private lateinit var txtDescription: EditText
+    private lateinit var txtStartTime: EditText
+    private lateinit var txtEndTime: EditText
+    private lateinit var imgPreview: ImageView
+    private var photoUri: Uri? = null
 
     // Constants for image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -38,11 +46,17 @@ class AddActivity : AppCompatActivity() {
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        sharedActivities = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
 
         // Initialize elements
         colorBox = findViewById(R.id.colorBox)
         spinner = findViewById(R.id.spinner)
         doneButton = findViewById(R.id.btnAddActivity)
+        txtActivityName = findViewById(R.id.txtActivityName)
+        txtDescription = findViewById(R.id.txtDescription)
+        txtStartTime = findViewById(R.id.txtStartTime)
+        txtEndTime = findViewById(R.id.txtEndTime)
+        imgPreview = findViewById(R.id.imgPreview)
 
         // Retrieve data from SharedPreferences
         val categoriesJsonString = sharedPreferences.getString("categories", null)
@@ -52,6 +66,7 @@ class AddActivity : AppCompatActivity() {
 
         // Set onClickListener for the done button to finish activity
         doneButton.setOnClickListener{
+            saveActivity()
             finish()
         }
 
@@ -129,7 +144,6 @@ class AddActivity : AppCompatActivity() {
     }
 
     // Function to handle result from image picker
-    // Function to handle result from image picker
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
@@ -143,7 +157,7 @@ class AddActivity : AppCompatActivity() {
                 }
             }
             // Save the image URI to SharedPreferences or process it as needed
-            saveImageUri(imageUri)
+            photoUri = imageUri
         }
     }
 
@@ -152,5 +166,24 @@ class AddActivity : AppCompatActivity() {
         // Save the image URI to SharedPreferences here
         // You can use SharedPreferences to store the image URI as a string
     }
+
+    // Function to save activity information to SharedPreferences
+    private fun saveActivity() {
+        val activityName = txtActivityName.text.toString()
+        val description = txtDescription.text.toString()
+        val categoryName = spinner.selectedItem.toString()
+        val color = categoryColors[spinner.selectedItemPosition]
+        val startTime = txtStartTime.text.toString()
+        val endTime = txtEndTime.text.toString()
+
+        // Create CSV string
+        val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime,${photoUri?.toString() ?: ""}"
+
+        // Save CSV string to SharedPreferences
+        val editor = sharedPreferences.edit()
+        editor.putString("activity_${System.currentTimeMillis()}", csvString)
+        editor.apply()
+    }
+
 }
 
