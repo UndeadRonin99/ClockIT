@@ -176,13 +176,18 @@ class AddActivity : AppCompatActivity() {
         val startTime = txtStartTime.text.toString()
         val endTime = txtEndTime.text.toString()
 
-        // Create CSV string
-        val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime,${photoUri?.toString() ?: ""}"
+        if (activityName == null) {
 
-        // Save CSV string to SharedPreferences
-        val editor = sharedPreferences.edit()
-        editor.putString("activity_${System.currentTimeMillis()}", csvString)
-        editor.apply()
+        } else {
+            // Create CSV string
+            val csvString =
+                "$activityName,$description,$categoryName,$color,$startTime,$endTime,${photoUri?.toString() ?: ""}"
+
+            // Save CSV string to SharedPreferences
+            val editor = sharedPreferences.edit()
+            editor.putString("activity_${System.currentTimeMillis()}", csvString)
+            editor.apply()
+        }
     }
 
 }

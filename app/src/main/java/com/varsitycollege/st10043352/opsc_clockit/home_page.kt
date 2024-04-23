@@ -22,6 +22,16 @@ class home_page : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setContentView(R.layout.activity_home_page)
+        val sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        val allActivities = sharedPreferences.all
+        for ((key, value) in allActivities) {
+            Log.d("SharedPreferences", "Key: $key, Value: $value")
+        }
+    }
+
 
     fun navAddCategory(view: View) {
         startActivity(Intent(this, Add_Category::class.java))
@@ -32,6 +42,18 @@ class home_page : AppCompatActivity() {
     }
 
     fun navInsights(view: View) {
-        startActivity(Intent(this, home_page::class.java))
+        startActivity(Intent(this, Insights::class.java))
+    }
+
+    fun navStats(view: View){
+        startActivity(Intent(this, stats::class.java))
+    }
+
+    fun navGoals(view: View){
+        startActivity(Intent(this, goals::class.java))
+    }
+
+    fun navFun(view: View){
+        startActivity(Intent(this, FunTime::class.java))
     }
 }
