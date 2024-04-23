@@ -16,8 +16,6 @@ class home_page : AppCompatActivity() {
         setContentView(R.layout.activity_home_page)
     }
 
-    private fun navAddActivity() {
-    }
 
     fun navAddCategory(view: View) {
         startActivity(Intent(this, Add_Category::class.java))
@@ -27,15 +25,7 @@ class home_page : AppCompatActivity() {
         startActivity(Intent(this, AddActivity::class.java))
     }
 
-    fun navInsights(view: View){
-        // Get the SharedPreferences editor
-        val editor = sharedPreferences.edit()
-
-// Clear all the data in SharedPreferences
-        editor.clear()
-
-// Apply the changes
-        editor.apply()
+    fun navInsights(view: View) {
         startActivity(Intent(this, home_page::class.java))
     }
 }
