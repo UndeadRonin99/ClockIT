@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 class home_page : AppCompatActivity() {
-
+//test-tyler
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var txtActivity: TextView
 
