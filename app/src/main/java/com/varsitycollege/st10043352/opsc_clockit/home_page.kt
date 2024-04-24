@@ -40,7 +40,6 @@ class home_page : AppCompatActivity() {
                 val activityData = value as String // Assuming the value is stored as a String
                 val activityTextView = TextView(this)
 
-                //activityTextView.text = activityData
                 activityTextView.text = formatSharedPref(activityData)
                 activityTextView.setTextColor(Color.WHITE)
                 activityTextView.setTextSize(20f)
@@ -58,6 +57,10 @@ class home_page : AppCompatActivity() {
                         resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
                     )
                 }
+                activityTextView.setOnClickListener {
+                    startActivity(Intent(this, LogHours::class.java))
+                }
+
                 (findViewById<LinearLayout>(R.id.LinearActivities)).addView(activityTextView)
             }
         }
