@@ -7,7 +7,6 @@
     android:background="@color/black"
     tools:context=".AddActivity">
 
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="413dp"
@@ -19,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-
 
     <EditText
         android:id="@+id/txtDescription"
@@ -56,6 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAddPhoto"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!-- New TimePicker -->
     <EditText
         android:id="@+id/txtStartTime"
         android:layout_width="369dp"
@@ -112,7 +111,6 @@
         app:strokeColor="#1B232E" />
 
     <TextView
-
         android:id="@+id/textView19"
         android:layout_width="283dp"
         android:layout_height="48dp"
@@ -185,6 +183,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddPhoto"
         app:layout_constraintVertical_bias="0.473" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

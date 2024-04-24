@@ -176,7 +176,7 @@ class AddActivity : AppCompatActivity() {
         val startTime = txtStartTime.text.toString()
         val endTime = txtEndTime.text.toString()
 
-        if (activityName == null || activityName.equals("")) {
+        if (activityName == null) {
 
         } else {
             // Create CSV string
