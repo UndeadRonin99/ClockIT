@@ -72,7 +72,8 @@
         android:onClick="navStats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnInsights"
-        app:srcCompat="@drawable/nav_stats_unselected" />
+        app:srcCompat="@drawable/nav_stats_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -83,7 +84,8 @@
         android:onClick="navGoals"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnStatistics"
-        app:srcCompat="@drawable/nav_goals_unselected" />
+        app:srcCompat="@drawable/nav_goals_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -94,7 +96,8 @@
         android:onClick="navFun"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:srcCompat="@drawable/nav_funstuff_unselected" />
+        app:srcCompat="@drawable/nav_funstuff_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/btnHome"
@@ -115,20 +118,23 @@
         android:onClick="navInsights"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnHome"
-        app:srcCompat="@drawable/nav_calander_unselected" />
+        app:srcCompat="@drawable/nav_calander_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ScrollView
-        android:layout_width="351dp"
-        android:layout_height="329dp"
+        android:layout_width="355dp"
+        android:layout_height="302dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddActivity"
-        app:layout_constraintVertical_bias="0.666">
+        app:layout_constraintVertical_bias="0.687"
+        tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
             android:id="@+id/LinearActivities"
