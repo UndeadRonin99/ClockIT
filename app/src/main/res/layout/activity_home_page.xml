@@ -131,19 +131,12 @@
         app:layout_constraintVertical_bias="0.666">
 
         <LinearLayout
+            android:id="@+id/LinearActivities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtActivity"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/round_buttons"
-                android:text="Activities"
-                android:textAlignment="textStart"
-                android:textColor="#FEFEFE"
-                android:visibility="gone" />
+
         </LinearLayout>
     </ScrollView>
 
