@@ -1,26 +1,25 @@
-// AddActivity.kt
-
 package com.varsitycollege.st10043352.opsc_clockit
 
-
+import android.app.TimePickerDialog
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONArray
-import android.content.SharedPreferences
-import android.graphics.Color
-import android.util.Log
-import android.widget.EditText
-import android.widget.ImageView
+import java.util.Calendar
+import java.util.Locale
 
 class AddActivity : AppCompatActivity() {
 
@@ -65,7 +64,7 @@ class AddActivity : AppCompatActivity() {
         populateSpinner(categoriesJsonString)
 
         // Set onClickListener for the done button to finish activity
-        doneButton.setOnClickListener{
+        doneButton.setOnClickListener {
             saveActivity()
             finish()
         }
@@ -77,6 +76,16 @@ class AddActivity : AppCompatActivity() {
         val btnAddPhoto = findViewById<Button>(R.id.btnAddPhoto)
         btnAddPhoto.setOnClickListener {
             openImagePicker()
+        }
+
+        // Set up click listener for the start time EditText
+        txtStartTime.setOnClickListener {
+            showTimePickerDialog(txtStartTime)
+        }
+
+        // Set up click listener for the end time EditText
+        txtEndTime.setOnClickListener {
+            showTimePickerDialog(txtEndTime)
         }
     }
 
@@ -112,26 +121,26 @@ class AddActivity : AppCompatActivity() {
                     val view = super.getView(position, convertView, parent)
                     if (view is TextView) {
                         view.setTextColor(Color.WHITE) // Set text color for selected item
+                        view.setBackgroundColor(Color.TRANSPARENT) // Set background color for selected item
                     }
                     return view
                 }
             }
+
+            // Set adapter for spinner
             spinner.adapter = adapter
         }
     }
 
-    // Function to set up the spinner listener
+    // Function to set up listener for spinner
     private fun setupSpinnerListener() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                // Update the color of the colorBox
-                Log.d("update","color should update")
-                if (position != categoryColors.size) {
-                    colorBox.setBackgroundColor(categoryColors[position])
-                }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Set color for color box based on selected category
+                colorBox.setBackgroundColor(categoryColors[position])
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
         }
@@ -139,56 +148,57 @@ class AddActivity : AppCompatActivity() {
 
     // Function to open image picker
     private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    // Function to handle result from image picker
+    // Function to handle result of image picker
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            // Get selected image URI
-            val imageUri: Uri? = data.data
-            // Display preview of selected image
-            if (imageUri != null) {
-                findViewById<ImageView>(R.id.imgPreview).apply {
-                    setImageURI(imageUri)
-                    visibility = View.VISIBLE // Show the preview ImageView
-                }
-            }
-            // Save the image URI to SharedPreferences or process it as needed
-            photoUri = imageUri
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            photoUri = data.data
+            imgPreview.setImageURI(photoUri)
         }
     }
 
-    // Function to save the image URI to SharedPreferences
-    private fun saveImageUri(imageUri: Uri?) {
-        // Save the image URI to SharedPreferences here
-        // You can use SharedPreferences to store the image URI as a string
-    }
-
-    // Function to save activity information to SharedPreferences
+    // Function to save activity details
     private fun saveActivity() {
+        // Get selected category name
+        val selectedCategoryName = spinner.selectedItem.toString()
+
+        // Get activity details
         val activityName = txtActivityName.text.toString()
         val description = txtDescription.text.toString()
-        val categoryName = spinner.selectedItem.toString()
-        val color = categoryColors[spinner.selectedItemPosition]
-        val startTime = txtStartTime.text.toString()
-        val endTime = txtEndTime.text.toString()
+        val startTime = txtStartTime.text.toString() // Use the selected time here
+        val endTime = txtEndTime.text.toString() // Use the selected time here
 
-        if (activityName == null) {
+        // Store activity details in SharedPreferences or wherever appropriate
+        Log.d("Activity Details", "Category: $selectedCategoryName, Name: $activityName, Description: $description, Start Time: $startTime, End Time: $endTime")
 
-        } else {
-            // Create CSV string
-            val csvString =
-                "$activityName,$description,$categoryName,$color,$startTime,$endTime,${photoUri?.toString() ?: ""}"
-
-            // Save CSV string to SharedPreferences
-            val editor = sharedPreferences.edit()
-            editor.putString("activity_${System.currentTimeMillis()}", csvString)
-            editor.apply()
-        }
+        // You can add the code here to save the activity details to SharedPreferences or database
     }
 
-}
+    // Function to show time picker dialog
+    private fun showTimePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                // Update EditText with selected time
+                val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+                editText.setText(selectedTime)
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.show()
+    }
+}
