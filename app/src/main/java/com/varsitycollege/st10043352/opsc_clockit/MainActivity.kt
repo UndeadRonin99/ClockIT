@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,17 +29,21 @@ class MainActivity : AppCompatActivity() {
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            if (isValidUser(username, password)) {
-                // User authenticated successfully
-                Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                // Navigate to the home page
-                startActivity(Intent(this, home_page::class.java)
-                )
-                // Finish the current activity so the user can't navigate back to the login screen using the back button
-                finish()
+            if (username.isEmpty() || password.isEmpty()) {
+                // Show an error message if username or password is empty
+                Toast.makeText(this, "Username or password cannot be blank", Toast.LENGTH_SHORT).show()
             } else {
-                // Invalid username or password
-                Toast.makeText(this, "Invalid username or password!", Toast.LENGTH_SHORT).show()
+                if (isValidUser(username, password)) {
+                    // User authenticated successfully
+                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    // Navigate to the home page
+                    startActivity(Intent(this, home_page::class.java))
+                    // Finish the current activity so the user can't navigate back to the login screen using the back button
+                    finish()
+                } else {
+                    // Invalid username or password
+                    Toast.makeText(this, "Invalid username or password!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -59,5 +62,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToRegisterPage() {
         startActivity(Intent(this, register_page::class.java))
-       }
+    }
 }
