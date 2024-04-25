@@ -9,6 +9,29 @@
     tools:context=".home_page">
 
 
+    <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="390dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="31dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ClockIT_background"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:id="@+id/LinearActivities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </ScrollView>
+
     <ImageView
         android:id="@+id/ClockIT_background"
         android:layout_width="457dp"
@@ -23,7 +46,7 @@
         android:id="@+id/textView3"
         android:layout_width="391dp"
         android:layout_height="61dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="152dp"
         android:text="Goals"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -86,21 +109,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnStatistics"
         app:srcCompat="@drawable/nav_goals_selected" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="280dp"
-        android:layout_height="236dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="102dp"
-        android:text="Coming Soon"
-        android:textAlignment="center"
-        android:textColor="#FEFEFE"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
