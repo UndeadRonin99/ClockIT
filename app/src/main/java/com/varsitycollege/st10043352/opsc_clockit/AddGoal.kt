@@ -1,6 +1,7 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -29,7 +30,7 @@ class AddGoal : AppCompatActivity() {
         val activityFields = splitActivityData(activityData)
 
         txtActivity.setText(activityFields?.get(0))
-        txtCategory.setTextColor((activityFields?.get(3))?.toIntOrNull() ?: 0)
+        txtCategory.setTextColor(activityFields?.get(3)?.let { Color.parseColor(it) } ?: Color.BLACK)
         txtCategory.setText(activityFields?.get(2))
         // Now you have an array of relevant fields that you can use as needed
         /* For example:

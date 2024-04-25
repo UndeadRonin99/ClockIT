@@ -76,7 +76,7 @@ class goals : AppCompatActivity() {
 
             // Now you can use these variables as needed
             // For example:
-            activityDetails= "${name}\n${category}"
+            activityDetails= "${name}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${category}"
         }
         return activityDetails
     }
