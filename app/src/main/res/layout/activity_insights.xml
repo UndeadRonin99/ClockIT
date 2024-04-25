@@ -8,22 +8,75 @@
     tools:context=".home_page">
 
     <ImageView
+        android:id="@+id/btnInsights"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnHome"
+        app:srcCompat="@drawable/nav_calendar_selected" />
+
+    <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView7"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
-        app:layout_constraintStart_toEndOf="@+id/btnStatistics"
-        app:layout_constraintTop_toBottomOf="@+id/btnHome"
-        app:srcCompat="@drawable/nav_goals_selected" />
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navGoals"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnAddDate"
+        app:srcCompat="@drawable/nav_goals_unselected" />
+
+    <ImageView
+        android:id="@+id/btnStatistics"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navStats"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnInsights"
+        app:srcCompat="@drawable/nav_stats_unselected" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navFun"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/nav_funstuff_unselected" />
+
+    <ImageView
+        android:id="@+id/btnHome"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navHome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/nav_home_unselected" />
+
+    <ImageView
+        android:id="@+id/ClockIT_background"
+        android:layout_width="457dp"
+        android:layout_height="225dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_snail" />
 
     <Button
         android:id="@+id/btnAddDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="144dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="92dp"
         android:backgroundTint="#8076B0"
         android:text="Okay"
         android:textColorHighlight="#1B232E"
@@ -36,94 +89,33 @@
         android:id="@+id/btnCancelDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="23dp"
         android:backgroundTint="#8076B0"
         android:text="Cancel"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-    <ImageView
-        android:id="@+id/ClockIT_background"
-        android:layout_width="558dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="528dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnHome"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blue_snail"
-        tools:layout_editor_absoluteX="-30dp" />
-
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="81dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="535dp"
         android:text="Insights"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnHome"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginBottom="24dp"
-        android:onClick="navFun"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/nav_funstuff_unselected" />
-
-    <ImageView
-        android:id="@+id/btnHome"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
-        android:onClick="navHome"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnInsights"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ClockIT_background"
-        app:srcCompat="@drawable/nav_home_unselected" />
-
-    <ImageView
-        android:id="@+id/btnStatistics"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
-        android:onClick="navStats"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
-        app:layout_constraintStart_toEndOf="@+id/btnInsights"
-        app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:srcCompat="@drawable/nav_stats_unselected" />
-
-    <ImageView
-        android:id="@+id/btnInsights"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="37dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnHome"
-        app:layout_constraintEnd_toStartOf="@+id/btnStatistics"
-        app:layout_constraintStart_toEndOf="@+id/btnHome"
-        app:layout_constraintTop_toTopOf="@+id/btnHome"
-        app:srcCompat="@drawable/nav_calendar_selected" />
+        tools:layout_editor_absoluteY="124dp" />
 
 
     <TextView
@@ -136,26 +128,25 @@
         android:textColorLink="#16F6F5F5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintVertical_bias="0.265" />
+
 
     <TextView
         android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
         android:background="#00ECE9E9"
         android:text="End Date:"
         android:textColor="@color/white"
         android:textColorLink="#16F6F5F5"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CalendarView
         android:id="@+id/calendarView"

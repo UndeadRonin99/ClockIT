@@ -1,5 +1,6 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.CalendarView
@@ -51,18 +52,18 @@ class Insights : AppCompatActivity() {
     }
 
     fun navFun(view: View) {
-        // Implement navigation to FunTime activity
+        startActivity(Intent(this, FunTime::class.java))
     }
 
-    fun navStats(view: View) {
-        // Implement navigation to Stats activity
+    fun navStats(view: View){
+        startActivity(Intent(this, stats::class.java))
     }
 
-    fun navGoals(view: View) {
-        // Implement navigation to Goals activity
+    fun navGoals(view: View){
+        startActivity(Intent(this, goals::class.java))
     }
 
-    fun navHome(view: View) {
-        // Implement navigation to HomePage activity
+    fun navHome(view: View){
+        startActivity(Intent(this, home_page::class.java))
     }
 }
