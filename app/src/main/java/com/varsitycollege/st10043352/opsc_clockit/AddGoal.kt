@@ -1,6 +1,7 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -30,15 +31,15 @@ class AddGoal : AppCompatActivity() {
 
         txtActivity.setText(activityFields?.get(0))
         txtCategory.setText(activityFields?.get(2))
-        // Now you have an array of relevant fields that you can use as needed
-        /* For example:
-        val name = activityFields?.get(0) ?: ""
-        val description = activityFields?.get(1) ?: ""
-        val category = activityFields?.get(2) ?: ""
-        val color = activityFields?.get(3) ?: ""
-        val number1 = activityFields?.get(4) ?: ""
-        val number2 = activityFields?.get(5) ?: ""
-        val contentUri = activityFields?.get(6) ?: ""
+        txtCategory.setTextColor((activityFields?.get(3))?.toInt() ?: 0)
+        /*
+        name = activityFields?.get(0) ?: ""
+        description = activityFields?.get(1) ?: ""
+        category = activityFields?.get(2) ?: ""
+        color = activityFields?.get(3) ?: ""
+        number1 = activityFields?.get(4) ?: ""
+        number2 = activityFields?.get(5) ?: ""
+        contentUri = activityFields?.get(6) ?: ""
         */
 
         // Now you can use these variables as needed in your activity

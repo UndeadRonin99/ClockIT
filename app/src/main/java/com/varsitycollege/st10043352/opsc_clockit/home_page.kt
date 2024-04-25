@@ -57,7 +57,9 @@ class home_page : AppCompatActivity() {
                     )
                 }
                 activityTextView.setOnClickListener {
-                    startActivity(Intent(this, LogHours::class.java))
+                    val intent = Intent(this, LogHours::class.java)
+                    intent.putExtra("activityData", activityData)
+                    startActivity(intent)
                 }
 
                 (findViewById<LinearLayout>(R.id.LinearActivities)).addView(activityTextView)

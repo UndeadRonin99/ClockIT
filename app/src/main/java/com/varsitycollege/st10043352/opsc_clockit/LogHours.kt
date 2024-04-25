@@ -1,35 +1,38 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class LogHours : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_hours)
 
+        val activityData = intent.getStringExtra("activityData") ?: ""
+        val activityTextView = findViewById<TextView>(R.id.textView_activity_name)
+        val categoryTextView = findViewById<TextView>(R.id.textView_activity_category)
 
-    }
-    fun formatSharedPref(activity: String?): CharSequence? {
-        var activityDetails = ""
-        activity?.let {
-            val values = activity.split(",")
+        // Split the activity details
+        val details = activityData.split(",")
+        if (details.size >= 3) { // Ensure we have at least three elements (name, description, category)
+            val activityName = details[0] // Activity Name
+            val categoryName = details[2] // Category Name
 
-            val name = values[0]
-            val description = values[1]
-            val category = values[2]
-            val color = values[3]
-            val number1 = values[4]
-            val number2 = values[5]
-            val contentUri = values[6]
-
-            // Now you can use these variables as needed
-            // For example:
-            activityDetails= "${name}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${category}\n${number1}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${number2}"
+            activityTextView.text = activityName
+            categoryTextView.text = categoryName
         }
-        return activityDetails
+
+        val backButton = findViewById<ImageView>(R.id.back_button)
+        backButton.setOnClickListener {
+            // Navigate back to the home page
+            val intent = Intent(this, home_page::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Clear the back stack
+            startActivity(intent)
+            finish() // Finish current activity
+        }
     }
 }
