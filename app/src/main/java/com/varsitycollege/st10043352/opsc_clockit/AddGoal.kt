@@ -29,6 +29,7 @@ class AddGoal : AppCompatActivity() {
         val activityFields = splitActivityData(activityData)
 
         txtActivity.setText(activityFields?.get(0))
+        txtCategory.setTextColor((activityFields?.get(3))?.toIntOrNull() ?: 0)
         txtCategory.setText(activityFields?.get(2))
         // Now you have an array of relevant fields that you can use as needed
         /* For example:

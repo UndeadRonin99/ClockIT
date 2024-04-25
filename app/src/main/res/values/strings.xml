@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ClockIT</string>
+    <string name="title_activity_time_selection_dialog">timeSelectionDialog</string>
 </resources>
