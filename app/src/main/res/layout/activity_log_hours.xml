@@ -10,49 +10,86 @@
     tools:context=".home_page">
 
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activity name"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="47dp" />
+    <ImageView
+        android:id="@+id/ClockIT_background"
+        android:layout_width="457dp"
+        android:layout_height="225dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_snail" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:textColor="#8076B0"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="76dp" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Daily goals"
-        android:textColor="#E5E5E5"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="107dp" />
+        android:id="@+id/textView3"
+        android:layout_width="391dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="184dp"
+        android:text="Log hours"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="326dp"
-        android:layout_height="82dp"
-        android:text="Is there daily goals?"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="139dp" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log Hours"
-        android:background="@drawable/round_buttons"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="287dp" />
+    <ImageView
+        android:id="@+id/btnStatistics"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navStats"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnInsights"
+        app:srcCompat="@drawable/nav_stats_unselected" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navGoals"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnStatistics"
+        app:srcCompat="@drawable/nav_goals_unselected" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navFun"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:srcCompat="@drawable/nav_funstuff_unselected" />
+
+    <ImageView
+        android:id="@+id/btnHome"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/nav_home_selected" />
+
+    <ImageView
+        android:id="@+id/btnInsights"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navInsights"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnHome"
+        app:srcCompat="@drawable/nav_calander_unselected" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
