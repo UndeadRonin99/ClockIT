@@ -22,8 +22,10 @@ class LogHours : AppCompatActivity() {
             val activityName = details[0] // Activity Name
             val categoryName = details[2] // Category Name
 
+
             activityTextView.text = activityName
             categoryTextView.text = categoryName
+            categoryTextView.setTextColor((details.get(3)).toInt())
         }
 
         val backButton = findViewById<ImageView>(R.id.back_button)
