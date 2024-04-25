@@ -110,4 +110,6 @@ class home_page : AppCompatActivity() {
     fun navFun(view: View){
         startActivity(Intent(this, FunTime::class.java))
     }
+
+    fun navHome(view: View) {}
 }
