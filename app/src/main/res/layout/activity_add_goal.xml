@@ -12,7 +12,7 @@
 
 
     <TimePicker
-        android:id="@+id/minPicker"
+        android:id="@+id/spnrTime"
         android:layout_width="169dp"
         android:layout_height="0dp"
         android:layout_marginBottom="396dp"
@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
 
     <Button
         android:id="@+id/btnAddMin"
@@ -59,14 +59,14 @@
         android:layout_height="0dp"
         android:layout_marginBottom="18dp"
         android:onClick="back"
-        app:layout_constraintBottom_toTopOf="@+id/txtActivity"
+        app:layout_constraintBottom_toTopOf="@+id/txtActivity1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button"
         tools:ignore="OnClick" />
 
     <TextView
-        android:id="@+id/txtActivity"
+        android:id="@+id/txtActivity1"
         android:layout_width="254dp"
         android:layout_height="46dp"
         android:layout_marginTop="66dp"
@@ -75,13 +75,13 @@
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/minPicker"
-        app:layout_constraintEnd_toEndOf="@+id/minPicker"
-        app:layout_constraintStart_toStartOf="@+id/txtCategory"
+        app:layout_constraintBottom_toTopOf="@+id/spnrTime"
+        app:layout_constraintEnd_toEndOf="@+id/spnrTime"
+        app:layout_constraintStart_toStartOf="@+id/txtCategory1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtCategory"
+        android:id="@+id/txtCategory1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="34dp"
@@ -91,9 +91,9 @@
         android:textColor="#FEFEFE"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtMin"
-        app:layout_constraintEnd_toEndOf="@+id/minPicker"
+        app:layout_constraintEnd_toEndOf="@+id/spnrTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
 
     <TextView
         android:id="@+id/txtMin"
@@ -105,7 +105,7 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/txtMax"
         app:layout_constraintStart_toStartOf="@+id/txtMax"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCategory1" />
 
     <TextView
         android:id="@+id/txtMax"

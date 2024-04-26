@@ -72,7 +72,7 @@ class AddActivity : AppCompatActivity() {
         setupSpinnerListener()
 
         // Set up click listener for the add photo button
-        val btnAddPhoto = findViewById<Button>(R.id.btnAddPhoto)
+        val btnAddPhoto = findViewById<Button>(R.id.btnLog)
         btnAddPhoto.setOnClickListener {
             openImagePicker()
         }

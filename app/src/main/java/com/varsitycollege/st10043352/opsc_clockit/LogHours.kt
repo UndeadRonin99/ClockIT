@@ -23,9 +23,10 @@ class LogHours : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
 
         val activityData = intent.getStringExtra("activityData") ?: ""
-        val activityTextView = findViewById<TextView>(R.id.textView_activity_name)
-        val categoryTextView = findViewById<TextView>(R.id.textView_activity_category)
+        val activityTextView = findViewById<TextView>(R.id.txtActivity1)
+        val categoryTextView = findViewById<TextView>(R.id.txtCategory1)
         val dailyGoalsTextView = findViewById<TextView>(R.id.textView11) // TextView for daily goals
+        val button = findViewById<Button>(R.id.btnLogHours)
 
         // Split the activity details
         val details = activityData.split(",")
@@ -51,6 +52,12 @@ class LogHours : AppCompatActivity() {
             }
 
             dailyGoalsTextView.text = dailyGoalsText.toString()
+
+            button.setOnClickListener{
+                val intent = Intent(this, SessionLog::class.java)
+                intent.putExtra("activity", activityData)
+                startActivity(intent)
+            }
         }
 
         val backButton = findViewById<ImageView>(R.id.back_button)

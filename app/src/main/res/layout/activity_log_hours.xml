@@ -10,7 +10,7 @@
     tools:context=".LogHours">
 
     <TextView
-        android:id="@+id/textView_activity_name"
+        android:id="@+id/txtActivity1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="73dp"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogHours"
         android:layout_width="114dp"
         android:layout_height="56dp"
         android:layout_marginStart="148dp"
@@ -46,10 +46,10 @@
         android:text="Daily goals"
         android:textColor="#E5E5E5"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogHours"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_activity_name" />
+        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
 
     <TextView
         android:id="@+id/textView11"
@@ -65,10 +65,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_activity_category" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCategory1" />
 
     <TextView
-        android:id="@+id/textView_activity_category"
+        android:id="@+id/txtCategory1"
         android:layout_width="364dp"
         android:layout_height="60dp"
 
@@ -80,7 +80,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_activity_name" />
+        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
 
     <ImageView
         android:id="@+id/back_button"
@@ -92,7 +92,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/back_button"
-        app:layout_constraintBottom_toTopOf="@+id/textView_activity_name"
+        app:layout_constraintBottom_toTopOf="@+id/txtActivity1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

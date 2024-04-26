@@ -28,13 +28,13 @@ class AddGoal : AppCompatActivity() {
         setContentView(R.layout.activity_add_goal)
 
         // Initialize all fields
-        txtActivity = findViewById(R.id.txtActivity)
-        txtCategory = findViewById(R.id.txtCategory)
+        txtActivity = findViewById(R.id.txtActivity1)
+        txtCategory = findViewById(R.id.txtCategory1)
         btnMin = findViewById(R.id.btnAddMin)
         btnMax = findViewById(R.id.btnAddMax)
         txtMin = findViewById(R.id.txtMin)
         txtMax = findViewById(R.id.txtMax)
-        minPicker = findViewById(R.id.minPicker)
+        minPicker = findViewById(R.id.spnrTime)
 
         minPicker.setIs24HourView(true)
 

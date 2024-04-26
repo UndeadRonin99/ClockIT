@@ -52,6 +52,7 @@ class goals : AppCompatActivity() {
                     val intent = Intent(this, AddGoal::class.java)
                     //pass info to the next page
                     intent.putExtra("activityData", activityData)
+                    intent.putExtra("position", key)
 
                     startActivity(intent)
                 }
