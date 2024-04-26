@@ -25,6 +25,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="172dp"
+        android:layout_height="231dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginBottom="109dp"
+        android:amPmBackgroundColor="#FEFEFE"
+        android:amPmTextColor="#FEFEFE"
+        android:background="#FEFEFE"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Spinner
         android:id="@+id/spnrMinHrs"
         android:layout_width="160dp"

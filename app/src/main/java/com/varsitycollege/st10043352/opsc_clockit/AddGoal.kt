@@ -48,6 +48,8 @@ class AddGoal : AppCompatActivity() {
         val spinnerMin1: Spinner = findViewById(R.id.spnrMinHrs)
         val spinnerMin2: Spinner = findViewById(R.id.spnrMinMinutes)
 
+
+
         //Create an ArrayAdapter using the string array and a default spinner layout
         val adapterHours = ArrayAdapter.createFromResource(this, R.array.hours_array,android.R.layout.simple_spinner_dropdown_item)
 
