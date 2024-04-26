@@ -27,10 +27,10 @@
 
     <Button
         android:id="@+id/button"
+        android:background="@drawable/round_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="335dp"
-        android:background="@drawable/round_buttons"
         android:text="Log Hours"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
