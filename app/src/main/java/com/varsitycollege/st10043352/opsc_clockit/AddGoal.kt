@@ -44,58 +44,7 @@ class AddGoal : AppCompatActivity() {
         contentUri = activityFields?.get(6) ?: ""
         */
 
-        // Find the Spinner view by its ID
-        val spinnerMin1: Spinner = findViewById(R.id.spnrMinHrs)
-        val spinnerMin2: Spinner = findViewById(R.id.spnrMinMinutes)
 
-
-
-        //Create an ArrayAdapter using the string array and a default spinner layout
-        val adapterHours = ArrayAdapter.createFromResource(this, R.array.hours_array,android.R.layout.simple_spinner_dropdown_item)
-
-
-        val adapterMinutes = ArrayAdapter.createFromResource(
-            this,
-            R.array.minutes_array,
-            android.R.layout.simple_spinner_item
-        )
-
-
-        // Specify the layout to use when the list of choices appears
-        adapterHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adapterMinutes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // Apply the adapter to the spinner
-        spinnerMin1.adapter = adapterHours
-        spinnerMin2.adapter = adapterMinutes
-
-        // Set text color and background color for the spinners
-        spinnerMin1.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // Set text color for selected item
-                (view as TextView).setTextColor(android.graphics.Color.WHITE)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })
-
-        spinnerMin2.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // Set text color for selected item
-                (view as TextView).setTextColor(android.graphics.Color.WHITE)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })
-
-// Set background color for the spinners
-
-        spinnerMin1.setBackgroundColor(android.graphics.Color.parseColor("#1B232E"))
-        spinnerMin1.setBackgroundColor(android.graphics.Color.parseColor("#1B232E"))
 
         btnMin.setOnClickListener {
 

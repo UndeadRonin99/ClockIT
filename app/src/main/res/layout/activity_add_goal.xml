@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:foregroundTint="#FEFEFE"
     android:onClick="back"
     android:textAlignment="center"
     tools:context=".home_page">
@@ -14,8 +15,9 @@
         android:layout_width="185dp"
         android:layout_height="48dp"
         android:layout_marginStart="113dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="113dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="364dp"
         android:backgroundTint="#1B232E"
         android:text="Add mimimum goal"
         android:textColorHighlight="#1B232E"
@@ -23,59 +25,38 @@
         android:textColorLink="#1B232E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker1" />
 
     <TimePicker
         android:id="@+id/timePicker1"
-        android:layout_width="172dp"
-        android:layout_height="231dp"
-        android:layout_marginStart="119dp"
-        android:layout_marginBottom="109dp"
+        android:layout_width="171dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="420dp"
         android:amPmBackgroundColor="#FEFEFE"
         android:amPmTextColor="#FEFEFE"
-        android:background="#FEFEFE"
+        android:foregroundTint="#FEFEFE"
+        android:numbersInnerTextColor="#FEFEFE"
+        android:numbersSelectorColor="#FEFEFE"
+        android:numbersTextColor="#FEFEFE"
         android:timePickerMode="spinner"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spnrMinHrs"
-        android:layout_width="160dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="63dp"
-        android:background="@drawable/round_buttons"
-        android:foregroundTint="#FEFEFE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMax" />
-
-    <Spinner
-        android:id="@+id/spnrMinMinutes"
-        android:layout_width="179dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginEnd="21dp"
-        android:background="@drawable/round_buttons"
-        android:foregroundTint="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spnrMinHrs"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="363dp"
-        android:layout_marginBottom="683dp"
+        android:layout_width="49dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="362dp"
         android:onClick="back"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert"
+        app:srcCompat="@drawable/back_button"
         tools:ignore="OnClick" />
 
     <TextView
