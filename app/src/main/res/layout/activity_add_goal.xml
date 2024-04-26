@@ -15,26 +15,13 @@
         android:id="@+id/minPicker"
         android:layout_width="169dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="163dp"
+        android:layout_marginBottom="396dp"
         android:theme="@style/MyDatePicker"
         android:timePickerMode="spinner"
-        app:layout_constraintBottom_toTopOf="@+id/btnsetgoals"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
-
-    <Button
-        android:id="@+id/btnsetgoals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginBottom="186dp"
-        android:backgroundTint="@color/white"
-        android:text="Set goals"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnAddMax"
-        app:layout_constraintTop_toBottomOf="@+id/minPicker" />
 
     <Button
         android:id="@+id/btnAddMin"
@@ -80,16 +67,17 @@
 
     <TextView
         android:id="@+id/txtActivity"
-        android:layout_width="255dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="34dp"
+        android:layout_width="254dp"
+        android:layout_height="46dp"
         android:layout_marginTop="66dp"
+        android:layout_marginEnd="1dp"
         android:layout_marginBottom="126dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/minPicker"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/minPicker"
+        app:layout_constraintStart_toStartOf="@+id/txtCategory"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -97,13 +85,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="21dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtMin"
-        app:layout_constraintEnd_toEndOf="@+id/txtActivity"
+        app:layout_constraintEnd_toEndOf="@+id/minPicker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
 
