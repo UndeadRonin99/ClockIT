@@ -12,9 +12,9 @@
     <TextView
         android:id="@+id/textView_activity_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginBottom="99dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginBottom="77dp"
         android:clickable="true"
         android:focusable="true"
         android:padding="16dp"
@@ -27,62 +27,72 @@
 
     <Button
         android:id="@+id/button"
+        android:layout_width="114dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginBottom="292dp"
         android:background="@drawable/round_buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="335dp"
         android:text="Log Hours"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="132dp"
         android:text="Daily goals"
         android:textColor="#E5E5E5"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_activity_name" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="326dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="354dp"
         android:text="Is there daily goals?"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_activity_category" />
 
     <TextView
         android:id="@+id/textView_activity_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="539dp"
-        android:padding="16dp"
+        android:layout_width="364dp"
+        android:layout_height="60dp"
+
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="73dp"
         android:textColor="#8076B0"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_activity_name"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_activity_name" />
 
     <ImageView
         android:id="@+id/back_button"
         android:layout_width="49dp"
         android:layout_height="0dp"
-        android:clickable="true"
 
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="17dp"
+        android:clickable="true"
         android:focusable="true"
         android:src="@drawable/back_button"
         app:layout_constraintBottom_toTopOf="@+id/textView_activity_name"
-        app:layout_constraintStart_toStartOf="@+id/textView_activity_name"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,8 +56,8 @@ class AddGoal : AppCompatActivity() {
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
             txtMin.text = "Min goal: $selectedTime"
 
-            // Save min goal to Shared Preferences
-            saveMinGoal(selectedTime)
+            // Pass the activity name when saving min goal
+            saveMinGoal(txtActivity.text.toString(), selectedTime)
         }
 
         btnMax.setOnClickListener {
@@ -66,9 +66,10 @@ class AddGoal : AppCompatActivity() {
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
             txtMax.text = "Max goal: $selectedTime"
 
-            // Save max goal to Shared Preferences
-            saveMaxGoal(selectedTime)
+            // Pass the activity name when saving max goal
+            saveMaxGoal(txtActivity.text.toString(), selectedTime)
         }
+
     }
 
     private fun splitActivityData(activityData: String?): List<String>? {
@@ -79,11 +80,14 @@ class AddGoal : AppCompatActivity() {
         finish()
     }
 
-    private fun saveMinGoal(minGoal: String) {
-        sharedPreferences.edit().putString(MIN_GOAL_KEY, minGoal).apply()
+    private fun saveMinGoal(activity: String, minGoal: String) {
+        val minGoalKey = "$MIN_GOAL_KEY-$activity"
+        sharedPreferences.edit().putString(minGoalKey, minGoal).apply()
     }
 
-    private fun saveMaxGoal(maxGoal: String) {
-        sharedPreferences.edit().putString(MAX_GOAL_KEY, maxGoal).apply()
+    private fun saveMaxGoal(activity: String, maxGoal: String) {
+        val maxGoalKey = "$MAX_GOAL_KEY-$activity"
+        sharedPreferences.edit().putString(maxGoalKey, maxGoal).apply()
     }
+
 }
