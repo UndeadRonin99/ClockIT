@@ -24,7 +24,6 @@ class AddActivity : AppCompatActivity() {
 
     private lateinit var colorBox: View
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedActivities: SharedPreferences
     private lateinit var spinner: Spinner
     private lateinit var doneButton: Button
     private lateinit var categoryColors: MutableList<Int>
@@ -44,7 +43,6 @@ class AddActivity : AppCompatActivity() {
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
-        sharedActivities = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
 
         // Initialize elements
         colorBox = findViewById(R.id.colorBox)

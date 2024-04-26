@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TimePicker
@@ -25,6 +26,7 @@ class SessionLog : AppCompatActivity() {
     private lateinit var txtActivity: TextView
     private lateinit var txtCategory: TextView
     private lateinit var imgPreview: ImageView
+    private lateinit var datePicker: DatePicker
     private var photoUri: Uri? = null
 
 
@@ -32,13 +34,14 @@ class SessionLog : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_log)
 
-        sharedPreferences = getSharedPreferences("categoryPreferences", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
         val activityData = intent.getStringExtra("activity") ?: ""
 
         txtActivity = findViewById(R.id.txtActivity1)
         txtCategory = findViewById(R.id.txtCategory1)
         btnAddPhoto = findViewById(R.id.btnAddPhoto)
         btnSave = findViewById(R.id.btnSave)
+        datePicker = findViewById(R.id.DatePicker)
         imgPreview = findViewById(R.id.imgPreview) // Initialize imgPreview here
 
         spnrTime = findViewById(R.id.spnrTime)
@@ -63,21 +66,29 @@ class SessionLog : AppCompatActivity() {
             val selectedMinute = spnrTime.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
 
+            val selectedMonth = datePicker.month
+            val day = datePicker.dayOfMonth
+            val selectedYear = datePicker.year
+            val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
+
+
             // Concatenate all the details into a single string
-            val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,${photoUri.toString()}"
+            val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,${photoUri.toString()}"
 
             // Get the existing log data from SharedPreferences
-            val existingLogs = sharedPreferences.getStringSet("log", mutableSetOf()) ?: mutableSetOf()
 
             // Add the new log entry to the set
-            existingLogs.add(logEntry)
+
 
             // Save the updated log data back to SharedPreferences
             val editor = sharedPreferences.edit()
-            editor.putStringSet("log", existingLogs)
+            editor.putString("Log_${System.currentTimeMillis()}", logEntry)
             editor.apply()
-            editor.commit()
-            Log.d("testing", "We got here")
+
+            sharedPreferences.getStringSet("Logs", emptySet())?.forEach {
+                Log.d("testing", it)
+            }
+
             Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
 
             // Optionally, you can finish the activity or perform any other action here

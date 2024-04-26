@@ -18,16 +18,19 @@ class home_page : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
-        val sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
         val allActivities = sharedPreferences.all
         for ((key, value) in allActivities) {
             Log.d("SharedPreferences", "Key: $key, Value: $value")
+        }
+        sharedPreferences.getStringSet("log", emptySet())?.forEach {
+            Log.d("testing", it)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
         val allActivities = sharedPreferences.all
 
         // Remove previously added TextViews
