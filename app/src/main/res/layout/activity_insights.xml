@@ -21,11 +21,11 @@
         android:id="@+id/imageView6"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="57dp"
+        android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
         android:onClick="navGoals"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnAddDate"
+        app:layout_constraintStart_toEndOf="@+id/btnStatistics"
         app:srcCompat="@drawable/nav_goals_unselected" />
 
     <ImageView
@@ -43,11 +43,11 @@
         android:id="@+id/imageView7"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginStart="32dp"
         android:layout_marginBottom="24dp"
         android:onClick="navFun"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:srcCompat="@drawable/nav_funstuff_unselected" />
 
     <ImageView

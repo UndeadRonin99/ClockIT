@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -49,8 +48,8 @@ class AddActivity : AppCompatActivity() {
 
         // Initialize elements
         colorBox = findViewById(R.id.colorBox)
-        spinner = findViewById(R.id.spinner)
-        doneButton = findViewById(R.id.btnAddActivity)
+        spinner = findViewById(R.id.spnrMinMinutes)
+        doneButton = findViewById(R.id.btnAddMin)
         txtActivityName = findViewById(R.id.txtActivityName)
         txtDescription = findViewById(R.id.txtDescription)
         txtStartTime = findViewById(R.id.txtStartTime)
