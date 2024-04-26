@@ -1,23 +1,33 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-private lateinit var sharedPreferences: SharedPreferences
-private lateinit var spnrTime: TimePicker
-private lateinit var btnLog: Button
-private lateinit var btnAddPhoto: Button
-private lateinit var btnSave: Button
-private lateinit var txtActivity: TextView
-private lateinit var txtCategory: TextView
-
-
-
 class SessionLog : AppCompatActivity() {
+
+    private val PICK_IMAGE_REQUEST = 1
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var spnrTime: TimePicker
+    private lateinit var btnLog: Button
+    private lateinit var btnAddPhoto: Button
+    private lateinit var btnSave: Button
+    private lateinit var txtActivity: TextView
+    private lateinit var txtCategory: TextView
+    private lateinit var imgPreview: ImageView
+    private var photoUri: Uri? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_log)
@@ -27,6 +37,10 @@ class SessionLog : AppCompatActivity() {
 
         txtActivity = findViewById(R.id.txtActivity1)
         txtCategory = findViewById(R.id.txtCategory1)
+        btnAddPhoto = findViewById(R.id.btnAddPhoto)
+        btnSave = findViewById(R.id.btnSave)
+        imgPreview = findViewById(R.id.imgPreview) // Initialize imgPreview here
+
         spnrTime = findViewById(R.id.spnrTime)
         spnrTime.setIs24HourView(true)
 
@@ -39,6 +53,55 @@ class SessionLog : AppCompatActivity() {
             txtCategory.text = categoryName
             txtCategory.setTextColor((details.get(3)).toInt())
         }
-//trdyvjhbk
+
+        btnAddPhoto.setOnClickListener {
+            openImagePicker1()
         }
+
+        btnSave.setOnClickListener{
+            val selectedHour = spnrTime.hour
+            val selectedMinute = spnrTime.minute
+            val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+
+            // Concatenate all the details into a single string
+            val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,${photoUri.toString()}"
+
+            // Get the existing log data from SharedPreferences
+            val existingLogs = sharedPreferences.getStringSet("log", mutableSetOf()) ?: mutableSetOf()
+
+            // Add the new log entry to the set
+            existingLogs.add(logEntry)
+
+            // Save the updated log data back to SharedPreferences
+            val editor = sharedPreferences.edit()
+            editor.putStringSet("log", existingLogs)
+            editor.apply()
+            editor.commit()
+            Log.d("testing", "We got here")
+            Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+
+            // Optionally, you can finish the activity or perform any other action here
+        }
+    }
+    private fun openImagePicker1() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    // Function to handle result of image picker
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        imgPreview = findViewById(R.id.imgPreview)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            photoUri = data.data
+            imgPreview.setImageURI(photoUri)
+        }
+    }
+
+    fun back1(view: View){
+        finish()
+    }
 }
