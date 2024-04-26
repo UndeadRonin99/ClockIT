@@ -39,6 +39,6 @@ class SessionLog : AppCompatActivity() {
             txtCategory.text = categoryName
             txtCategory.setTextColor((details.get(3)).toInt())
         }
-
+//trdyvjhbk
         }
 }
