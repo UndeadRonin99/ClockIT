@@ -1,5 +1,4 @@
 package com.varsitycollege.st10043352.opsc_clockit
-
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -12,8 +11,11 @@ class AddGoal : AppCompatActivity() {
     private lateinit var txtActivity: TextView
     private lateinit var txtCategory: TextView
     private lateinit var btnMin: Button
+    private lateinit var btnMax: Button
     private lateinit var txtMin: TextView
-    private lateinit var timePicker: TimePicker
+    private lateinit var txtMax: TextView
+    private lateinit var minPicker: TimePicker
+    private lateinit var maxPicker: TimePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +25,14 @@ class AddGoal : AppCompatActivity() {
         txtActivity = findViewById(R.id.txtActivity)
         txtCategory = findViewById(R.id.txtCategory)
         btnMin = findViewById(R.id.btnAddMin)
+        btnMax = findViewById(R.id.btnAddMax)
         txtMin = findViewById(R.id.txtMin)
-        timePicker = findViewById(R.id.minPicker)
+        txtMax = findViewById(R.id.txtMax)
+        minPicker = findViewById(R.id.minPicker)
 
-        timePicker.setIs24HourView(true)
+
+        minPicker.setIs24HourView(true)
+
 
         // Retrieve the information from Intent extras
         val activityData = intent.getStringExtra("activityData")
@@ -39,10 +45,17 @@ class AddGoal : AppCompatActivity() {
         txtCategory.setTextColor((activityFields?.get(3))?.toInt() ?: 0)
 
         btnMin.setOnClickListener {
-            val selectedHour = timePicker.hour
-            val selectedMinute = timePicker.minute
+            val selectedHour = minPicker.hour
+            val selectedMinute = minPicker.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
             txtMin.text = "Min goal: $selectedTime"
+        }
+
+        btnMax.setOnClickListener {
+            val selectedHour = minPicker.hour
+            val selectedMinute = minPicker.minute
+            val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            txtMax.text = "Max goal: $selectedTime"
         }
     }
 

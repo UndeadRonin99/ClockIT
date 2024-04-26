@@ -10,42 +10,69 @@
     android:textAlignment="center"
     tools:context=".home_page">
 
+
+    <TimePicker
+        android:id="@+id/minPicker"
+        android:layout_width="169dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="163dp"
+        android:theme="@style/MyDatePicker"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/btnsetgoals"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
+
+    <Button
+        android:id="@+id/btnsetgoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginBottom="186dp"
+        android:backgroundTint="@color/white"
+        android:text="Set goals"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnAddMax"
+        app:layout_constraintTop_toBottomOf="@+id/minPicker" />
+
     <Button
         android:id="@+id/btnAddMin"
         android:layout_width="185dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="113dp"
-        android:layout_marginEnd="113dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="#1B232E"
         android:text="Add mimimum goal"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddMax"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minPicker" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMax" />
 
-    <TimePicker
-        android:id="@+id/minPicker"
-        android:layout_width="169dp"
-        android:layout_height="97dp"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="121dp"
-        android:theme="@style/MyDatePicker"
-        android:timePickerMode="spinner"
+    <Button
+        android:id="@+id/btnAddMax"
+        android:layout_width="185dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="270dp"
+        android:backgroundTint="#1B232E"
+        android:text="Add maximum goal"
+        android:textColorHighlight="#1B232E"
+        android:textColorHint="#1B232E"
+        android:textColorLink="#1B232E"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAddMin" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="49dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="362dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="18dp"
         android:onClick="back"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_button"
@@ -53,29 +80,30 @@
 
     <TextView
         android:id="@+id/txtActivity"
-        android:layout_width="251dp"
-        android:layout_height="45dp"
+        android:layout_width="255dp"
+        android:layout_height="41dp"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="126dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="126dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/minPicker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtCategory"
-        android:layout_width="217dp"
-        android:layout_height="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="21dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtMin"
+        app:layout_constraintEnd_toEndOf="@+id/txtActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtActivity" />
 
@@ -83,25 +111,27 @@
         android:id="@+id/txtMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="314dp"
+        android:layout_marginStart="1dp"
         android:text="Min time: "
         android:textColor="#FEFEFE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtMax"
+        app:layout_constraintStart_toStartOf="@+id/txtMax"
         app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
 
     <TextView
         android:id="@+id/txtMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="310dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginBottom="134dp"
         android:text="Max time: "
         android:textColor="#FEFEFE"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddMin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMin" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
