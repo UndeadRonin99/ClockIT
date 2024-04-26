@@ -24,7 +24,9 @@ class AddGoal : AppCompatActivity() {
         txtCategory = findViewById(R.id.txtCategory)
         btnMin = findViewById(R.id.btnAddMin)
         txtMin = findViewById(R.id.txtMin)
-        timePicker = findViewById(R.id.timePicker1)
+        timePicker = findViewById(R.id.minPicker)
+
+        timePicker.setIs24HourView(true)
 
         // Retrieve the information from Intent extras
         val activityData = intent.getStringExtra("activityData")
