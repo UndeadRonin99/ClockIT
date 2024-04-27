@@ -22,15 +22,95 @@
         android:id="@+id/textView3"
         android:layout_width="391dp"
         android:layout_height="61dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="144dp"
         android:text="Statistics"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background" />
+
+
+    <Button
+        android:id="@+id/btnAddDate"
+        android:layout_width="93dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#8076B0"
+        android:text="Okay"
+        android:textColorHighlight="#1B232E"
+        android:textColorHint="#1B232E"
+        android:textColorLink="#1B232E"
+        app:layout_constraintStart_toEndOf="@+id/btnCancelDate"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+    <Button
+        android:id="@+id/btnCancelDate"
+        android:layout_width="93dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="26dp"
+        android:backgroundTint="#8076B0"
+        android:text="Cancel"
+        android:textColorHighlight="#1B232E"
+        android:textColorHint="#1B232E"
+        android:textColorLink="#1B232E"
+        app:layout_constraintBottom_toTopOf="@+id/btnStatistics"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/StartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ECE9E9"
+        android:text="Start Date:"
+        android:textColor="@color/white"
+        android:textColorLink="#16F6F5F5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.301" />
+
+    <TextView
+        android:id="@+id/EndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="#00ECE9E9"
+        android:text="End Date:"
+        android:textColor="@color/white"
+        android:textColorLink="#16F6F5F5"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="335dp"
+        android:layout_height="311dp"
+        android:layout_marginTop="276dp"
+        android:layout_marginBottom="16dp"
+        android:background="#1B232E"
+        android:dateTextAppearance="@style/MyCalendarDateText"
+        android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
+        android:unfocusedMonthDateColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -85,21 +165,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnStatistics"
         app:srcCompat="@drawable/nav_goals_unselected" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="280dp"
-        android:layout_height="236dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="102dp"
-        android:text="Coming Soon"
-        android:textAlignment="center"
-        android:textColor="#FEFEFE"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
