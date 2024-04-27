@@ -46,7 +46,10 @@
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
         app:layout_constraintStart_toEndOf="@+id/btnCancelDate"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        android:onClick="navigateToStatistics"
+        tools:ignore="OnClick" />
+
 
     <Button
         android:id="@+id/btnCancelDate"

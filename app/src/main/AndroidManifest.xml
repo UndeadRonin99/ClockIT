@@ -26,6 +26,12 @@
         android:theme="@style/Theme.OPSC_ClockIT"
         tools:targetApi="31">
         <activity
+            android:name=".PeriodLogged"
+            android:exported="false" />
+        <activity
+            android:name=".staticsticsPeriod"
+            android:exported="false" />
+        <activity
             android:name=".SessionLog"
             android:exported="false" />
         <activity
