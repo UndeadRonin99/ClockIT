@@ -1,5 +1,6 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,6 +20,9 @@ class Insights : AppCompatActivity() {
     private var selectedStartDate: Date? = null
     private var selectedEndDate: Date? = null
 
+    // SharedPreferences file name
+    private val PREF_NAME = "InsightsPrefs"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insights)
@@ -26,6 +30,15 @@ class Insights : AppCompatActivity() {
         startDate = findViewById(R.id.StartDate)
         endDate = findViewById(R.id.EndDate)
         calendarView = findViewById(R.id.calendarView)
+
+        // Reset saved dates to null initially (or on some specific condition)
+        selectedStartDate = null
+        selectedEndDate = null
+        startDate.text = "Start Date: Not selected"
+        endDate.text = "End Date: Not selected"
+
+        // Load saved dates from SharedPreferences
+        loadSavedDates()
 
         // Set listener for calendar view
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -65,5 +78,38 @@ class Insights : AppCompatActivity() {
 
     fun navHome(view: View){
         startActivity(Intent(this, home_page::class.java))
+    }
+
+    // Function to save selected dates to SharedPreferences
+    private fun saveSelectedDates() {
+        val sharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putLong("startDate", selectedStartDate?.time ?: -1)
+            putLong("endDate", selectedEndDate?.time ?: -1)
+            apply()
+        }
+    }
+
+    // Function to load saved dates from SharedPreferences
+    private fun loadSavedDates() {
+        val sharedPref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val startDateMillis = sharedPref.getLong("startDate", -1)
+        val endDateMillis = sharedPref.getLong("endDate", -1)
+
+        if (startDateMillis != -1L) {
+            selectedStartDate = Date(startDateMillis)
+            startDate.text = "Start Date: ${dateFormat.format(selectedStartDate)}"
+        }
+
+        if (endDateMillis != -1L) {
+            selectedEndDate = Date(endDateMillis)
+            endDate.text = "End Date: ${dateFormat.format(selectedEndDate)}"
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Save selected dates to SharedPreferences when the activity is paused
+        saveSelectedDates()
     }
 }
