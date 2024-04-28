@@ -7,6 +7,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PeriodLogged">
+
+    <ScrollView
+        android:layout_width="365dp"
+        android:layout_height="512dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:id="@+id/LinearActivities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+    </ScrollView>
+
     <ImageView
         android:id="@+id/back_button"
         android:layout_width="56dp"
@@ -14,6 +38,7 @@
 
         android:clickable="true"
         android:focusable="true"
+        android:onClick="back2"
         android:src="@drawable/back_button"
         app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,28 +46,15 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="168dp"
         android:text="LOGS"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtActivity1"
-        android:layout_width="193dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="108dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="16dp"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

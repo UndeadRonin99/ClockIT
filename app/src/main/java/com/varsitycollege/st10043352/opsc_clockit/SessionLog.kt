@@ -66,7 +66,7 @@ class SessionLog : AppCompatActivity() {
             val selectedMinute = spnrTime.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
 
-            val selectedMonth = datePicker.month
+            val selectedMonth = datePicker.month + 1
             val day = datePicker.dayOfMonth
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
@@ -84,10 +84,6 @@ class SessionLog : AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.putString("Log_${System.currentTimeMillis()}", logEntry)
             editor.apply()
-
-            sharedPreferences.getStringSet("Logs", emptySet())?.forEach {
-                Log.d("testing", it)
-            }
 
             Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
 
