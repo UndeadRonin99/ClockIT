@@ -75,19 +75,13 @@ class SessionLog : AppCompatActivity() {
             // Concatenate all the details into a single string
             val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,${photoUri.toString()}"
 
-            // Get the existing log data from SharedPreferences
-
-            // Add the new log entry to the set
-
-
             // Save the updated log data back to SharedPreferences
             val editor = sharedPreferences.edit()
             editor.putString("Log_${System.currentTimeMillis()}", logEntry)
             editor.apply()
 
             Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-
-            // Optionally, you can finish the activity or perform any other action here
+            finish()
         }
     }
     private fun openImagePicker1() {
