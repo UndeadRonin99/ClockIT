@@ -59,13 +59,14 @@ class PeriodLogged : AppCompatActivity() {
                 if (startDate != null && endDate != null && logDateFormatted != null) {
                     if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
                         //val activity = intent.getStringExtra()
-                        activityList = formatActivities(intent.getStringExtra("activityData"))
+                        val activityData = intent.getStringExtra("activityData")
+                        activityList = formatActivities(activityData)
                         if(logData[0].equals(activityList[0])) {
-                            val logData =
+                            val logData1 =
                                 value as String // Assuming the value is stored as a String
                             val activityTextView = TextView(this)
 
-                            activityTextView.text = formatSharedPref(logData)
+                            activityTextView.text = formatSharedPref(logData1)
                             activityTextView.setTextColor(Color.WHITE)
                             activityTextView.setTextSize(20f)
                             activityTextView.setBackgroundResource(R.drawable.round_buttons)
@@ -84,7 +85,10 @@ class PeriodLogged : AppCompatActivity() {
                                 )
                             }
                             activityTextView.setOnClickListener {//NEED TO CHANGE THIS TO THE NEW PAGE
-                                val intent = Intent(this, home_page::class.java)
+                                val intent = Intent(this, ViewLog::class.java)
+                                intent.putExtra("logData", logData1)
+
+                                intent.putExtra("activityData", activityData)
                                 startActivity(intent)
                             }
 
@@ -95,8 +99,8 @@ class PeriodLogged : AppCompatActivity() {
                     }
                 }
             }
-            }
         }
+    }
 
     fun formatSharedPref(activity: String?): CharSequence? {
         var activityDetails = ""

@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 
 class SessionLog : AppCompatActivity() {
 
@@ -98,6 +99,8 @@ class SessionLog : AppCompatActivity() {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
             photoUri = data.data
+            val dataUri = (data.data).toString()
+            val dataIntent = dataUri.toUri()
             imgPreview.setImageURI(photoUri)
         }
     }
