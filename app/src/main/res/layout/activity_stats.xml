@@ -38,37 +38,20 @@
         android:id="@+id/btnAddDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="159dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="#8076B0"
+        android:onClick="navigateToStatistics"
         android:text="Okay"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelDate"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        android:onClick="navigateToStatistics"
-        tools:ignore="OnClick" />
-
-
-    <Button
-        android:id="@+id/btnCancelDate"
-        android:layout_width="93dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="26dp"
-        android:backgroundTint="#8076B0"
-        android:text="Cancel"
-        android:textColorHighlight="#1B232E"
-        android:textColorHint="#1B232E"
-        android:textColorLink="#1B232E"
         app:layout_constraintBottom_toTopOf="@+id/btnStatistics"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/StartDate"
@@ -80,23 +63,23 @@
         android:textColorLink="#16F6F5F5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.301" />
+        app:layout_constraintVertical_bias="0.316" />
 
     <TextView
         android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:background="#00ECE9E9"
         android:text="End Date:"
         android:textColor="@color/white"
         android:textColorLink="#16F6F5F5"
         app:layout_constraintBottom_toTopOf="@+id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent" />
 
     <CalendarView
@@ -104,12 +87,10 @@
         android:layout_width="335dp"
         android:layout_height="311dp"
         android:layout_marginTop="276dp"
-        android:layout_marginBottom="16dp"
         android:background="#1B232E"
         android:dateTextAppearance="@style/MyCalendarDateText"
         android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
         android:unfocusedMonthDateColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"

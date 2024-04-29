@@ -71,36 +71,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/blue_snail" />
 
+
     <Button
         android:id="@+id/btnAddDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginStart="159dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="159dp"
         android:backgroundTint="#8076B0"
         android:text="Okay"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-    <Button
-        android:id="@+id/btnCancelDate"
-        android:layout_width="93dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="23dp"
-        android:backgroundTint="#8076B0"
-        android:text="Cancel"
-        android:textColorHighlight="#1B232E"
-        android:textColorHint="#1B232E"
-        android:textColorLink="#1B232E"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
 
     <TextView
         android:id="@+id/textView3"
