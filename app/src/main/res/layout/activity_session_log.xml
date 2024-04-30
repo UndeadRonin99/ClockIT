@@ -11,10 +11,10 @@
 
     <ImageView
         android:id="@+id/imgPreview"
-        android:layout_width="166dp"
-        android:layout_height="204dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="27dp"
+        android:layout_width="157dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/DatePicker"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -34,6 +34,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCategory1"
         app:strokeColor="#1B232E" />
+
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="161dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="33dp"
+        android:text="Take Photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddPhoto"
+        android:backgroundTint="#1B232E"/>
 
     <Button
         android:id="@+id/btnSave"
@@ -82,14 +96,15 @@
 
     <TextView
         android:id="@+id/txtCategory1"
-        android:layout_width="364dp"
-        android:layout_height="60dp"
+        android:layout_width="211dp"
+        android:layout_height="63dp"
 
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="48dp"
         android:text="test"
         android:textColor="#8076B0"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtActivity1" />
 

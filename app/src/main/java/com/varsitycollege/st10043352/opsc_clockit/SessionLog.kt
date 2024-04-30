@@ -1,10 +1,13 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
@@ -14,10 +17,13 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import java.io.File
+import java.io.FileOutputStream
 
 class SessionLog : AppCompatActivity() {
 
     private val PICK_IMAGE_REQUEST = 1
+    private val REQUEST_IMAGE_CAPTURE = 2
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spnrTime: TimePicker
@@ -29,7 +35,6 @@ class SessionLog : AppCompatActivity() {
     private lateinit var imgPreview: ImageView
     private lateinit var datePicker: DatePicker
     private var photoUri: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,15 +48,15 @@ class SessionLog : AppCompatActivity() {
         btnAddPhoto = findViewById(R.id.btnAddPhoto)
         btnSave = findViewById(R.id.btnSave)
         datePicker = findViewById(R.id.DatePicker)
-        imgPreview = findViewById(R.id.imgPreview) // Initialize imgPreview here
+        imgPreview = findViewById(R.id.imgPreview)
 
         spnrTime = findViewById(R.id.spnrTime)
         spnrTime.setIs24HourView(true)
 
         val details = activityData.split(",")
-        if (details.size >= 3) { // Ensure we have at least three elements (name, description, category)
-            val activityName = details[0] // Activity Name
-            val categoryName = details[2] // Category Name
+        if (details.size >= 3) {
+            val activityName = details[0]
+            val categoryName = details[2]
 
             txtActivity.text = activityName
             txtCategory.text = categoryName
@@ -59,7 +64,7 @@ class SessionLog : AppCompatActivity() {
         }
 
         btnAddPhoto.setOnClickListener {
-            openImagePicker1()
+            openImagePicker()
         }
 
         btnSave.setOnClickListener{
@@ -72,11 +77,8 @@ class SessionLog : AppCompatActivity() {
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
 
-
-            // Concatenate all the details into a single string
             val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,${photoUri.toString()}"
 
-            // Save the updated log data back to SharedPreferences
             val editor = sharedPreferences.edit()
             editor.putString("Log_${System.currentTimeMillis()}", logEntry)
             editor.apply()
@@ -85,23 +87,49 @@ class SessionLog : AppCompatActivity() {
             finish()
         }
     }
-    private fun openImagePicker1() {
+
+    private fun openImagePicker() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    // Function to handle result of image picker
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        imgPreview = findViewById(R.id.imgPreview)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             photoUri = data.data
-            val dataUri = (data.data).toString()
-            val dataIntent = dataUri.toUri()
             imgPreview.setImageURI(photoUri)
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val uri = saveImageToExternalStorage(imageBitmap)
+            imgPreview.setImageBitmap(imageBitmap)
+            photoUri = uri
+        }
+    }
+
+    private fun saveImageToExternalStorage(bitmap: Bitmap): Uri {
+        val imagesFolder = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "SessionImages")
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs()
+        }
+        val imageFile = File(imagesFolder, "session_image_${System.currentTimeMillis()}.jpg")
+        val outputStream = FileOutputStream(imageFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.close()
+        return imageFile.toUri()
+    }
+
+    fun takePhoto(view: View) {
+        dispatchTakePictureIntent()
+    }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
         }
     }
 
