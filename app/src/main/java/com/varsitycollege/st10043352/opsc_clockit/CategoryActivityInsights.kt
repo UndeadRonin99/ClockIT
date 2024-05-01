@@ -26,6 +26,8 @@ class CategoryActivityInsights : AppCompatActivity() {
     private var startDateMillis by Delegates.notNull<Long>()
     private var endDateMillis by Delegates.notNull<Long>()
     private var currentActivities : MutableList<String> = mutableListOf("")
+    private var currentCategories : MutableList<String> = mutableListOf("")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +65,71 @@ class CategoryActivityInsights : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
         val allActivities = sharedPreferences.all
         currentActivities.clear()
+        currentCategories.clear()
 
         // Remove previously added TextViews
         (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
+        (findViewById<LinearLayout>(R.id.LinearActivities2)).removeAllViews()
+
+
+        // Iterate through all Categories and create TextViews
+        for ((key, value) in allActivities) {
+            if(key.startsWith("Log_")) {
+                val log = value as String
+                val logData = formatLogs(log)
+
+                // Get the date in "DD/MM" format from the log data
+                val logDate = logData[4]
+                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+                val logDateWithYear = "$logDate/$currentYear"
+
+                // Convert the log date to a Date object
+                val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val logDateFormatted = logDateFormat.parse(logDateWithYear)
+
+                // Check if the log date falls between the selected start and end dates
+                if (startDate != null && endDate != null && logDateFormatted != null) {
+                    if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
+                        for ((key1, value) in allActivities) {
+                            if (key1.startsWith("activity_")) { // Check if the key represents an activity
+                                val activityData = value as String // Assuming the value is stored as a String
+                                val CategoryTextView = TextView(this)
+                                val activityInfo = formatActivity(activityData)
+                                if(!currentCategories.contains(activityInfo[2])) {
+                                    if (logData[1].equals(activityInfo[2])) {
+                                        currentCategories.add(activityInfo[2])
+
+                                        CategoryTextView.text = formatCategory(activityData)
+                                        CategoryTextView.setTextColor(Color.WHITE)
+                                        CategoryTextView.setTextSize(20f)
+                                        CategoryTextView.setBackgroundResource(R.drawable.round_buttons)
+                                        CategoryTextView.textAlignment =
+                                            View.TEXT_ALIGNMENT_TEXT_START
+                                        CategoryTextView.visibility =
+                                            View.VISIBLE // Make the TextView visible
+                                        CategoryTextView.layoutParams = LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                            resources.getDimensionPixelSize(R.dimen.activity_box_height)
+                                        ).apply {
+                                            setMargins(
+                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
+                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
+                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
+                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
+                                            )
+                                        }
+                                        (findViewById<LinearLayout>(R.id.LinearActivities2)).addView(
+                                            CategoryTextView
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Iterate through all activities and create TextViews
         for ((key, value) in allActivities) {
@@ -140,6 +204,18 @@ class CategoryActivityInsights : AppCompatActivity() {
             val values = activity.split(",")
 
             val name = values[0]
+
+            activityDetails= "\t\t${name}"
+        }
+        return activityDetails
+    }
+
+    fun formatCategory(activity: String?): CharSequence? {
+        var activityDetails = ""
+        activity?.let {
+            val values = activity.split(",")
+
+            val name = values[2]
 
             activityDetails= "\t\t${name}"
         }
