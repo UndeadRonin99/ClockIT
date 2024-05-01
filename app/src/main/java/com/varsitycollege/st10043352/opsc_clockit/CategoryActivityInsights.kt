@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -27,6 +28,8 @@ class CategoryActivityInsights : AppCompatActivity() {
     private var endDateMillis by Delegates.notNull<Long>()
     private var currentActivities : MutableList<String> = mutableListOf("")
     private var currentCategories : MutableList<String> = mutableListOf("")
+    private var times : MutableList<String> = mutableListOf()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +73,17 @@ class CategoryActivityInsights : AppCompatActivity() {
         // Remove previously added TextViews
         (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
         (findViewById<LinearLayout>(R.id.LinearActivities2)).removeAllViews()
+        var hrs: Int = 0
+        var mns: Int = 0
 
+        for ((key, value) in allActivities) {
+            if (key.startsWith("Log_")){
+                val log = value as String
+                val logData = formatLogs(log)
+
+                times.add(logData[3])
+            }
+        }
 
         // Iterate through all Categories and create TextViews
         for ((key, value) in allActivities) {
@@ -87,6 +100,8 @@ class CategoryActivityInsights : AppCompatActivity() {
                 val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val logDateFormatted = logDateFormat.parse(logDateWithYear)
 
+
+
                 // Check if the log date falls between the selected start and end dates
                 if (startDate != null && endDate != null && logDateFormatted != null) {
                     if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
@@ -94,12 +109,28 @@ class CategoryActivityInsights : AppCompatActivity() {
                             if (key1.startsWith("activity_")) { // Check if the key represents an activity
                                 val activityData = value as String // Assuming the value is stored as a String
                                 val CategoryTextView = TextView(this)
+                                var time : String = ""
+
+
+
+
+                                for (tme in times){
+                                    val time1 = tme.split(":")
+
+                                    hrs += time1[0].toInt()
+                                    mns += time1[1].toInt()
+                                }
+
+                                Log.d("mns = ", "$mns")
+
+                                time = "${hrs} hours ${mns} minutes"
+
                                 val activityInfo = formatActivity(activityData)
                                 if(!currentCategories.contains(activityInfo[2])) {
                                     if (logData[1].equals(activityInfo[2])) {
                                         currentCategories.add(activityInfo[2])
 
-                                        CategoryTextView.text = formatCategory(activityData)
+                                        CategoryTextView.text = "${formatCategory(activityData)}\t\t$time"
                                         CategoryTextView.setTextColor(Color.WHITE)
                                         CategoryTextView.setTextSize(20f)
                                         CategoryTextView.setBackgroundResource(R.drawable.round_buttons)
