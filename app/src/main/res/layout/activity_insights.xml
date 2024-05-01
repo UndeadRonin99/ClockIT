@@ -145,7 +145,7 @@
         style="@style/MyDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#6A696D"
         android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
         android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
         android:focusedMonthDateColor="#FFFFFF"

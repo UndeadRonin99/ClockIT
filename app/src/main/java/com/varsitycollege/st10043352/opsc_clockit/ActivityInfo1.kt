@@ -8,10 +8,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.squareup.picasso.Picasso
 
 class ActivityInfo1 : AppCompatActivity() {
 
-    private lateinit var back_button: ImageView
+    private lateinit var backButton: ImageView
+    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,7 @@ class ActivityInfo1 : AppCompatActivity() {
         val endTime = intent.getStringExtra("endTime")
         val photoUri = intent.getStringExtra("photoUri")
 
-        // Find TextViews in the layout
+        // Find Views in the layout
         val txtHeading = findViewById<TextView>(R.id.txtHeading)
         val txtActivityName = findViewById<TextView>(R.id.ActivityName)
         val txtDescription = findViewById<TextView>(R.id.txtDescription)
@@ -33,15 +35,18 @@ class ActivityInfo1 : AppCompatActivity() {
         val txtStartTime = findViewById<TextView>(R.id.txtStartTime)
         val txtEndTime = findViewById<TextView>(R.id.txtEndTime)
         val txtPhotoUri = findViewById<TextView>(R.id.txtPhotoUri)
-        val backButton = findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener {
-            // Navigate back to the home page
+        backButton = findViewById(R.id.back_button)
+        imageView = findViewById(R.id.imageView)
 
+        // Load image into the ImageView using Picasso
+        Picasso.get().load(photoUri).into(imageView)
+
+        backButton.setOnClickListener {
             finish() // Finish current activity
         }
 
         // Set the retrieved data to the TextViews
-        txtHeading.text=activityName
+        txtHeading.text = activityName
         txtActivityName.text = activityName
         txtDescription.text = description
         txtCategory.text = category
