@@ -1,16 +1,14 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 
 class ViewLog : AppCompatActivity() {
 
@@ -42,77 +40,50 @@ class ViewLog : AppCompatActivity() {
         txtCategory.text = activityList.getOrNull(2) ?: "Category Not Found"
         txtTime.text = logTime
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            loadLogImage(logList)
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
-        }
+        loadLogImage(logList)
 
         backButton.setOnClickListener {
             finish()
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                loadLogImage(logList)
-            } else {
-                showPermissionExplanationDialog()
-            }
-        }
-    }
-
-    private fun showPermissionExplanationDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Permission Required")
-        dialogBuilder.setMessage("Storage permission is required to view the log image. Please grant the permission.")
-        dialogBuilder.setPositiveButton("Grant") { dialog, _ ->
-            openAppSettings()
-            dialog.dismiss()
-        }
-        dialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = dialogBuilder.create()
-        dialog.show()
-    }
-
-    private fun openAppSettings() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri: Uri = Uri.fromParts("package", packageName, null)
-        intent.data = uri
-        startActivity(intent)
-    }
-
     private fun loadLogImage(logList: List<String>) {
         if (logList.size >= 6 && !logList[5].isNullOrEmpty()) {
-            val logImageURI = Uri.parse(logList[5])
-            LogPhoto.setImageURI(logImageURI)
+            val logImageUri = Uri.parse(logList[5])
+            if (logImageUri.scheme != null && logImageUri.host != null) {
+                // Load image from Firebase Storage using Picasso
+                FirebaseStorage.getInstance().getReferenceFromUrl(logList[5]).downloadUrl
+                    .addOnSuccessListener { uri ->
+                        Picasso.get().load(uri).into(LogPhoto)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("ViewLog", "Failed to load image: $exception")
+                    }
+            } else {
+                Log.e("ViewLog", "Invalid URI: $logImageUri")
+            }
         } else {
             Log.e("ViewLog", "URI string is null or invalid.")
         }
     }
 
+
     companion object {
-        private const val REQUEST_STORAGE_PERMISSION = 10196
-    }
+        fun formatLogs(log: String?): List<String> {
+            return log?.split(",") ?: emptyList()
+        }
 
-    fun formatLogs(log: String?): List<String> {
-        return log?.split(",") ?: emptyList()
-    }
+        fun formatActivities(log: String?): List<String> {
+            return log?.split(",") ?: emptyList()
+        }
 
-    fun formatActivities(log: String?): List<String> {
-        return log?.split(",") ?: emptyList()
-    }
-
-    fun formatSharedPref(activity: String?): CharSequence? {
-        return activity?.let {
-            val values = activity.split(",")
-            val name = values[3]
-            val times = name.split(":")
-            "\t${times[0]} hours ${times[1]} minutes"
-        } ?: ""
+        fun formatSharedPref(activity: String?): CharSequence? {
+            return activity?.let {
+                val values = activity.split(",")
+                val name = values[3]
+                val times = name.split(":")
+                "\t${times[0]} hours ${times[1]} minutes"
+            } ?: ""
+        }
     }
 }

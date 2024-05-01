@@ -7,8 +7,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
-import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.ImageView
@@ -17,8 +15,11 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 
 class SessionLog : AppCompatActivity() {
 
@@ -36,6 +37,8 @@ class SessionLog : AppCompatActivity() {
     private lateinit var datePicker: DatePicker
     private var photoUri: Uri? = null
 
+    private lateinit var storageRef: StorageReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_log)
@@ -52,6 +55,9 @@ class SessionLog : AppCompatActivity() {
 
         spnrTime = findViewById(R.id.spnrTime)
         spnrTime.setIs24HourView(true)
+
+        // Initialize Firebase Storage reference
+        storageRef = FirebaseStorage.getInstance().reference
 
         val details = activityData.split(",")
         if (details.size >= 3) {
@@ -76,6 +82,9 @@ class SessionLog : AppCompatActivity() {
             val day = datePicker.dayOfMonth
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
+
+            // Upload image to Firebase Storage
+            photoUri?.let { uploadImageToFirebase(it) }
 
             val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,${photoUri.toString()}"
 
@@ -121,19 +130,26 @@ class SessionLog : AppCompatActivity() {
         return imageFile.toUri()
     }
 
-    fun takePhoto(view: View) {
-        dispatchTakePictureIntent()
-    }
+    private fun uploadImageToFirebase(imageUri: Uri) {
+        val imagesRef = storageRef.child("session_images/${imageUri.lastPathSegment}")
+        val uploadTask = imagesRef.putFile(imageUri)
 
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            // Image uploaded successfully
+            val downloadUrl = taskSnapshot.storage.downloadUrl.toString()
+
+            // Save download URL to SharedPreferences or Firebase Realtime Database
+            saveDownloadUrl(downloadUrl)
+
+            Toast.makeText(this, "Image uploaded to Firebase Storage", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener { exception ->
+            // Handle unsuccessful uploads
+            Toast.makeText(this, "Failed to upload image: $exception", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun back1(view: View){
-        finish()
+    // Function to save download URL to SharedPreferences or Firebase Realtime Database
+    private fun saveDownloadUrl(downloadUrl: String) {
+        // Code to save download URL
     }
 }
