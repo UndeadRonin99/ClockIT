@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#000000"
+    android:orientation="vertical"
     android:textAlignment="center"
     tools:context=".home_page">
 
@@ -26,7 +27,8 @@
         android:onClick="navGoals"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnStatistics"
-        app:srcCompat="@drawable/nav_goals_unselected" />
+        app:srcCompat="@drawable/nav_goals_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/btnStatistics"
@@ -37,7 +39,8 @@
         android:onClick="navStats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnInsights"
-        app:srcCompat="@drawable/nav_stats_unselected" />
+        app:srcCompat="@drawable/nav_stats_unselected"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -48,7 +51,8 @@
         android:onClick="navFun"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:srcCompat="@drawable/nav_funstuff_unselected" />
+        app:srcCompat="@drawable/nav_funstuff_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/btnHome"
@@ -59,7 +63,8 @@
         android:onClick="navHome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/nav_home_unselected" />
+        app:srcCompat="@drawable/nav_home_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/ClockIT_background"
@@ -76,17 +81,17 @@
         android:id="@+id/btnAddDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="159dp"
         android:backgroundTint="#8076B0"
-        android:text="Okay"
+        android:text="Search"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.888"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView3"
@@ -104,6 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background" />
 
+
     <TextView
         android:id="@+id/StartDate"
         android:layout_width="wrap_content"
@@ -114,39 +120,52 @@
         android:textColorLink="#16F6F5F5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.265" />
-
+        app:layout_constraintVertical_bias="0.266"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
         android:background="#00ECE9E9"
         android:text="End Date:"
         android:textColor="@color/white"
         android:textColorLink="#16F6F5F5"
-        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.304" />
 
     <CalendarView
         android:id="@+id/calendarView"
+        style="@style/MyDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="252dp"
-        android:background="#2E86D5"
-        android:dateTextAppearance="@style/MyCalendarDateText"
+        android:background="#FFFFFF"
+        android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
         android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
-        android:unfocusedMonthDateColor="@color/white"
+        android:focusedMonthDateColor="#FFFFFF"
+        android:selectedWeekBackgroundColor="#FFFFFF"
+        android:unfocusedMonthDateColor="#FFFFFF"
+        android:visibility="visible"
+        android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:weekNumberColor="#FFFFFF"
+        android:weekSeparatorLineColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623"
+        tools:focusedMonthDateColor="#FFFFFF"
+        tools:selectedWeekBackgroundColor="#FFFFFF"
+        tools:unfocusedMonthDateColor="#FFFFFF"
+        tools:weekNumberColor="#FFFFFF"
+        tools:weekSeparatorLineColor="#FFFFFF" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
