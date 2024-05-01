@@ -12,4 +12,7 @@
     <color name="green">#00FF00</color> <!-- Green -->
     <color name="yellow">#FFFF00</color> <!-- Yellow -->
     <color name="magenta">#FF00FF</color> <!-- Magenta -->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>
