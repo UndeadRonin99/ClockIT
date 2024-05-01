@@ -184,4 +184,14 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLog"
         app:layout_constraintVertical_bias="0.473" />
 
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Photo"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorBox" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

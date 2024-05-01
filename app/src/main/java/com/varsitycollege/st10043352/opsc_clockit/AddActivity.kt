@@ -1,11 +1,14 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -16,9 +19,13 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import org.json.JSONArray
-import java.util.Calendar
-import java.util.Locale
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddActivity : AppCompatActivity() {
 
@@ -36,6 +43,7 @@ class AddActivity : AppCompatActivity() {
 
     // Constants for image selection
     private val PICK_IMAGE_REQUEST = 1
+    private val REQUEST_IMAGE_CAPTURE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +80,13 @@ class AddActivity : AppCompatActivity() {
         // Set up click listener for the add photo button
         val btnAddPhoto = findViewById<Button>(R.id.btnLog)
         btnAddPhoto.setOnClickListener {
-            openImagePicker()
+            openGallery()
+        }
+
+        // Set up click listener for the take photo button
+        val btnTakePhoto = findViewById<Button>(R.id.btnTakePhoto)
+        btnTakePhoto.setOnClickListener {
+            dispatchTakePictureIntent()
         }
 
         // Set up click listener for the start time EditText
@@ -144,19 +158,23 @@ class AddActivity : AppCompatActivity() {
     }
 
     // Function to open image picker
-    private fun openImagePicker() {
+    private fun openGallery() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    // Function to handle result of image picker
+    // Function to handle result of image picker or camera capture
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             photoUri = data.data
+            imgPreview.setImageURI(photoUri)
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            // Handle camera capture result
+            // Display the captured image in the image preview
             imgPreview.setImageURI(photoUri)
         }
     }
@@ -205,4 +223,42 @@ class AddActivity : AppCompatActivity() {
         timePickerDialog.show()
     }
 
+    // Function to dispatch intent for taking a photo with the camera
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.example.android.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            }
+        }
+    }
+
+    // Function to create an image file
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            photoUri = absoluteFile.toUri()
+        }
+    }
 }

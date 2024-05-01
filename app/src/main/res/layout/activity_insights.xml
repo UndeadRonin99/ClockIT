@@ -139,7 +139,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
-        android:background="#1B232E"
+        android:background="#2E86D5"
         android:dateTextAppearance="@style/MyCalendarDateText"
         android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
         android:unfocusedMonthDateColor="@color/white"
