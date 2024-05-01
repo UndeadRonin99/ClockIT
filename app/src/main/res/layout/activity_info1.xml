@@ -9,6 +9,20 @@
     tools:context=".ActivityInfo1">
 
     <TextView
+        android:id="@+id/txtHeading"
+        android:layout_width="200dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="68dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="#FEFEFE"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

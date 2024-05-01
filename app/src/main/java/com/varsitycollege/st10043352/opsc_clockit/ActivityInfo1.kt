@@ -26,6 +26,7 @@ class ActivityInfo1 : AppCompatActivity() {
         val photoUri = intent.getStringExtra("photoUri")
 
         // Find TextViews in the layout
+        val txtHeading = findViewById<TextView>(R.id.txtHeading)
         val txtActivityName = findViewById<TextView>(R.id.ActivityName)
         val txtDescription = findViewById<TextView>(R.id.txtDescription)
         val txtCategory = findViewById<TextView>(R.id.txtCategory)
@@ -35,13 +36,12 @@ class ActivityInfo1 : AppCompatActivity() {
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
             // Navigate back to the home page
-            val intent = Intent(this, CategoryActivityInsights::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Clear the back stack
-            startActivity(intent)
+
             finish() // Finish current activity
         }
 
         // Set the retrieved data to the TextViews
+        txtHeading.text=activityName
         txtActivityName.text = activityName
         txtDescription.text = description
         txtCategory.text = category
