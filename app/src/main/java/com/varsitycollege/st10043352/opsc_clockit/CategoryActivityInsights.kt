@@ -204,10 +204,8 @@ class CategoryActivityInsights : AppCompatActivity() {
                                             )
                                         }
                                         activityTextView.setOnClickListener {
-                                            val intent = Intent(this, PeriodLogged::class.java)
+                                            val intent = Intent(this, ActivityInfo1::class.java)
                                             intent.putExtra("activityData", activityData)
-                                            intent.putExtra("startDate", startDateMillis)
-                                            intent.putExtra("endDate", endDateMillis)
                                             startActivity(intent)
                                         }
 

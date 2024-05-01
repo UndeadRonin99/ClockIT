@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
-    tools:context=".ActivityInfo">
+    tools:context=".ActivityInfo1">
     <ImageView
         android:id="@+id/back_button"
         android:layout_width="56dp"

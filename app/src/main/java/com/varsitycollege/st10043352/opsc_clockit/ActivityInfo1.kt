@@ -8,12 +8,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class ActivityInfo : AppCompatActivity() {
+class ActivityInfo1 : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info)
-//trsxfhcg
+        setContentView(R.layout.activity_info1)
 
+        val activity = intent.getStringExtra("activityData")
+        val activityData = formatActivity(activity)
+
+
+    }
+
+
+    fun formatActivity(log: String?): List<String> {
+        var logData: List<String> = emptyList()
+
+        log?.let {
+            logData = log.split(",")
+        }
+
+        return logData
     }
 }
