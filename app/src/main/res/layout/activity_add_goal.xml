@@ -24,21 +24,6 @@
         app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
 
     <Button
-        android:id="@+id/btnAddMin"
-        android:layout_width="185dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#1B232E"
-        android:text="Add mimimum goal"
-        android:textColorHighlight="#1B232E"
-        android:textColorHint="#1B232E"
-        android:textColorLink="#1B232E"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddMax"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMax" />
-
-    <Button
         android:id="@+id/btnAddMax"
         android:layout_width="185dp"
         android:layout_height="0dp"
@@ -52,6 +37,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddMin" />
+
+    <Button
+        android:id="@+id/btnAddMin"
+        android:layout_width="185dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#1B232E"
+        android:text="Add mimimum goal"
+        android:textColorHighlight="#1B232E"
+        android:textColorHint="#1B232E"
+        android:textColorLink="#1B232E"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddMax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMax" />
 
     <ImageView
         android:id="@+id/imageView3"
