@@ -59,7 +59,7 @@
         android:layout_marginStart="43dp"
         android:layout_marginEnd="43dp"
         android:layout_marginBottom="354dp"
-        android:text="Is there daily goals?"
+        android:text="Are there daily goals that you would like to set?"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20dp"
