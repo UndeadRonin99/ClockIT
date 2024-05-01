@@ -205,9 +205,15 @@ class CategoryActivityInsights : AppCompatActivity() {
                                         }
                                         activityTextView.setOnClickListener {
                                             val intent = Intent(this, ActivityInfo1::class.java)
-                                            intent.putExtra("activityData", activityData)
+                                            intent.putExtra("activityName", activityInfo[0])
+                                            intent.putExtra("description", activityInfo[1])
+                                            intent.putExtra("category", activityInfo[2])
+                                            intent.putExtra("startTime", activityInfo[4])
+                                            intent.putExtra("endTime", activityInfo[5])
+                                            intent.putExtra("photoUri", activityInfo[6])
                                             startActivity(intent)
                                         }
+
 
                                         (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(
                                             activityTextView
