@@ -38,6 +38,8 @@ class SessionLog : AppCompatActivity() {
     private var photoUri: Uri? = null
 
     private lateinit var storageRef: StorageReference
+    private val storage = FirebaseStorage.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,17 +85,37 @@ class SessionLog : AppCompatActivity() {
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
 
-            // Upload image to Firebase Storage
-            photoUri?.let { uploadImageToFirebase(it) }
 
-            val logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,${photoUri.toString()}"
 
-            val editor = sharedPreferences.edit()
-            editor.putString("Log_${System.currentTimeMillis()}", logEntry)
-            editor.apply()
+            val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
+            val uploadTask = photoUri?.let { storageRef.putFile(it) }
 
-            Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-            finish()
+            uploadTask?.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                storageRef.downloadUrl
+            }?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    val logEntry = if (downloadUri != null) {
+                        "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,$downloadUri"
+                    } else {
+                        "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,"
+                    }
+
+                    val editor = sharedPreferences.edit()
+                    editor.putString("Log_${System.currentTimeMillis()}", logEntry)
+                    editor.apply()
+
+                    Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    // Handle failure
+                }
+            }
         }
     }
 
