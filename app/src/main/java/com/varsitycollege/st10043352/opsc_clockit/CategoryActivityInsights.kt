@@ -133,7 +133,7 @@ class CategoryActivityInsights : AppCompatActivity() {
 
             // Create TextView for the current category
             val CategoryTextView = TextView(this)
-            CategoryTextView.text = "$categoryName\t\t$hours hours $minutes minutes"
+            CategoryTextView.text = "$categoryName\t\t\t\t$hours hours $minutes minutes"
             CategoryTextView.setTextColor(Color.WHITE)
             CategoryTextView.setTextSize(20f)
             CategoryTextView.setBackgroundResource(R.drawable.round_buttons)
