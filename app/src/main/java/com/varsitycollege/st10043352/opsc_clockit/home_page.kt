@@ -34,7 +34,7 @@ class home_page : AppCompatActivity() {
         val allActivities = sharedPreferences.all
 
         // Remove previously added TextViews
-        (findViewById<LinearLayout>(R.id.LinearActivities)).removeAllViews()
+        (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
 
         // Iterate through all activities and create TextViews
         for ((key, value) in allActivities) {
@@ -65,7 +65,7 @@ class home_page : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                (findViewById<LinearLayout>(R.id.LinearActivities)).addView(activityTextView)
+                (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(activityTextView)
             }
         }
     }

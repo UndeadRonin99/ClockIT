@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class goals : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +20,7 @@ class goals : AppCompatActivity() {
         val allActivities = sharedPreferences.all
 
         // Remove previously added TextViews
-        (findViewById<LinearLayout>(R.id.LinearActivities)).removeAllViews()
+        (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
 
         // Iterate through all activities and create TextViews
         for ((key, value) in allActivities) {
@@ -57,7 +54,7 @@ class goals : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                (findViewById<LinearLayout>(R.id.LinearActivities)).addView(activityTextView)
+                (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(activityTextView)
             }
         }
     }

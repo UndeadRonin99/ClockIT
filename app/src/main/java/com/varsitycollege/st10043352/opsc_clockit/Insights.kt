@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,7 @@ class Insights : AppCompatActivity() {
     private lateinit var endDate: TextView
     private lateinit var calendarView: CalendarView
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
+    private lateinit var btnAddDate: Button
     private var selectedStartDate: Date? = null
     private var selectedEndDate: Date? = null
 
@@ -30,6 +31,7 @@ class Insights : AppCompatActivity() {
         startDate = findViewById(R.id.StartDate)
         endDate = findViewById(R.id.EndDate)
         calendarView = findViewById(R.id.calendarView)
+        btnAddDate = findViewById(R.id.btnAddDate)
 
         // Reset saved dates to null initially (or on some specific condition)
         selectedStartDate = null
@@ -54,6 +56,16 @@ class Insights : AppCompatActivity() {
                 selectedEndDate = selectedDate
                 endDate.text = "End Date: ${dateFormat.format(selectedDate)}"
             }
+
+        }
+
+        btnAddDate.setOnClickListener{
+            // Start the StatisticsPeriod activity
+            val intent = Intent(this, CategoryActivityInsights::class.java)
+            // Pass the selected start and end dates to the next activity
+            intent.putExtra("startDate", selectedStartDate?.time ?: -1)
+            intent.putExtra("endDate", selectedEndDate?.time ?: -1)
+            startActivity(intent)
         }
     }
 

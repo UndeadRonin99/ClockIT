@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -66,7 +65,7 @@ class staticsticsPeriod : AppCompatActivity() {
         currentActivities.clear()
 
         // Remove previously added TextViews
-        (findViewById<LinearLayout>(R.id.LinearActivities)).removeAllViews()
+        (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
 
         // Iterate through all activities and create TextViews
         for ((key, value) in allActivities) {
@@ -122,7 +121,7 @@ class staticsticsPeriod : AppCompatActivity() {
                                             startActivity(intent)
                                         }
 
-                                        (findViewById<LinearLayout>(R.id.LinearActivities)).addView(
+                                        (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(
                                             activityTextView
                                         )
                                     }

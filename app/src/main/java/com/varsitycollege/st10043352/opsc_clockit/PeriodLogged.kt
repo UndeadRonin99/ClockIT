@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -92,7 +91,7 @@ class PeriodLogged : AppCompatActivity() {
                                 startActivity(intent)
                             }
 
-                            (findViewById<LinearLayout>(R.id.LinearActivities)).addView(
+                            (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(
                                 activityTextView
                             )
                         }
