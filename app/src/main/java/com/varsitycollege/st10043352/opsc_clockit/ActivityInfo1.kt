@@ -35,13 +35,9 @@ class ActivityInfo1 : AppCompatActivity() {
         backButton = findViewById(R.id.back_button)
         imageView = findViewById(R.id.imageView)
 
-        // Load image into the ImageView using Picasso
-        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri ?: "")
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            Picasso.get().load(uri).into(imageView)
-        }.addOnFailureListener {
-            // Handle failure to download image
-        }
+
+
+
 
         backButton.setOnClickListener {
             finish() // Finish current activity
@@ -54,6 +50,17 @@ class ActivityInfo1 : AppCompatActivity() {
         txtCategory.text = category
         txtStartTime.text = startTime
         txtEndTime.text = endTime
-        txtPhotoUri.text = photoUri
+        if(!photoUri.equals("")) {
+            txtPhotoUri.text = "Here is your photo"
+            // Load image into the ImageView using Picasso
+            val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri ?: "")
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                Picasso.get().load(uri).into(imageView)
+            }.addOnFailureListener {
+                // Handle failure to download image
+            }
+        } else {
+            txtPhotoUri.text = "Photo was not found for this activity"
+        }
     }
 }

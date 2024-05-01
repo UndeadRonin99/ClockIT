@@ -204,27 +204,39 @@ class AddActivity : AppCompatActivity() {
         val storageRef = storage.reference.child("images/$imageFileName")
         val uploadTask = photoUri?.let { storageRef.putFile(it) }
 
-        uploadTask?.continueWithTask { task ->
-            if (!task.isSuccessful) {
-                task.exception?.let {
-                    throw it
+        if(photoUri == null){
+            val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime"
+
+            // Save CSV string to SharedPreferences or Firebase Realtime Database
+            val editor = sharedPreferences.edit()
+            editor.putString("activity_${System.currentTimeMillis()}", csvString)
+            editor.apply()
+        } else {
+
+
+            uploadTask?.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
                 }
-            }
-            storageRef.downloadUrl
-        }?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // Get the download URL for the image
-                val downloadUri = task.result
+                storageRef.downloadUrl
+            }?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Get the download URL for the image
+                    val downloadUri = task.result
 
-                // Create CSV string with download URL
-                val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime,$downloadUri"
+                    // Create CSV string with download URL
+                    val csvString =
+                        "$activityName,$description,$categoryName,$color,$startTime,$endTime,$downloadUri"
 
-                // Save CSV string to SharedPreferences or Firebase Realtime Database
-                val editor = sharedPreferences.edit()
-                editor.putString("activity_${System.currentTimeMillis()}", csvString)
-                editor.apply()
-            } else {
-                // Handle failures
+                    // Save CSV string to SharedPreferences or Firebase Realtime Database
+                    val editor = sharedPreferences.edit()
+                    editor.putString("activity_${System.currentTimeMillis()}", csvString)
+                    editor.apply()
+                } else {
+
+                }
             }
         }
     }
