@@ -210,7 +210,11 @@ class CategoryActivityInsights : AppCompatActivity() {
                                             intent.putExtra("category", activityInfo[2])
                                             intent.putExtra("startTime", activityInfo[4])
                                             intent.putExtra("endTime", activityInfo[5])
-                                            intent.putExtra("photoUri", activityInfo[6])
+                                            if(activityInfo.count() == 7) {
+                                                intent.putExtra("photoUri", activityInfo[6])
+                                            } else {
+                                                intent.putExtra("photoUri", "")
+                                            }
                                             startActivity(intent)
                                         }
 

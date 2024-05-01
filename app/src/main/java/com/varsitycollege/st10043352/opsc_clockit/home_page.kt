@@ -76,12 +76,9 @@ class home_page : AppCompatActivity() {
             val values = activity.split(",")
 
             val name = values[0]
-            val description = values[1]
             val category = values[2]
-            val color = values[3]
             val number1 = values[4]
             val number2 = values[5]
-            val contentUri = values[6]
 
             // Now you can use these variables as needed
             // For example:
