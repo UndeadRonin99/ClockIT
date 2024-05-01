@@ -11,46 +11,47 @@
 
     <ImageView
         android:id="@+id/ClockIT_background"
-        android:layout_width="457dp"
-        android:layout_height="225dp"
+        android:layout_width="411dp"
+        android:layout_height="222dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/blue_snail" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="391dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:text="Statistics"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ClockIT_background" />
-
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.226" />
 
     <Button
         android:id="@+id/btnAddDate"
         android:layout_width="93dp"
         android:layout_height="48dp"
-        android:layout_marginStart="159dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="40dp"
         android:backgroundTint="#8076B0"
         android:onClick="navigateToStatistics"
-        android:text="Okay"
+        android:text="Search"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
-        app:layout_constraintBottom_toTopOf="@+id/btnStatistics"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.882"
         tools:ignore="OnClick" />
 
     <TextView
@@ -61,40 +62,43 @@
         android:text="Start Date:"
         android:textColor="@color/white"
         android:textColorLink="#16F6F5F5"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.316" />
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.303" />
 
     <TextView
         android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:background="#00ECE9E9"
         android:text="End Date:"
         android:textColor="@color/white"
         android:textColorLink="#16F6F5F5"
-        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.345" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="335dp"
         android:layout_height="311dp"
-        android:layout_marginTop="276dp"
-        android:background="#1B232E"
+        android:background="#618ECC"
         android:dateTextAppearance="@style/MyCalendarDateText"
         android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
         android:unfocusedMonthDateColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
+        app:layout_constraintVertical_bias="0.661" />
 
     <ImageView
         android:id="@+id/imageView7"
