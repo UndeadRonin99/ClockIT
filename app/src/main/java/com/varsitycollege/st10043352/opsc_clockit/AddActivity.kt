@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import com.google.firebase.storage.FirebaseStorage
 import org.json.JSONArray
 import java.io.File
 import java.io.IOException
@@ -40,6 +41,9 @@ class AddActivity : AppCompatActivity() {
     private lateinit var txtEndTime: EditText
     private lateinit var imgPreview: ImageView
     private var photoUri: Uri? = null
+
+    // Initialize FirebaseStorage instance
+    private val storage = FirebaseStorage.getInstance()
 
     // Constants for image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -188,17 +192,40 @@ class AddActivity : AppCompatActivity() {
         val startTime = txtStartTime.text.toString()
         val endTime = txtEndTime.text.toString()
 
-        if (activityName == null || activityName.equals("")) {
+        if (activityName.isNullOrEmpty()) {
+            // Handle empty activity name
+            return
+        }
 
-        } else {
-            // Create CSV string
-            val csvString =
-                "$activityName,$description,$categoryName,$color,$startTime,$endTime,${photoUri?.toString() ?: ""}"
+        // Generate a unique ID for the image file
+        val imageFileName = "${UUID.randomUUID()}.jpg"
 
-            // Save CSV string to SharedPreferences
-            val editor = sharedPreferences.edit()
-            editor.putString("activity_${System.currentTimeMillis()}", csvString)
-            editor.apply()
+        // Get a reference to the image file in Firebase Storage
+        val storageRef = storage.reference.child("images/$imageFileName")
+        val uploadTask = photoUri?.let { storageRef.putFile(it) }
+
+        uploadTask?.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            storageRef.downloadUrl
+        }?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Get the download URL for the image
+                val downloadUri = task.result
+
+                // Create CSV string with download URL
+                val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime,$downloadUri"
+
+                // Save CSV string to SharedPreferences or Firebase Realtime Database
+                val editor = sharedPreferences.edit()
+                editor.putString("activity_${System.currentTimeMillis()}", csvString)
+                editor.apply()
+            } else {
+                // Handle failures
+            }
         }
     }
 

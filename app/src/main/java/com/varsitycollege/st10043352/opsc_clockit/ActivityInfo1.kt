@@ -1,13 +1,10 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
 class ActivityInfo1 : AppCompatActivity() {
@@ -39,7 +36,12 @@ class ActivityInfo1 : AppCompatActivity() {
         imageView = findViewById(R.id.imageView)
 
         // Load image into the ImageView using Picasso
-        Picasso.get().load(photoUri).into(imageView)
+        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri ?: "")
+        storageRef.downloadUrl.addOnSuccessListener { uri ->
+            Picasso.get().load(uri).into(imageView)
+        }.addOnFailureListener {
+            // Handle failure to download image
+        }
 
         backButton.setOnClickListener {
             finish() // Finish current activity
