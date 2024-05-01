@@ -96,7 +96,7 @@
         android:layout_marginStart="101dp"
         android:layout_marginTop="71dp"
         android:layout_marginEnd="102dp"
-        android:text="Coming Soon"
+        android:text="Coming Soon (Part 3)"
         android:textAlignment="center"
         android:textColor="#FEFEFE"
         android:textSize="60sp"

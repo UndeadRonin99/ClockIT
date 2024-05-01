@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="22dp"
-        android:text="TextView"
+        android:text="Activity Name"
         android:textAlignment="textStart"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
@@ -206,5 +206,16 @@
         app:layout_constraintBottom_toTopOf="@+id/txtHeading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="91dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhotoUri" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
