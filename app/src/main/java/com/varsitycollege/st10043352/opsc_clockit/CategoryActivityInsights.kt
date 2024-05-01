@@ -26,10 +26,9 @@ class CategoryActivityInsights : AppCompatActivity() {
     private var endDate: Date? = null
     private var startDateMillis by Delegates.notNull<Long>()
     private var endDateMillis by Delegates.notNull<Long>()
-    private var currentActivities : MutableList<String> = mutableListOf("")
-    private var currentCategories : MutableList<String> = mutableListOf("")
-    private var times : MutableList<String> = mutableListOf()
-
+    private var currentActivities: MutableList<String> = mutableListOf("")
+    private var currentCategories: MutableList<String> = mutableListOf("")
+    private var times: MutableList<String> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +49,11 @@ class CategoryActivityInsights : AppCompatActivity() {
         val txtEndDate = findViewById<TextView>(R.id.txtenddate)
 
         // Display the selected start and end dates in the TextViews
-        txtStartDate.text = "Start Date: ${startDate.let { dateFormat.format(it) } ?: "Not selected"}"
+        txtStartDate.text =
+            "Start Date: ${startDate.let { dateFormat.format(it) } ?: "Not selected"}"
         txtEndDate.text = "End Date: ${endDate?.let { dateFormat.format(it) } ?: "Not selected"}"
 
-        val backButton = findViewById <ImageView>(R.id.back_button)
+        val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
             // Navigate back to the home page
             val intent = Intent(this, Insights::class.java)
@@ -63,129 +63,124 @@ class CategoryActivityInsights : AppCompatActivity() {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
         val allActivities = sharedPreferences.all
-        currentActivities.clear()
-        currentCategories.clear()
 
         // Remove previously added TextViews
-        (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
         (findViewById<LinearLayout>(R.id.LinearActivities2)).removeAllViews()
-        var hrs: Int = 0
-        var mns: Int = 0
 
+        // Iterate through all Categories and calculate hours logged for each within the selected period
+        val categoryTimeMap = mutableMapOf<String, Pair<Int, Int>>() // Pair of (hours, minutes)
         for ((key, value) in allActivities) {
-            if (key.startsWith("Log_")){
-                val log = value as String
-                val logData = formatLogs(log)
+            if (key.startsWith("activity_")) {
+                val activityData = value as String
+                val activityInfo = formatActivity(activityData)
+                val categoryName = activityInfo[2]
 
-                times.add(logData[3])
-            }
-        }
+                // Initialize total hours and minutes for the category
+                var totalHours = 0
+                var totalMinutes = 0
 
-        // Iterate through all Categories and create TextViews
-        for ((key, value) in allActivities) {
-            if(key.startsWith("Log_")) {
-                val log = value as String
-                val logData = formatLogs(log)
+                // Iterate through all logs to calculate total hours for the current category within the selected period
+                for ((logKey, logValue) in allActivities) {
+                    if (logKey.startsWith("Log_")) {
+                        val log = logValue as String
+                        val logData = formatLogs(log)
+                        val logDate = logData[4]
+                        val logDateWithYear =
+                            "$logDate/${Calendar.getInstance().get(Calendar.YEAR)}"
+                        val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val logDateFormatted = logDateFormat.parse(logDateWithYear)
 
-                // Get the date in "DD/MM" format from the log data
-                val logDate = logData[4]
-                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-                val logDateWithYear = "$logDate/$currentYear"
-
-                // Convert the log date to a Date object
-                val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val logDateFormatted = logDateFormat.parse(logDateWithYear)
-
-
-
-                // Check if the log date falls between the selected start and end dates
-                if (startDate != null && endDate != null && logDateFormatted != null) {
-                    if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
-                        for ((key1, value) in allActivities) {
-                            if (key1.startsWith("activity_")) { // Check if the key represents an activity
-                                val activityData = value as String // Assuming the value is stored as a String
-                                val CategoryTextView = TextView(this)
-                                var time : String = ""
-
-
-
-
-                                for (tme in times){
-                                    val time1 = tme.split(":")
-
-                                    hrs += time1[0].toInt()
-                                    mns += time1[1].toInt()
-                                }
-
-                                Log.d("mns = ", "$mns")
-
-                                time = "${hrs} hours ${mns} minutes"
-
-                                val activityInfo = formatActivity(activityData)
-                                if(!currentCategories.contains(activityInfo[2])) {
-                                    if (logData[1].equals(activityInfo[2])) {
-                                        currentCategories.add(activityInfo[2])
-
-                                        CategoryTextView.text = "${formatCategory(activityData)}\t\t$time"
-                                        CategoryTextView.setTextColor(Color.WHITE)
-                                        CategoryTextView.setTextSize(20f)
-                                        CategoryTextView.setBackgroundResource(R.drawable.round_buttons)
-                                        CategoryTextView.textAlignment =
-                                            View.TEXT_ALIGNMENT_TEXT_START
-                                        CategoryTextView.visibility =
-                                            View.VISIBLE // Make the TextView visible
-                                        CategoryTextView.layoutParams = LinearLayout.LayoutParams(
-                                            LinearLayout.LayoutParams.MATCH_PARENT,
-                                            resources.getDimensionPixelSize(R.dimen.activity_box_height)
-                                        ).apply {
-                                            setMargins(
-                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
-                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
-                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
-                                                resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
-                                            )
-                                        }
-                                        (findViewById<LinearLayout>(R.id.LinearActivities2)).addView(
-                                            CategoryTextView
-                                        )
+                        // Check if the log date falls within the selected period
+                        if (startDate != null && endDate != null && logDateFormatted != null) {
+                            if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
+                                val times = logData[3].split(",")
+                                for (tme in times) {
+                                    val timeComponents = tme.split(":")
+                                    val hours = timeComponents[0].toInt()
+                                    val minutes = timeComponents[1].toInt()
+                                    if (logData[1] == categoryName) {
+                                        totalMinutes += hours * 60 + minutes
                                     }
                                 }
                             }
                         }
                     }
                 }
+
+                // Calculate total hours and remaining minutes for the current category
+                totalHours = totalMinutes / 60
+                totalMinutes %= 60
+
+                // Add the category and its total hours to the map
+                categoryTimeMap[categoryName] = Pair(totalHours, totalMinutes)
             }
         }
+
+        // Iterate through the categories and display only those with logged activities within the selected period
+        for ((categoryName, categoryTime) in categoryTimeMap) {
+            val hours = categoryTime.first
+            val minutes = categoryTime.second
+
+            // Check if hours and minutes are both 0, if so, skip adding the TextView
+            if (hours == 0 && minutes == 0) {
+                continue
+            }
+
+            // Create TextView for the current category
+            val CategoryTextView = TextView(this)
+            CategoryTextView.text = "$categoryName\t\t$hours hours $minutes minutes"
+            CategoryTextView.setTextColor(Color.WHITE)
+            CategoryTextView.setTextSize(20f)
+            CategoryTextView.setBackgroundResource(R.drawable.round_buttons)
+            CategoryTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+            CategoryTextView.visibility = View.VISIBLE
+            CategoryTextView.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                resources.getDimensionPixelSize(R.dimen.activity_box_height)
+            ).apply {
+                setMargins(
+                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
+                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
+                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
+                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
+                )
+            }
+
+            // Add the TextView to the appropriate LinearLayout
+            (findViewById<LinearLayout>(R.id.LinearActivities2)).addView(CategoryTextView)
+        }
+
+
+
+
+
+
 
 
         // Iterate through all activities and create TextViews
         for ((key, value) in allActivities) {
-            if(key.startsWith("Log_")) {
+            if (key.startsWith("Log_")) {
                 val log = value as String
                 val logData = formatLogs(log)
-
-                // Get the date in "DD/MM" format from the log data
                 val logDate = logData[4]
                 val currentYear = Calendar.getInstance().get(Calendar.YEAR)
                 val logDateWithYear = "$logDate/$currentYear"
-
-                // Convert the log date to a Date object
                 val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val logDateFormatted = logDateFormat.parse(logDateWithYear)
 
-                // Check if the log date falls between the selected start and end dates
                 if (startDate != null && endDate != null && logDateFormatted != null) {
                     if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
                         for ((key1, value) in allActivities) {
-                            if (key1.startsWith("activity_")) { // Check if the key represents an activity
-                                val activityData = value as String // Assuming the value is stored as a String
+                            if (key1.startsWith("activity_")) {
+                                val activityData = value as String
                                 val activityTextView = TextView(this)
                                 val activityInfo = formatActivity(activityData)
-                                if(!currentActivities.contains(activityInfo[0])) {
+                                if (!currentActivities.contains(activityInfo[0])) {
                                     if (logData[0].equals(activityInfo[0])) {
                                         currentActivities.add(activityInfo[0])
 
@@ -196,7 +191,7 @@ class CategoryActivityInsights : AppCompatActivity() {
                                         activityTextView.textAlignment =
                                             View.TEXT_ALIGNMENT_TEXT_START
                                         activityTextView.visibility =
-                                            View.VISIBLE // Make the TextView visible
+                                            View.VISIBLE
                                         activityTextView.layoutParams = LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.MATCH_PARENT,
                                             resources.getDimensionPixelSize(R.dimen.activity_box_height)
@@ -228,6 +223,7 @@ class CategoryActivityInsights : AppCompatActivity() {
             }
         }
     }
+
 
     fun formatSharedPref(activity: String?): CharSequence? {
         var activityDetails = ""
