@@ -155,25 +155,25 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.623">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        style="@style/MyDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
-        android:focusedMonthDateColor="#FFFFFF"
-        android:selectedWeekBackgroundColor="#FFFFFF"
-        android:unfocusedMonthDateColor="#FFFFFF"
-        android:visibility="visible"
-        android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:weekNumberColor="#FFFFFF"
-        android:weekSeparatorLineColor="#FFFFFF"
-        tools:focusedMonthDateColor="#FFFFFF"
-        tools:selectedWeekBackgroundColor="#FFFFFF"
-        tools:unfocusedMonthDateColor="#FFFFFF"
-        tools:weekNumberColor="#FFFFFF"
-        tools:weekSeparatorLineColor="#FFFFFF" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            style="@style/MyDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:dateTextAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:dayOfWeekTextAppearance="@style/MyCalendarDayOfWeekText"
+            android:focusedMonthDateColor="#FFFFFF"
+            android:selectedWeekBackgroundColor="#FFFFFF"
+            android:unfocusedMonthDateColor="#FFFFFF"
+            android:visibility="visible"
+            android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:weekNumberColor="#FFFFFF"
+            android:weekSeparatorLineColor="#FFFFFF"
+            tools:focusedMonthDateColor="#FFFFFF"
+            tools:selectedWeekBackgroundColor="#FFFFFF"
+            tools:unfocusedMonthDateColor="#FFFFFF"
+            tools:weekNumberColor="#FFFFFF"
+            tools:weekSeparatorLineColor="#FFFFFF" />
 </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
