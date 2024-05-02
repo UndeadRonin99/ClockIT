@@ -76,6 +76,7 @@ class SessionLog : AppCompatActivity() {
         }
 
         btnSave.setOnClickListener {
+            btnSave.isClickable = false
             val selectedHour = spnrTime.hour
             val selectedMinute = spnrTime.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
@@ -88,7 +89,7 @@ class SessionLog : AppCompatActivity() {
 
             val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
             val uploadTask = photoUri?.let { storageRef.putFile(it) }
-            var logEntry = ""
+            var logEntry: String
 
             if (photoUri != null) {
                 uploadTask?.continueWithTask { task ->
@@ -109,8 +110,6 @@ class SessionLog : AppCompatActivity() {
 
                         Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
                         finish()
-                    } else {
-                        // Handle failure
                     }
                 }
             } else {

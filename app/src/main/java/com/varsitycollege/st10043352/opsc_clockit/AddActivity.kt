@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -75,7 +76,7 @@ class AddActivity : AppCompatActivity() {
         // Set onClickListener for the done button to finish activity
         doneButton.setOnClickListener {
             saveActivity()
-            finish()
+            doneButton.isClickable = false
         }
 
         // Set up the spinner listener
@@ -204,16 +205,19 @@ class AddActivity : AppCompatActivity() {
         val storageRef = storage.reference.child("images/$imageFileName")
         val uploadTask = photoUri?.let { storageRef.putFile(it) }
 
-        if(photoUri == null){
-            val csvString = "$activityName,$description,$categoryName,$color,$startTime,$endTime"
-
-            // Save CSV string to SharedPreferences or Firebase Realtime Database
-            val editor = sharedPreferences.edit()
-            editor.putString("activity_${System.currentTimeMillis()}", csvString)
-            editor.apply()
+        if (photoUri == null) {
+            // If there's no photo, directly save activity details
+            saveActivityDetails(
+                activityName,
+                description,
+                categoryName,
+                color,
+                startTime,
+                endTime,
+                null
+            )
         } else {
-
-
+            // If there's a photo, upload it to Firebase Storage first
             uploadTask?.continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -226,19 +230,37 @@ class AddActivity : AppCompatActivity() {
                     // Get the download URL for the image
                     val downloadUri = task.result
 
-                    // Create CSV string with download URL
-                    val csvString =
-                        "$activityName,$description,$categoryName,$color,$startTime,$endTime,$downloadUri"
-
-                    // Save CSV string to SharedPreferences or Firebase Realtime Database
-                    val editor = sharedPreferences.edit()
-                    editor.putString("activity_${System.currentTimeMillis()}", csvString)
-                    editor.apply()
+                    // Save activity details along with the download URL
+                    saveActivityDetails(
+                        activityName,
+                        description,
+                        categoryName,
+                        color,
+                        startTime,
+                        endTime,
+                        downloadUri
+                    )
+                    Toast.makeText(this, "Activity saved", Toast.LENGTH_SHORT).show()
+                    finish()
                 } else {
-
+                    // Handle the case where the upload task fails
+                    // You can log an error message or display a toast to the user
                 }
             }
         }
+    }
+
+    private fun saveActivityDetails(activityName: String, description: String, categoryName: String, color: Int, startTime: String, endTime: String, photoUri: Uri?) {
+        // Construct the CSV string based on whether there's a photo or not
+        val csvString = if (photoUri != null) {
+            "$activityName,$description,$categoryName,$color,$startTime,$endTime,$photoUri"
+        } else {
+            "$activityName,$description,$categoryName,$color,$startTime,$endTime"
+        }
+        // Save CSV string to SharedPreferences
+        val editor = sharedPreferences.edit()
+        editor.putString("activity_${System.currentTimeMillis()}", csvString)
+        editor.apply()
     }
 
     // Function to show time picker dialog
