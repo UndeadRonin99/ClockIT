@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,12 +61,17 @@ class Insights : AppCompatActivity() {
         }
 
         btnAddDate.setOnClickListener{
-            // Start the StatisticsPeriod activity
-            val intent = Intent(this, CategoryActivityInsights::class.java)
-            // Pass the selected start and end dates to the next activity
-            intent.putExtra("startDate", selectedStartDate?.time ?: -1)
-            intent.putExtra("endDate", selectedEndDate?.time ?: -1)
-            startActivity(intent)
+            if(selectedStartDate != null && selectedEndDate != null) {
+
+                // Start the StatisticsPeriod activity
+                val intent = Intent(this, CategoryActivityInsights::class.java)
+                // Pass the selected start and end dates to the next activity
+                intent.putExtra("startDate", selectedStartDate?.time ?: -1)
+                intent.putExtra("endDate", selectedEndDate?.time ?: -1)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CalendarView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -65,15 +66,19 @@ class stats : AppCompatActivity() {
     }
 
     fun navigateToStatistics(view: View) {
-        // Save selected dates to SharedPreferences
-        saveSelectedDates()
+        // Save selected dates to SharedPreferences if it is not null
+        if(selectedStartDate != null && selectedEndDate != null) {
+            saveSelectedDates()
 
-        // Start the StatisticsPeriod activity
-        val intent = Intent(this, staticsticsPeriod::class.java)
-        // Pass the selected start and end dates to the next activity
-        intent.putExtra("startDate", selectedStartDate?.time ?: -1)
-        intent.putExtra("endDate", selectedEndDate?.time ?: -1)
-        startActivity(intent)
+            // Start the StatisticsPeriod activity
+            val intent = Intent(this, staticsticsPeriod::class.java)
+            // Pass the selected start and end dates to the next activity
+            intent.putExtra("startDate", selectedStartDate?.time ?: -1)
+            intent.putExtra("endDate", selectedEndDate?.time ?: -1)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // Function to save selected dates to SharedPreferences
