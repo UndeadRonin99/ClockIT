@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
@@ -18,6 +19,7 @@ class ViewLog : AppCompatActivity() {
     private lateinit var txtTime: TextView
     private lateinit var LogPhoto: ImageView
     private var logList: List<String> = listOf("")
+    private lateinit var txt404: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class ViewLog : AppCompatActivity() {
         txtCategory = findViewById(R.id.CategoryName)
         txtTime = findViewById(R.id.TimeOnTask)
         LogPhoto = findViewById(R.id.LogPhoto)
+        txt404 = findViewById(R.id.txt404)
 
         val activityData = intent.getStringExtra("activityData")
         val logData = intent.getStringExtra("logData")
@@ -40,7 +43,11 @@ class ViewLog : AppCompatActivity() {
         txtCategory.text = activityList.getOrNull(2) ?: "Category Not Found"
         txtTime.text = logTime
 
-        loadLogImage(logList)
+        if(!logList[5].equals("")){
+            loadLogImage(logList)
+        } else {
+            txt404.isVisible = true
+        }
 
         backButton.setOnClickListener {
             finish()

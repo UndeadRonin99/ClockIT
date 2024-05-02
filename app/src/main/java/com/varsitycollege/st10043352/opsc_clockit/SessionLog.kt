@@ -75,7 +75,7 @@ class SessionLog : AppCompatActivity() {
             openImagePicker()
         }
 
-        btnSave.setOnClickListener{
+        btnSave.setOnClickListener {
             val selectedHour = spnrTime.hour
             val selectedMinute = spnrTime.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
@@ -86,35 +86,42 @@ class SessionLog : AppCompatActivity() {
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
 
 
-
             val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
             val uploadTask = photoUri?.let { storageRef.putFile(it) }
+            var logEntry = ""
 
-            uploadTask?.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
+            if (photoUri != null) {
+                uploadTask?.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
                     }
-                }
-                storageRef.downloadUrl
-            }?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    val logEntry = if (downloadUri != null) {
-                        "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,$downloadUri"
+                    storageRef.downloadUrl
+                }?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,$downloadUri"
+
+                        val editor = sharedPreferences.edit()
+                        editor.putString("Log_${System.currentTimeMillis()}", logEntry)
+                        editor.apply()
+
+                        Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+                        finish()
                     } else {
-                        "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,"
+                        // Handle failure
                     }
-
-                    val editor = sharedPreferences.edit()
-                    editor.putString("Log_${System.currentTimeMillis()}", logEntry)
-                    editor.apply()
-
-                    Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    // Handle failure
                 }
+            } else {
+                logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,"
+
+                val editor = sharedPreferences.edit()
+                editor.putString("Log_${System.currentTimeMillis()}", logEntry)
+                editor.apply()
+
+                Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
     }
