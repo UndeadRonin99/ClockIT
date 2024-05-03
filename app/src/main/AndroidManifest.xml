@@ -7,13 +7,15 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Devices running Android 13 (API level 33) or higher -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACTION_OPEN_DOCUMENT" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -25,9 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OPSC_ClockIT"
         tools:targetApi="31">
-        <activity
-            android:name=".ViewActivityPhoto"
-            android:exported="false" />
         <activity
             android:name=".ActivityInfo1"
             android:exported="false" />

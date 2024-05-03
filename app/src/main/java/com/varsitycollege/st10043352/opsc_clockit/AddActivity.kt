@@ -2,13 +2,16 @@ package com.varsitycollege.st10043352.opsc_clockit
 
 import android.app.Activity
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -20,14 +23,16 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.firebase.storage.FirebaseStorage
 import org.json.JSONArray
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
 class AddActivity : AppCompatActivity() {
 
@@ -174,14 +179,32 @@ class AddActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            photoUri = data.data
-            imgPreview.setImageURI(photoUri)
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            // Handle camera capture result
-            // Display the captured image in the image preview
-            imgPreview.setImageURI(photoUri)
+        when (requestCode) {
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+                    // User selected an image from the gallery
+                    photoUri = data.data
+                    imgPreview.setImageURI(photoUri)
+                }
+            }
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    // Display the captured image in the image preview
+                    val extras = data?.extras
+                    val imageBitmap = extras?.get("data") as Bitmap
+                    imgPreview.setImageBitmap(imageBitmap)
+
+                    photoUri = getImageURI(this, imageBitmap)
+                }
+            }
         }
+    }
+
+    private fun getImageURI(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 
     // Function to save activity details
@@ -216,39 +239,44 @@ class AddActivity : AppCompatActivity() {
                 endTime,
                 null
             )
-        } else {
-            // If there's a photo, upload it to Firebase Storage first
-            uploadTask?.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
-                    }
-                }
-                storageRef.downloadUrl
-            }?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Get the download URL for the image
-                    val downloadUri = task.result
+            Toast.makeText(this, "Activity saved", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
-                    // Save activity details along with the download URL
-                    saveActivityDetails(
-                        activityName,
-                        description,
-                        categoryName,
-                        color,
-                        startTime,
-                        endTime,
-                        downloadUri
-                    )
-                    Toast.makeText(this, "Activity saved", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    // Handle the case where the upload task fails
-                    // You can log an error message or display a toast to the user
+        uploadTask?.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
                 }
+            }
+            storageRef.downloadUrl
+        }?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Get the download URL for the image
+                val downloadUri = task.result
+
+                // Save activity details along with the download URL
+                saveActivityDetails(
+                    activityName,
+                    description,
+                    categoryName,
+                    color,
+                    startTime,
+                    endTime,
+                    downloadUri
+                )
+                Toast.makeText(this, "Activity saved", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                // Log the error
+                Log.e("AddActivity", "Upload failed: ${task.exception}")
+                // Display a toast to the user
+                Toast.makeText(this, "Upload failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
     private fun saveActivityDetails(activityName: String, description: String, categoryName: String, color: Int, startTime: String, endTime: String, photoUri: Uri?) {
         // Construct the CSV string based on whether there's a photo or not
@@ -286,26 +314,8 @@ class AddActivity : AppCompatActivity() {
 
     // Function to dispatch intent for taking a photo with the camera
     private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this,
-                        "com.example.android.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
-        }
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
     }
 
     // Function to create an image file
