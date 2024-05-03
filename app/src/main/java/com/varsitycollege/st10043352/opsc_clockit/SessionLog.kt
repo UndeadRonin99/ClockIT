@@ -1,12 +1,14 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.ImageView
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -35,7 +38,9 @@ class SessionLog : AppCompatActivity() {
     private lateinit var txtCategory: TextView
     private lateinit var imgPreview: ImageView
     private lateinit var datePicker: DatePicker
+    private lateinit var takePhoto: Button
     private var photoUri: Uri? = null
+
 
     private lateinit var storageRef: StorageReference
     private val storage = FirebaseStorage.getInstance()
@@ -54,6 +59,7 @@ class SessionLog : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
         datePicker = findViewById(R.id.DatePicker)
         imgPreview = findViewById(R.id.imgPreview)
+        takePhoto = findViewById(R.id.btnTakePhoto)
 
         spnrTime = findViewById(R.id.spnrTime)
         spnrTime.setIs24HourView(true)
@@ -73,6 +79,10 @@ class SessionLog : AppCompatActivity() {
 
         btnAddPhoto.setOnClickListener {
             openImagePicker()
+        }
+
+        takePhoto.setOnClickListener{
+            dispatchTakePictureIntent()
         }
 
         btnSave.setOnClickListener {
@@ -125,6 +135,18 @@ class SessionLog : AppCompatActivity() {
         }
     }
 
+    private fun dispatchTakePictureIntent() {
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
+
+    private fun getImageURI(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
+    }
+
     private fun openImagePicker() {
         val intent = Intent()
         intent.type = "image/*"
@@ -135,14 +157,24 @@ class SessionLog : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            photoUri = data.data
-            imgPreview.setImageURI(photoUri)
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            val uri = saveImageToExternalStorage(imageBitmap)
-            imgPreview.setImageBitmap(imageBitmap)
-            photoUri = uri
+        when (requestCode) {
+            PICK_IMAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+                    // User selected an image from the gallery
+                    photoUri = data.data
+                    imgPreview.setImageURI(photoUri)
+                }
+            }
+            REQUEST_IMAGE_CAPTURE -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    // Display the captured image in the image preview
+                    val extras = data?.extras
+                    val imageBitmap = extras?.get("data") as Bitmap
+                    imgPreview.setImageBitmap(imageBitmap)
+
+                    photoUri = getImageURI(this, imageBitmap)
+                }
+            }
         }
     }
 
