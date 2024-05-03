@@ -54,7 +54,7 @@ class AddGoal : AppCompatActivity() {
             val selectedHour = minPicker.hour
             val selectedMinute = minPicker.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-            txtMin.text = "Min goal: $selectedTime"
+            txtMin.text = "Minimum goal: $selectedTime"
 
             // Pass the activity name when saving min goal
             saveMinGoal(txtActivity.text.toString(), selectedTime)
@@ -64,7 +64,7 @@ class AddGoal : AppCompatActivity() {
             val selectedHour = minPicker.hour
             val selectedMinute = minPicker.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-            txtMax.text = "Max goal: $selectedTime"
+            txtMax.text = "Maximum goal: $selectedTime"
 
             // Pass the activity name when saving max goal
             saveMaxGoal(txtActivity.text.toString(), selectedTime)

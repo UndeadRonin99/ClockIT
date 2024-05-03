@@ -14,112 +14,89 @@
     <TimePicker
         android:id="@+id/spnrTime"
         android:layout_width="169dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="396dp"
+        android:layout_height="105dp"
         android:theme="@style/MyDatePicker"
         android:timePickerMode="spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
-
-    <Button
-        android:id="@+id/btnAddMax"
-        android:layout_width="185dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="270dp"
-        android:backgroundTint="#1B232E"
-        android:text="Add maximum goal"
-        android:textColorHighlight="#1B232E"
-        android:textColorHint="#1B232E"
-        android:textColorLink="#1B232E"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddMin" />
+        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteY="272dp" />
 
     <Button
         android:id="@+id/btnAddMin"
         android:layout_width="185dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
+        android:layout_height="48dp"
         android:backgroundTint="#1B232E"
         android:text="Add mimimum goal"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddMax"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMax" />
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="429dp" />
+
+    <Button
+        android:id="@+id/btnAddMax"
+        android:layout_width="185dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#1B232E"
+        android:text="Add maximum goal"
+        android:textColorHighlight="#1B232E"
+        android:textColorHint="#1B232E"
+        android:textColorLink="#1B232E"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="484dp" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="49dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="18dp"
+        android:layout_height="48dp"
         android:onClick="back"
-        app:layout_constraintBottom_toTopOf="@+id/txtActivity1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/back_button"
         tools:ignore="OnClick" />
 
     <TextView
         android:id="@+id/txtActivity1"
-        android:layout_width="254dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="126dp"
+        android:layout_width="256dp"
+        android:layout_height="38dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/spnrTime"
-        app:layout_constraintEnd_toEndOf="@+id/spnrTime"
-        app:layout_constraintStart_toStartOf="@+id/txtCategory1"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="66dp" />
 
     <TextView
         android:id="@+id/txtCategory1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="21dp"
+        android:layout_width="212dp"
+        android:layout_height="28dp"
         android:text="TextView"
         android:textColor="#FEFEFE"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtMin"
-        app:layout_constraintEnd_toEndOf="@+id/spnrTime"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtActivity1" />
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="104dp" />
 
     <TextView
         android:id="@+id/txtMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:text="Min time: "
+        android:text="Minimum time: "
         android:textColor="#FEFEFE"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtMax"
-        app:layout_constraintStart_toStartOf="@+id/txtMax"
-        app:layout_constraintTop_toBottomOf="@+id/txtCategory1" />
+        android:textSize="18dp"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="172dp" />
 
     <TextView
         android:id="@+id/txtMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="192dp"
-        android:layout_marginBottom="134dp"
-        android:text="Max time: "
+        android:text="Maximum time: "
         android:textColor="#FEFEFE"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddMin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="18dp"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="199dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
