@@ -51,7 +51,7 @@ class ActivityInfo1 : AppCompatActivity() {
         txtStartTime.text = startTime
         txtEndTime.text = endTime
         if(!photoUri.equals("")) {
-            txtPhotoUri.text = "Here is your photo"
+            txtPhotoUri.text = "View photo below:"
             // Load image into the ImageView using Picasso
             val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri ?: "")
             storageRef.downloadUrl.addOnSuccessListener { uri ->
@@ -60,7 +60,7 @@ class ActivityInfo1 : AppCompatActivity() {
                 // Handle failure to download image
             }
         } else {
-            txtPhotoUri.text = "Photo was not found for this activity"
+            txtPhotoUri.text = "No photo has been stored for this activity."
         }
     }
 }
