@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.varsitycollege.st10043352.opsc_clockit" />
+                  <option name="mobileSdkAppId" value="1:156257947739:android:b6ddcc1f59678e33656f7e" />
+                  <option name="projectId" value="clockit-13d02" />
+                  <option name="projectNumber" value="156257947739" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
