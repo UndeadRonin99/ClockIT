@@ -17,6 +17,8 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
@@ -41,16 +43,20 @@ class SessionLog : AppCompatActivity() {
     private lateinit var takePhoto: Button
     private var photoUri: Uri? = null
 
-
+    private lateinit var database: FirebaseDatabase
+    private lateinit var activityRef: DatabaseReference
     private lateinit var storageRef: StorageReference
     private val storage = FirebaseStorage.getInstance()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session_log)
 
         sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
+        database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
+        activityRef = database.getReference("logged_sessions")
+        storageRef = storage.reference
+
         val activityData = intent.getStringExtra("activity") ?: ""
 
         txtActivity = findViewById(R.id.txtActivity1)
@@ -63,9 +69,6 @@ class SessionLog : AppCompatActivity() {
 
         spnrTime = findViewById(R.id.spnrTime)
         spnrTime.setIs24HourView(true)
-
-        // Initialize Firebase Storage reference
-        storageRef = FirebaseStorage.getInstance().reference
 
         val details = activityData.split(",")
         if (details.size >= 3) {
@@ -81,7 +84,7 @@ class SessionLog : AppCompatActivity() {
             openImagePicker()
         }
 
-        takePhoto.setOnClickListener{
+        takePhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
 
@@ -96,70 +99,58 @@ class SessionLog : AppCompatActivity() {
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
 
-
             val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
             val uploadTask = photoUri?.let { storageRef.putFile(it) }
-            var logEntry: String
 
-            if (photoUri != null) {
-                uploadTask?.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                        }
-                    }
-                    storageRef.downloadUrl
-                }?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,$downloadUri"
-
-                        val editor = sharedPreferences.edit()
-                        editor.putString("Log_${System.currentTimeMillis()}", logEntry)
-                        editor.apply()
-
-                        Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-                        finish()
+            uploadTask?.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
                     }
                 }
-            } else {
-                logEntry = "${details[0]},${details[2]},${details[3]},$selectedTime,$selectedDate,"
+                storageRef.downloadUrl
+            }?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    val logEntry = LoggedSession(
+                        details[0],
+                        details[2],
+                        details[3],
+                        selectedTime,
+                        selectedDate,
+                        downloadUri.toString()
+                    )
 
-                val editor = sharedPreferences.edit()
-                editor.putString("Log_${System.currentTimeMillis()}", logEntry)
-                editor.apply()
-
-                Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-                finish()
+                    activityRef.push().setValue(logEntry)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Failed to log session: $exception", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
         }
+
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
-            // Navigate back to the home page
             val intent = Intent(this, LogHours::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Clear the back stack
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("activityData", activityData)
             startActivity(intent)
-            finish() // Finish current activity
+            finish()
         }
     }
 
     private fun dispatchTakePictureIntent() {
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
     }
 
-    private fun getImageURI(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path: String = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
-    }
-
     private fun openImagePicker() {
-        val intent = Intent()
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
@@ -177,48 +168,32 @@ class SessionLog : AppCompatActivity() {
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     // Display the captured image in the image preview
-                    val extras = data?.extras
-                    val imageBitmap = extras?.get("data") as Bitmap
-                    imgPreview.setImageBitmap(imageBitmap)
-
-                    photoUri = getImageURI(this, imageBitmap)
+                    val extras = data.extras
+                    if (extras != null && extras.containsKey("data")) {
+                        val imageBitmap = extras.get("data") as Bitmap
+                        imgPreview.setImageBitmap(imageBitmap)
+                        // Convert bitmap to Uri
+                        photoUri = getImageUri(this, imageBitmap)
+                    }
                 }
             }
         }
     }
 
-    private fun saveImageToExternalStorage(bitmap: Bitmap): Uri {
-        val imagesFolder = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "SessionImages")
-        if (!imagesFolder.exists()) {
-            imagesFolder.mkdirs()
-        }
-        val imageFile = File(imagesFolder, "session_image_${System.currentTimeMillis()}.jpg")
-        val outputStream = FileOutputStream(imageFile)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-        outputStream.close()
-        return imageFile.toUri()
-    }
 
-    private fun uploadImageToFirebase(imageUri: Uri) {
-        val imagesRef = storageRef.child("session_images/${imageUri.lastPathSegment}")
-        val uploadTask = imagesRef.putFile(imageUri)
-
-        uploadTask.addOnSuccessListener { taskSnapshot ->
-            // Image uploaded successfully
-            val downloadUrl = taskSnapshot.storage.downloadUrl.toString()
-
-            // Save download URL to SharedPreferences or Firebase Realtime Database
-            saveDownloadUrl(downloadUrl)
-
-            Toast.makeText(this, "Image uploaded to Firebase Storage", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener { exception ->
-            // Handle unsuccessful uploads
-            Toast.makeText(this, "Failed to upload image: $exception", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // Function to save download URL to SharedPreferences or Firebase Realtime Database
-    private fun saveDownloadUrl(downloadUrl: String) {
-        // Code to save download URL
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 }
+
+data class LoggedSession(
+    val activityName: String,
+    val categoryName: String,
+    val categoryColor: String,
+    val startTime: String,
+    val date: String,
+    val imageUrl: String
+)
