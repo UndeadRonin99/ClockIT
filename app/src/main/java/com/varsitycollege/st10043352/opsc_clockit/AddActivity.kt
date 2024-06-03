@@ -1,10 +1,8 @@
 package com.varsitycollege.st10043352.opsc_clockit
-
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -37,7 +35,6 @@ import java.util.UUID
 class AddActivity : AppCompatActivity() {
 
     private lateinit var colorBox: View
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spinner: Spinner
     private lateinit var doneButton: Button
     private lateinit var categoryColors: MutableList<Int>
@@ -59,9 +56,6 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-
-        // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
 
         // Initialize elements
         colorBox = findViewById(R.id.colorBox)
@@ -285,16 +279,26 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun saveActivityDetails(activityName: String, description: String, categoryName: String, color: Int, startTime: String, endTime: String, photoUri: Uri?) {
-        // Construct the CSV string based on whether there's a photo or not
-        val csvString = if (photoUri != null) {
-            "$activityName,$description,$categoryName,$color,$startTime,$endTime,$photoUri"
-        } else {
-            "$activityName,$description,$categoryName,$color,$startTime,$endTime"
+        // Get a reference to the 'activities' node in the database
+        val activitiesRef = database.getReference("activities")
+
+        // Create a unique key for the new activity
+        val activityKey = activitiesRef.push().key
+
+        // Create a HashMap to hold the activity data
+        val activityData = HashMap<String, Any?>()
+        activityData["activityName"] = activityName
+        activityData["description"] = description
+        activityData["categoryName"] = categoryName
+        activityData["color"] = color
+        activityData["startTime"] = startTime
+        activityData["endTime"] = endTime
+        activityData["photoUrl"] = photoUri?.toString()
+
+        // Save the activity data to the database
+        if (activityKey != null) {
+            activitiesRef.child(activityKey).setValue(activityData)
         }
-        // Save CSV string to SharedPreferences
-        val editor = sharedPreferences.edit()
-        editor.putString("activity_${System.currentTimeMillis()}", csvString)
-        editor.apply()
     }
 
     // Function to show time picker dialog
