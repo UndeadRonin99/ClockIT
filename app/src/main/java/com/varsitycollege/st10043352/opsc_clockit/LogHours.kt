@@ -10,8 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class LogHours : AppCompatActivity() {
+    private lateinit var database: FirebaseDatabase
+    private lateinit var activityRef: DatabaseReference
 
     private val SHARED_PREF_KEY = "goals"
     private val MIN_GOAL_KEY = "min_goal"
@@ -26,7 +33,8 @@ class LogHours : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_hours)
 
-        sharedPreferences = getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
+        database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
+        activityRef = database.getReference("activities")
 
         activityData = intent.getStringExtra("activityData") ?: ""
         val activityTextView = findViewById<TextView>(R.id.txtActivity1)
@@ -44,28 +52,11 @@ class LogHours : AppCompatActivity() {
             categoryTextView.text = categoryName
             categoryTextView.setTextColor((details.get(3)).toInt())
 
-            // Retrieve and display saved daily goals
-            val minGoal = sharedPreferences.getString("$MIN_GOAL_KEY-$activityName", "")
-            val maxGoal = sharedPreferences.getString("$MAX_GOAL_KEY-$activityName", "")
-
-            val dailyGoalsText = StringBuilder()
-            if (!minGoal.isNullOrEmpty()) {
-                dailyGoalsText.append("Min Goal: $minGoal\n")
-            }
-
-            if (!maxGoal.isNullOrEmpty()) {
-                dailyGoalsText.append("\nMax Goal: $maxGoal")
-            }
-
-            dailyGoalsTextView.text = dailyGoalsText.toString()
-
             button.setOnClickListener{
                 val intent = Intent(this, SessionLog::class.java)
                 intent.putExtra("activity", activityData)
                 startActivity(intent)
             }
-
-
         }
 
         val backButton = findViewById<ImageView>(R.id.back_button)
@@ -78,33 +69,24 @@ class LogHours : AppCompatActivity() {
         }
     }
 
-    fun formatActivities(log: String?): List<String> {
-        var logData: List<String> = emptyList()
+    fun DeleteOnClick(view: View) {
+        val activityName = details[0]
 
-        log?.let {
-            logData = log.split(",")
-        }
-
-        return logData
-    }
-
-    fun DeleteOnClick(view: View){
-        sharedActivities = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
-        val allActivities = sharedActivities.all
-        for ((key1, value) in allActivities) {
-            if (key1.startsWith("activity_")) { // Check if the key represents an activity
-                val activityList = formatActivities(value.toString())
-                if(details[0].equals(activityList[0])){
-                    val editor = sharedActivities.edit()
-                    editor.remove(key1)
-                    editor.apply()
-                    Log.d("Delete", "activity deleted")
-                    Toast.makeText(this, "Activity Deleted", Toast.LENGTH_SHORT).show()
-                    finish()
-                    break
+        activityRef.orderByChild("activityName").equalTo(activityName)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (activitySnapshot in snapshot.children) {
+                        activitySnapshot.ref.removeValue()
+                        Log.d("Delete", "activity deleted")
+                        Toast.makeText(this@LogHours, "Activity Deleted", Toast.LENGTH_SHORT).show()
+                        finish()
+                        break
+                    }
                 }
-            }
-        }
-    }
 
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Delete", "Error deleting activity: ${error.message}")
+                }
+            })
+    }
 }
