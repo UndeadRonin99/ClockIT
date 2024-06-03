@@ -35,6 +35,8 @@ class home_page : AppCompatActivity() {
                     val activityData = activitySnapshot.value as Map<String, Any>
                     val activityTextView = TextView(this@home_page)
 
+                    val activityData1 = formatFirebaseData1(activityData)
+
                     activityTextView.text = formatFirebaseData(activityData)
                     activityTextView.setTextColor(Color.WHITE)
                     activityTextView.setTextSize(20f)
@@ -54,7 +56,7 @@ class home_page : AppCompatActivity() {
                     }
                     activityTextView.setOnClickListener {
                         val intent = Intent(this@home_page, LogHours::class.java)
-                        intent.putExtra("activityData", activityData.toString()) // Convert to String if needed
+                        intent.putExtra("activityData", activityData1) // Convert to String if needed
                         startActivity(intent)
                     }
 
@@ -67,6 +69,16 @@ class home_page : AppCompatActivity() {
                 Log.e("home_page", "Database error: ${error.message}")
             }
         })
+    }
+
+    private fun formatFirebaseData1(activityData: Map<String, Any>): CharSequence {
+        // Format the activity data as needed
+        // Example:
+        val name = activityData["activityName"]
+        val category = activityData["categoryName"]
+        val color = activityData["color"]
+
+        return "$name, ,$category,$color"
     }
 
     private fun formatFirebaseData(activityData: Map<String, Any>): CharSequence {
