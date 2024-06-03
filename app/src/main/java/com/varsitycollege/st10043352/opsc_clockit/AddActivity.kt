@@ -24,8 +24,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import org.json.JSONArray
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -50,6 +50,7 @@ class AddActivity : AppCompatActivity() {
 
     // Initialize FirebaseStorage instance
     private val storage = FirebaseStorage.getInstance()
+    private val database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
 
     // Constants for image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -72,11 +73,8 @@ class AddActivity : AppCompatActivity() {
         txtEndTime = findViewById(R.id.txtEndTime)
         imgPreview = findViewById(R.id.imgPreview)
 
-        // Retrieve data from SharedPreferences
-        val categoriesJsonString = sharedPreferences.getString("categories", null)
-
-        // Populate spinner with retrieved data
-        populateSpinner(categoriesJsonString)
+        // Retrieve data from Firebase
+        populateSpinner()
 
         // Set onClickListener for the done button to finish activity
         doneButton.setOnClickListener {
@@ -110,47 +108,56 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    // Function to populate spinner with category names
-    private fun populateSpinner(categoriesJsonString: String?) {
-        categoriesJsonString?.let {
-            // Convert JSON string to JSONArray
-            val jsonArray = JSONArray(it)
+    // Function to populate spinner with category names from Firebase
+    private fun populateSpinner() {
+        val categoriesReference = database.getReference("categories")
 
-            // Extract category names and colors from JSONArray
-            val categoryNames = mutableListOf<String>()
-            categoryColors = mutableListOf()
-            for (i in 0 until jsonArray.length()) {
-                val jsonObject = jsonArray.getJSONObject(i)
-                val categoryName = jsonObject.getString("categoryName")
-                val categoryColor = jsonObject.getInt("categoryColor")
-                categoryNames.add(categoryName)
-                categoryColors.add(categoryColor)
-            }
+        categoriesReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val categoryNames = mutableListOf<String>()
+                categoryColors = mutableListOf()
 
-            // Create adapter for spinner
-            val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNames) {
-                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val view = super.getDropDownView(position, convertView, parent)
-                    if (view is TextView) {
-                        view.setTextColor(Color.WHITE) // Set text color for dropdown items
-                        view.setBackgroundColor(Color.parseColor("#1B232E")) // Set background color for dropdown items
+                for (categorySnapshot in snapshot.children) {
+                    val categoryName = categorySnapshot.child("categoryName").getValue(String::class.java)
+                    val categoryColor = categorySnapshot.child("categoryColor").getValue(Int::class.java)
+
+                    if (categoryName != null && categoryColor != null) {
+                        categoryNames.add(categoryName)
+                        categoryColors.add(categoryColor)
                     }
-                    return view
                 }
 
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val view = super.getView(position, convertView, parent)
-                    if (view is TextView) {
-                        view.setTextColor(Color.WHITE) // Set text color for selected item
-                        view.setBackgroundColor(Color.TRANSPARENT) // Set background color for selected item
+                // Create adapter for spinner
+                val adapter = object : ArrayAdapter<String>(this@AddActivity, android.R.layout.simple_spinner_dropdown_item, categoryNames) {
+                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        if (view is TextView) {
+                            view.setTextColor(Color.WHITE) // Set text color for dropdown items
+                            view.setBackgroundColor(Color.parseColor("#1B232E")) // Set background color for dropdown items
+                        }
+                        return view
                     }
-                    return view
+
+                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getView(position, convertView, parent)
+                        if (view is TextView) {
+                            view.setTextColor(Color.WHITE) // Set text color for selected item
+                            view.setBackgroundColor(Color.TRANSPARENT) // Set background color for selected item
+                        }
+                        return view
+                    }
                 }
+
+                // Set adapter for spinner
+                spinner.adapter = adapter
             }
 
-            // Set adapter for spinner
-            spinner.adapter = adapter
-        }
+            override fun onCancelled(error: DatabaseError) {
+                // Handle database error
+                Log.e("AddActivity", "Database error: ${error.message}")
+                Toast.makeText(this@AddActivity, "Failed to load categories", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     // Function to set up listener for spinner
@@ -190,7 +197,7 @@ class AddActivity : AppCompatActivity() {
             REQUEST_IMAGE_CAPTURE -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     // Display the captured image in the image preview
-                    val extras = data?.extras
+                    val extras = data.extras
                     val imageBitmap = extras?.get("data") as Bitmap
                     imgPreview.setImageBitmap(imageBitmap)
 
@@ -216,7 +223,7 @@ class AddActivity : AppCompatActivity() {
         val startTime = txtStartTime.text.toString()
         val endTime = txtEndTime.text.toString()
 
-        if (activityName.isNullOrEmpty()) {
+        if (activityName.isEmpty()) {
             // Handle empty activity name
             return
         }
@@ -276,7 +283,6 @@ class AddActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun saveActivityDetails(activityName: String, description: String, categoryName: String, color: Int, startTime: String, endTime: String, photoUri: Uri?) {
         // Construct the CSV string based on whether there's a photo or not
