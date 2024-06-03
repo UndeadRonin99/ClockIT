@@ -51,7 +51,6 @@ class register_page : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 Log.d("RegisterPage", "User registration successful")
-                // Save additional user data to the database
                 saveUserToDatabase(username, email)
                 Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@register_page, MainActivity::class.java)
@@ -72,16 +71,25 @@ class register_page : AppCompatActivity() {
         }
 
         val database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app/")
-        val myRef = database.getReference("users")
+        val userRef = database.getReference("users")
+        val usernameRef = database.getReference("usernames")
 
         val user = mapOf(
             "username" to username,
             "email" to email
         )
-        myRef.child(userId).setValue(user).addOnCompleteListener { task ->
+        userRef.child(userId).setValue(user).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d("RegisterPage", "User data saved successfully")
-                Toast.makeText(this, "User data saved successfully", Toast.LENGTH_SHORT).show()
+                usernameRef.child(username).setValue(userId).addOnCompleteListener { usernameTask ->
+                    if (usernameTask.isSuccessful) {
+                        Log.d("RegisterPage", "Username mapping saved successfully")
+                        Toast.makeText(this, "User data saved successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.e("RegisterPage", "Failed to save username mapping", usernameTask.exception)
+                        Toast.makeText(this, "Failed to save username mapping: ${usernameTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
                 Log.e("RegisterPage", "Failed to save user data", task.exception)
                 Toast.makeText(this, "Failed to save user data: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
