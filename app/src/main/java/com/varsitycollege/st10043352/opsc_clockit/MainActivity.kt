@@ -9,15 +9,21 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        auth = Firebase.auth
         sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
         val usernameEditText = findViewById<EditText>(R.id.txtUsername)
