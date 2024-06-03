@@ -1,94 +1,86 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.*
 
 class home_page : AppCompatActivity() {
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var txtActivity: TextView
-
+    private val database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
-        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
-        val allActivities = sharedPreferences.all
-        for ((key, value) in allActivities) {
-            Log.d("SharedPreferences", "Key: $key, Value: $value")
-        }
-        sharedPreferences.getStringSet("log", emptySet())?.forEach {
-            Log.d("testing", it)
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        sharedPreferences = getSharedPreferences("CategoryPreferences", MODE_PRIVATE)
-        val allActivities = sharedPreferences.all
+        fetchActivitiesFromFirebaseDatabase()
+    }
 
-        // Remove previously added TextViews
-        (findViewById<LinearLayout>(R.id.LinearActivities1)).removeAllViews()
+    private fun fetchActivitiesFromFirebaseDatabase() {
+        val activitiesRef = database.getReference("activities")
 
-        // Iterate through all activities and create TextViews
-        for ((key, value) in allActivities) {
-            if (key.startsWith("activity_")) { // Check if the key represents an activity
-                val activityData = value as String // Assuming the value is stored as a String
-                val activityTextView = TextView(this)
+        activitiesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Remove previously added TextViews
+                findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
 
-                activityTextView.text = formatSharedPref(activityData)
-                activityTextView.setTextColor(Color.WHITE)
-                activityTextView.setTextSize(20f)
-                activityTextView.setBackgroundResource(R.drawable.round_buttons)
-                activityTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                activityTextView.visibility = View.VISIBLE // Make the TextView visible
-                activityTextView.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    resources.getDimensionPixelSize(R.dimen.activity_box_height)
-                ).apply {
-                    setMargins(
-                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
-                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
-                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
-                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
-                    )
+                for (activitySnapshot in snapshot.children) {
+                    val activityData = activitySnapshot.value as Map<String, Any>
+                    val activityTextView = TextView(this@home_page)
+
+                    activityTextView.text = formatFirebaseData(activityData)
+                    activityTextView.setTextColor(Color.WHITE)
+                    activityTextView.setTextSize(20f)
+                    activityTextView.setBackgroundResource(R.drawable.round_buttons)
+                    activityTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                    activityTextView.visibility = View.VISIBLE // Make the TextView visible
+                    activityTextView.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT // Change to WRAP_CONTENT
+                    ).apply {
+                        setMargins(
+                            resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
+                            resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
+                            resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
+                            resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
+                        )
+                    }
+                    activityTextView.setOnClickListener {
+                        val intent = Intent(this@home_page, LogHours::class.java)
+                        intent.putExtra("activityData", activityData.toString()) // Convert to String if needed
+                        startActivity(intent)
+                    }
+
+                    findViewById<LinearLayout>(R.id.LinearActivities1).addView(activityTextView)
                 }
-                activityTextView.setOnClickListener {
-                    val intent = Intent(this, LogHours::class.java)
-                    intent.putExtra("activityData", activityData)
-                    startActivity(intent)
-                }
-
-                (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(activityTextView)
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle database error
+                Log.e("home_page", "Database error: ${error.message}")
+            }
+        })
     }
 
-    fun formatSharedPref(activity: String?): CharSequence? {
-        var activityDetails = ""
-        activity?.let {
-            val values = activity.split(",")
+    private fun formatFirebaseData(activityData: Map<String, Any>): CharSequence {
+        // Format the activity data as needed
+        // Example:
+        val name = activityData["activityName"]
+        val category = activityData["categoryName"]
+        val startTime = activityData["startTime"]
+        val endTime = activityData["endTime"]
 
-            val name = values[0]
-            val category = values[2]
-            val number1 = values[4]
-            val number2 = values[5]
-
-            // Now you can use these variables as needed
-            // For example:
-            activityDetails= "${name}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${category}\n${number1}\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${number2}"
-        }
-        return activityDetails
+        return "$name\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$category\n$startTime\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$endTime"
     }
 
-
-
+    // Functions for navigation
     fun navAddCategory(view: View) {
         startActivity(Intent(this, Add_Category::class.java))
     }
@@ -101,15 +93,15 @@ class home_page : AppCompatActivity() {
         startActivity(Intent(this, Insights::class.java))
     }
 
-    fun navStats(view: View){
+    fun navStats(view: View) {
         startActivity(Intent(this, stats::class.java))
     }
 
-    fun navGoals(view: View){
+    fun navGoals(view: View) {
         startActivity(Intent(this, goals::class.java))
     }
 
-    fun navFun(view: View){
+    fun navFun(view: View) {
         startActivity(Intent(this, FunTime::class.java))
     }
 
