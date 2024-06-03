@@ -1,18 +1,14 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
 
 class AddGoal : AppCompatActivity() {
-
-    private val SHARED_PREF_KEY = "goals"
-    private val MIN_GOAL_KEY = "min_goal"
-    private val MAX_GOAL_KEY = "max_goal"
 
     private lateinit var txtActivity: TextView
     private lateinit var txtCategory: TextView
@@ -21,7 +17,7 @@ class AddGoal : AppCompatActivity() {
     private lateinit var txtMin: TextView
     private lateinit var txtMax: TextView
     private lateinit var minPicker: TimePicker
-    private lateinit var sharedPreferences: SharedPreferences
+    private val database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +43,6 @@ class AddGoal : AppCompatActivity() {
         txtActivity.text = activityFields?.get(0)
         txtCategory.text = activityFields?.get(2)
         txtCategory.setTextColor((activityFields?.get(3))?.toInt() ?: 0)
-
-        sharedPreferences = getSharedPreferences(SHARED_PREF_KEY, MODE_PRIVATE)
 
         btnMin.setOnClickListener {
             val selectedHour = minPicker.hour
@@ -81,13 +75,15 @@ class AddGoal : AppCompatActivity() {
     }
 
     private fun saveMinGoal(activity: String, minGoal: String) {
-        val minGoalKey = "$MIN_GOAL_KEY-$activity"
-        sharedPreferences.edit().putString(minGoalKey, minGoal).apply()
+        val ref = database.getReference("goals")
+        val minGoalKey = "$activity/min_goal"
+        ref.child(minGoalKey).setValue(minGoal)
     }
 
     private fun saveMaxGoal(activity: String, maxGoal: String) {
-        val maxGoalKey = "$MAX_GOAL_KEY-$activity"
-        sharedPreferences.edit().putString(maxGoalKey, maxGoal).apply()
+        val ref = database.getReference("goals")
+        val maxGoalKey = "$activity/max_goal"
+        ref.child(maxGoalKey).setValue(maxGoal)
     }
 
 }

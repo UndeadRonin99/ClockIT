@@ -1,7 +1,6 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,14 +19,8 @@ class LogHours : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var activityRef: DatabaseReference
 
-    private val SHARED_PREF_KEY = "goals"
-    private val MIN_GOAL_KEY = "min_goal"
-    private val MAX_GOAL_KEY = "max_goal"
-
-    private lateinit var sharedPreferences: SharedPreferences
     private var details: List<String> = listOf("")
     private var activityData: String = ""
-    private lateinit var sharedActivities: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +44,9 @@ class LogHours : AppCompatActivity() {
             activityTextView.text = activityName
             categoryTextView.text = categoryName
             categoryTextView.setTextColor((details.get(3)).toInt())
+
+            // Fetch and display goals for the activity
+            fetchGoalsForActivity(activityName, dailyGoalsTextView)
 
             button.setOnClickListener{
                 val intent = Intent(this, SessionLog::class.java)
@@ -88,5 +84,30 @@ class LogHours : AppCompatActivity() {
                     Log.e("Delete", "Error deleting activity: ${error.message}")
                 }
             })
+    }
+
+    private fun fetchGoalsForActivity(activityName: String, dailyGoalsTextView: TextView) {
+        val goalsRef = database.getReference("goals")
+        goalsRef.child(activityName).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val minGoal = snapshot.child("min_goal").getValue(String::class.java)
+                val maxGoal = snapshot.child("max_goal").getValue(String::class.java)
+
+                val dailyGoalsText = StringBuilder()
+                if (!minGoal.isNullOrEmpty()) {
+                    dailyGoalsText.append("Minimum goal: $minGoal\n")
+                }
+
+                if (!maxGoal.isNullOrEmpty()) {
+                    dailyGoalsText.append("Maximum goal: $maxGoal")
+                }
+
+                dailyGoalsTextView.text = dailyGoalsText.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FetchGoals", "Error fetching goals: ${error.message}")
+            }
+        })
     }
 }
