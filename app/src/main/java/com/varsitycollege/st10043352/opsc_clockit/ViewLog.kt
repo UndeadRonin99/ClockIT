@@ -32,19 +32,19 @@ class ViewLog : AppCompatActivity() {
         LogPhoto = findViewById(R.id.LogPhoto)
         txt404 = findViewById(R.id.txt404)
 
-        val activityData = intent.getStringExtra("activityData")
-        val logData = intent.getStringExtra("logData")
+        val ActivityName = intent.getStringExtra("activityName")
+        val Category = intent.getStringExtra("category")
+        val time = intent.getStringExtra("time")
+        val photoUrl = intent.getStringExtra("photo")
 
-        val activityList = formatActivities(activityData)
-        logList = formatLogs(logData)
-        val logTime = formatSharedPref(logData)
 
-        txtName.text = activityList.getOrNull(0) ?: "Activity Name Not Found"
-        txtCategory.text = activityList.getOrNull(2) ?: "Category Not Found"
-        txtTime.text = logTime
 
-        if(!logList[5].equals("")){
-            loadLogImage(logList)
+        txtName.text = ActivityName
+        txtCategory.text = Category
+        txtTime.text = time
+
+        if(!photoUrl.equals("")){
+            loadLogImage(photoUrl)
         } else {
             txt404.isVisible = true
         }
@@ -54,24 +54,24 @@ class ViewLog : AppCompatActivity() {
         }
     }
 
-    private fun loadLogImage(logList: List<String>) {
-        if (logList.size >= 6 && !logList[5].isNullOrEmpty()) {
-            val logImageUri = Uri.parse(logList[5])
+    private fun loadLogImage(logList: String?) {
+
+            val logImageUri = Uri.parse(logList)
             if (logImageUri.scheme != null && logImageUri.host != null) {
                 // Load image from Firebase Storage using Picasso
-                FirebaseStorage.getInstance().getReferenceFromUrl(logList[5]).downloadUrl
-                    .addOnSuccessListener { uri ->
-                        Picasso.get().load(uri).into(LogPhoto)
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.e("ViewLog", "Failed to load image: $exception")
-                    }
+                if (logList != null) {
+                    FirebaseStorage.getInstance().getReferenceFromUrl(logList).downloadUrl
+                        .addOnSuccessListener { uri ->
+                            Picasso.get().load(uri).into(LogPhoto)
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e("ViewLog", "Failed to load image: $exception")
+                        }
+                }
             } else {
                 Log.e("ViewLog", "Invalid URI: $logImageUri")
             }
-        } else {
-            Log.e("ViewLog", "URI string is null or invalid.")
-        }
+
     }
 
 

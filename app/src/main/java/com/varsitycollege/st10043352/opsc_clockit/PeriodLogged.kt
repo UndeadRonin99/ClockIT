@@ -35,14 +35,17 @@ class PeriodLogged : AppCompatActivity() {
     private var endDate: Date? = null
     private var startDateMillis by Delegates.notNull<Long>()
     private var endDateMillis by Delegates.notNull<Long>()
+    private var activityName : String? = null
+    private var category : String? = null
+    private var photo : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_period_logged)
 
-        val activityName = intent.getStringExtra("activityName")
-        val category = intent.getStringExtra("category")
+        activityName = intent.getStringExtra("activityName")
+        category = intent.getStringExtra("category")
         val color = intent.getStringExtra("color")
 
         val txtActivity = findViewById<TextView>(R.id.actName)
@@ -74,16 +77,10 @@ class PeriodLogged : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        // Remove previously added TextViews
-        //findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
+        findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
 
         allActivities = ActivityData
         var allSessions = SessionData
-
-        // Remove previously added TextViews
-        //findViewById<LinearLayout>(R.id.LinearActivities2).removeAllViews()
-
-
 
         // Iterate through all activities + sessions and create TextViews
         if (allSessions != null) {
@@ -114,6 +111,7 @@ class PeriodLogged : AppCompatActivity() {
                                 val hours = hoursString.toInt()
                                 val minutes = minutesString.toInt()
                                 val formattedTime = "${hours} Hours ${minutes} Minutes"
+                                photo = logData[4]
 
 
                                 activityTextView.text = formatSharedPref(formattedTime)
@@ -136,7 +134,10 @@ class PeriodLogged : AppCompatActivity() {
                                 }
                                 activityTextView.setOnClickListener {//NEED TO CHANGE THIS TO THE NEW PAGE
                                     val intent = Intent(this, ViewLog::class.java)
-                                    intent.putExtra("activityName", intent.getStringExtra("activityName"))
+                                    intent.putExtra("activityName", activityName)
+                                    intent.putExtra("category", category)
+                                    intent.putExtra("photo", photo)
+                                    intent.putExtra("time", formattedTime)
 
                                     //intent.putExtra("Category",)
                                     startActivity(intent)

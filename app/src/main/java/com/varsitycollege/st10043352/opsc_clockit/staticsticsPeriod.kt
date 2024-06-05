@@ -183,7 +183,8 @@ class staticsticsPeriod : AppCompatActivity() {
 
             // Check if the session falls within the selected date range
             val logDate = logData[3]
-            val logDateWithYear: String? = logDate?.let { "$it/${Calendar.getInstance().get(Calendar.YEAR)}" }
+            val logDateWithYear: String? =
+                logDate?.let { "$it/${Calendar.getInstance().get(Calendar.YEAR)}" }
             if (!logDateWithYear.isNullOrEmpty()) {
                 val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val logDateFormatted = logDateFormat.parse(logDateWithYear)
@@ -192,30 +193,28 @@ class staticsticsPeriod : AppCompatActivity() {
                     logDateFormatted >= startDate && logDateFormatted <= endDate
                 ) {
                     val activityName = logData[0]
+                    val activityCategory = logData[1]
+                    val activityColor = logData[2]
 
                     // Update statistics for the activity
-                    val activityTime = activityStatistics[activityName]
-                    if (activityTime != null) {
-                        val hours = activityTime.first + logData[5].split(":")[0].toInt()
-                        val minutes = activityTime.second + logData[5].split(":")[1].toInt()
-                        activityStatistics[activityName] = Pair(hours, minutes)
-                    } else {
-                        val hours = logData[5].split(":")[0].toInt()
-                        val minutes = logData[5].split(":")[1].toInt()
-                        activityStatistics[activityName] = Pair(hours, minutes)
-                    }
+                    val time = logData[5]
+                    val (hoursString, minutesString) = time.split(":")
+                    val hours = hoursString.toInt()
+                    val minutes = minutesString.toInt()
+                    val formattedTime = "${hours} Hours ${minutes} Minutes"
+
+                    activityStatistics(activityName, formattedTime, activityCategory, activityColor)
                 }
             }
         }
 
+    }
         // Display statistics for each activity
-        activityStatistics.forEach { (activityName, activityTime) ->
-            val hours = activityTime.first
-            val minutes = activityTime.second
+        private fun activityStatistics(activityName : String, activityTime: String, activityCategory:String, activityColor : String) {
 
             // Create TextView for the activity with its statistics
             val activityTextView = TextView(this)
-            activityTextView.text = "$activityName\t\t\t\t$hours hours $minutes minutes"
+            activityTextView.text = activityName
             activityTextView.setTextColor(Color.WHITE)
             activityTextView.setTextSize(20f)
             activityTextView.setBackgroundResource(R.drawable.round_buttons)
@@ -237,9 +236,10 @@ class staticsticsPeriod : AppCompatActivity() {
             activityTextView.setOnClickListener {
                 val intent = Intent(this, PeriodLogged::class.java)
                 intent.putExtra("activityName", activityName)
-                intent.putExtra("category", logData[1])
-                intent.putExtra("color", logData[2])
-                intent.putExtra("time", logData[5])
+                intent.putExtra("category", activityCategory)
+                intent.putExtra("color", activityColor)
+                intent.putExtra("time", activityTime)
+
                 intent.putExtra("startDate", startDateMillis)
                 intent.putExtra("endDate", endDateMillis)
 
@@ -250,6 +250,4 @@ class staticsticsPeriod : AppCompatActivity() {
             findViewById<LinearLayout>(R.id.LinearActivities1).addView(activityTextView)
         }
     }
-
-}
 
