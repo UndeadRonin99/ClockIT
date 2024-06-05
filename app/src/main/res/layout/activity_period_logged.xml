@@ -9,16 +9,16 @@
     tools:context=".PeriodLogged">
 
     <ScrollView
-        android:layout_width="365dp"
-        android:layout_height="512dp"
+        android:id="@+id/scrollView5"
+        android:layout_width="360dp"
+        android:layout_height="198dp"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="53dp"
         android:layout_marginEnd="23dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="420dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/Category"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
@@ -34,29 +34,42 @@
     <ImageView
         android:id="@+id/back_button"
         android:layout_width="56dp"
-        android:layout_height="0dp"
+        android:layout_height="57dp"
 
+        android:layout_marginBottom="56dp"
         android:clickable="true"
         android:focusable="true"
         android:onClick="back2"
         android:src="@drawable/back_button"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="168dp"
+        android:id="@+id/actName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="56dp"
-        android:layout_marginEnd="168dp"
-        android:text="Logs:"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="1dp"
+        android:text="txtActivityName"
+        android:textColor="#FEFEFE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/Category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Category"
+        android:layout_width="126dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="6dp"
+        android:text="txtCategory"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

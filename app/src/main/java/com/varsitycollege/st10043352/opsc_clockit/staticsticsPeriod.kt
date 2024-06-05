@@ -19,6 +19,7 @@ import kotlin.properties.Delegates
 class staticsticsPeriod : AppCompatActivity() {
     private var SessionData: Map<String, Any>? = null
     private lateinit var ActivityData: Map<String, Any>
+    private lateinit var logData: List<String>
     private lateinit var sharedPreferences: SharedPreferences
     private var startDate: Date? = null
     private var endDate: Date? = null
@@ -167,6 +168,8 @@ class staticsticsPeriod : AppCompatActivity() {
         // Remove previously added TextViews
         findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
 
+        ActivityData = allActivities
+
         // Initialize a map to store statistics for each activity
         val activityStatistics = mutableMapOf<String, Pair<Int, Int>>() // Pair of (hours, minutes)
 
@@ -176,7 +179,7 @@ class staticsticsPeriod : AppCompatActivity() {
             logMap[sessionKey] = sessionValue
 
             val log = formatSessionFirebaseData(logMap, sessionKey)
-            val logData = formatLogs(log as String)
+            logData = formatLogs(log as String)
 
             // Check if the session falls within the selected date range
             val logDate = logData[3]
@@ -232,10 +235,14 @@ class staticsticsPeriod : AppCompatActivity() {
 
             // Set click listener to view more details about the activity
             activityTextView.setOnClickListener {
-                // Start ActivityInfo1 with details about the activity
-                val intent = Intent(this, ActivityInfo1::class.java)
+                val intent = Intent(this, PeriodLogged::class.java)
                 intent.putExtra("activityName", activityName)
-                // Add other details as needed
+                intent.putExtra("category", logData[1])
+                intent.putExtra("color", logData[2])
+                intent.putExtra("time", logData[5])
+                intent.putExtra("startDate", startDateMillis)
+                intent.putExtra("endDate", endDateMillis)
+
                 startActivity(intent)
             }
 
