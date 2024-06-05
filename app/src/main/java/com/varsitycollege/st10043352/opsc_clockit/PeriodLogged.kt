@@ -67,8 +67,8 @@ class PeriodLogged : AppCompatActivity() {
         startDate = if (startDateMillis != -1L) Date(startDateMillis) else null
         endDate = if (endDateMillis != -1L) Date(endDateMillis) else null
 
-
-
+        // Fetch daily goals
+        fetchGoalsForActivity(activityName ?: "", findViewById(R.id.textView11))
     }
 
     override fun onResume() {
@@ -233,6 +233,37 @@ class PeriodLogged : AppCompatActivity() {
 
         return "$name,$category,$color,$date,$photoUri,$time"
     }
+    private fun fetchGoalsForActivity(activityName: String, dailyGoalsTextView: TextView) {
+        val goalsRef = database.getReference("goals")
+        goalsRef.child(activityName).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val minGoal = snapshot.child("min_goal").getValue(String::class.java)
+                val maxGoal = snapshot.child("max_goal").getValue(String::class.java)
+
+                val dailyGoalsText = StringBuilder()
+                if (!minGoal.isNullOrEmpty()) {
+                    dailyGoalsText.append("Min goal: $minGoal\t\t\t\t\t")
+                }
+
+
+                if (!maxGoal.isNullOrEmpty()) {
+                    dailyGoalsText.append("Max goal: $maxGoal")
+                }
+                if(maxGoal.isNullOrEmpty()&&minGoal.isNullOrEmpty()){
+                    dailyGoalsText.append("No goals have been set")
+
+
+                }
+
+                dailyGoalsTextView.text = dailyGoalsText.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FetchGoals", "Error fetching goals: ${error.message}")
+            }
+        })
+    }
+
 
     fun formatSharedPref(activity: String?): CharSequence? {
         var activityDetails = ""
