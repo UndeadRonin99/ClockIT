@@ -28,6 +28,7 @@ class PeriodLogged : AppCompatActivity() {
     private val database = FirebaseDatabase.getInstance("https://clockit-13d02-default-rtdb.europe-west1.firebasedatabase.app")
     private lateinit var allActivities: Map<String, Any>
     private var activityList: List<String> = mutableListOf("")
+    private lateinit var photos: Array<String>
 
 
     private lateinit var sharedPreferences: SharedPreferences
@@ -72,6 +73,7 @@ class PeriodLogged : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        photos = emptyArray()
         fetchActivitiesFromFirebaseDatabase()
         fetchSessionsFromFirebaseDatabase()
     }
@@ -111,7 +113,11 @@ class PeriodLogged : AppCompatActivity() {
                                 val hours = hoursString.toInt()
                                 val minutes = minutesString.toInt()
                                 val formattedTime = "${hours} Hours ${minutes} Minutes"
+
+
+
                                 photo = logData[4]
+                                photos += ("$photo,$formattedTime,$activityName")
 
 
                                 activityTextView.text = formatSharedPref(formattedTime)
@@ -132,14 +138,13 @@ class PeriodLogged : AppCompatActivity() {
                                         resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
                                     )
                                 }
-                                activityTextView.setOnClickListener {//NEED TO CHANGE THIS TO THE NEW PAGE
+                                activityTextView.setOnClickListener {
                                     val intent = Intent(this, ViewLog::class.java)
+                                    intent.putExtra("photos", photos)
                                     intent.putExtra("activityName", activityName)
                                     intent.putExtra("category", category)
-                                    intent.putExtra("photo", photo)
                                     intent.putExtra("time", formattedTime)
 
-                                    //intent.putExtra("Category",)
                                     startActivity(intent)
                                 }
 

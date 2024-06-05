@@ -35,19 +35,31 @@ class ViewLog : AppCompatActivity() {
         val ActivityName = intent.getStringExtra("activityName")
         val Category = intent.getStringExtra("category")
         val time = intent.getStringExtra("time")
-        val photoUrl = intent.getStringExtra("photo")
-
-
+        val photoUrls = intent.getStringArrayExtra("photos")
 
         txtName.text = ActivityName
         txtCategory.text = Category
         txtTime.text = time
 
-        if(!photoUrl.equals("")){
-            loadLogImage(photoUrl)
-        } else {
-            txt404.isVisible = true
+        if (photoUrls != null) {
+            if(photoUrls.isNotEmpty()){
+                for(key in photoUrls){
+                    val id = key.split(",")
+                    val photoUrl = id[0]
+                    val time1 = id[1]
+                    val act = id[2]
+
+                    if(time1.equals(time) && act.equals(ActivityName)){
+                        if(!photoUrls.equals("")){
+                            loadLogImage(photoUrl)
+                        } else {
+                            txt404.isVisible = true
+                        }
+                    }
+                }
+            }
         }
+
 
         backButton.setOnClickListener {
             finish()

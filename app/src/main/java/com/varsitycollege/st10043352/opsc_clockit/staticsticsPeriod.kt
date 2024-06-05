@@ -173,6 +173,9 @@ class staticsticsPeriod : AppCompatActivity() {
         // Initialize a map to store statistics for each activity
         val activityStatistics = mutableMapOf<String, Pair<Int, Int>>() // Pair of (hours, minutes)
 
+        // Keep track of already displayed activities to avoid duplicates
+        val displayedActivities = mutableSetOf<String>()
+
         // Iterate through all sessions and calculate statistics
         SessionData?.forEach { (sessionKey, sessionValue) ->
             val logMap = mutableMapOf<String, Any>()
@@ -193,23 +196,27 @@ class staticsticsPeriod : AppCompatActivity() {
                     logDateFormatted >= startDate && logDateFormatted <= endDate
                 ) {
                     val activityName = logData[0]
-                    val activityCategory = logData[1]
-                    val activityColor = logData[2]
 
-                    // Update statistics for the activity
-                    val time = logData[5]
-                    val (hoursString, minutesString) = time.split(":")
-                    val hours = hoursString.toInt()
-                    val minutes = minutesString.toInt()
-                    val formattedTime = "${hours} Hours ${minutes} Minutes"
+                    // Check if the activity has already been displayed
+                    if (!displayedActivities.contains(activityName)) {
+                        displayedActivities.add(activityName)
 
-                    activityStatistics(activityName, formattedTime, activityCategory, activityColor)
+                        val activityCategory = logData[1]
+                        val activityColor = logData[2]
+
+                        // Update statistics for the activity
+                        val time = logData[5]
+                        val (hoursString, minutesString) = time.split(":")
+                        val hours = hoursString.toInt()
+                        val minutes = minutesString.toInt()
+                        val formattedTime = "${hours} Hours ${minutes} Minutes"
+
+                        activityStatistics(activityName, formattedTime, activityCategory, activityColor)
+                    }
                 }
             }
         }
-
-    }
-        // Display statistics for each activity
+    }        // Display statistics for each activity
         private fun activityStatistics(activityName : String, activityTime: String, activityCategory:String, activityColor : String) {
 
             // Create TextView for the activity with its statistics
