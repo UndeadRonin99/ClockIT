@@ -1,13 +1,14 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import android.widget.ImageView
+import androidx.activity.enableEdgeToEdge
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
