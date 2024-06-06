@@ -34,6 +34,7 @@ class PeriodLogged : AppCompatActivity() {
     private lateinit var allActivities: Map<String, Any>
     private var activityList: List<String> = mutableListOf("")
     private lateinit var photos: Array<String>
+    private var color : Int = 0
 
     private lateinit var sharedPreferences: SharedPreferences
     private var startDate: Date? = null
@@ -52,7 +53,7 @@ class PeriodLogged : AppCompatActivity() {
 
         activityName = intent.getStringExtra("activityName")
         category = intent.getStringExtra("category")
-        val color = intent.getStringExtra("color")
+        color = (intent.getStringExtra("color"))?.toInt() ?: 0
 
         val txtActivity = findViewById<TextView>(R.id.actName)
         val txtCategory = findViewById<TextView>(R.id.Category)
@@ -84,7 +85,7 @@ class PeriodLogged : AppCompatActivity() {
 
         val entries = logsData.mapIndexed { index, hours -> BarEntry(index.toFloat(), hours) }
         val dataSet = BarDataSet(entries, "Logs")
-        dataSet.color = Color.BLUE
+        dataSet.color = color
 
         val data = BarData(dataSet)
         barChart.data = data
