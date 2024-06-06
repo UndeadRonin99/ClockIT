@@ -3,7 +3,6 @@ package com.varsitycollege.st10043352.opsc_clockit
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -22,10 +21,6 @@ class statsGoals : AppCompatActivity() {
     private lateinit var ActivityData: Map<String, Any>
     private lateinit var logData: List<String>
     private lateinit var sharedPreferences: SharedPreferences
-    private var startDate: Date? = null
-    private var endDate: Date? = null
-    private var startDateMillis by Delegates.notNull<Long>()
-    private var endDateMillis by Delegates.notNull<Long>()
     private var currentActivities: MutableList<String> = mutableListOf("")
     private var times: MutableList<String> = mutableListOf()
 
@@ -35,22 +30,6 @@ class statsGoals : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_goals)
-
-        startDateMillis = intent.getLongExtra("startDate", -1)
-        endDateMillis = intent.getLongExtra("endDate", -1)
-
-        // Convert the date millis to Date objects
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        startDate = if (startDateMillis != -1L) Date(startDateMillis) else null
-        endDate = if (endDateMillis != -1L) Date(endDateMillis) else null
-
-        // Find TextViews in the layout
-        val txtStartDate = findViewById<TextView>(R.id.txtstartdate)
-        val txtEndDate = findViewById<TextView>(R.id.txtenddate)
-
-        // Display the selected start and end dates in the TextViews
-        txtStartDate.text = "Start Date: ${startDate.let { dateFormat.format(it) } ?: "Not selected"}"
-        txtEndDate.text = "End Date: ${endDate?.let { dateFormat.format(it) } ?: "Not selected"}"
 
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
@@ -169,6 +148,11 @@ class statsGoals : AppCompatActivity() {
         // Remove previously added TextViews
         findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
 
+        if (!::allActivities.isInitialized) {
+            Log.e("updateUI", "allActivities has not been initialized")
+            return
+        }
+
         ActivityData = allActivities
 
         // Initialize a map to store statistics for each activity
@@ -176,6 +160,14 @@ class statsGoals : AppCompatActivity() {
 
         // Keep track of already displayed activities to avoid duplicates
         val displayedActivities = mutableSetOf<String>()
+
+        // Get the current date and set the start and end dates to the first and last days of the current month
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val startOfMonth = calendar.time
+
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        val endOfMonth = calendar.time
 
         // Iterate through all sessions and calculate statistics
         SessionData?.forEach { (sessionKey, sessionValue) ->
@@ -187,15 +179,12 @@ class statsGoals : AppCompatActivity() {
 
             // Check if the session falls within the selected date range
             val logDate = logData[3]
-            val logDateWithYear: String? =
-                logDate?.let { "$it/${Calendar.getInstance().get(Calendar.YEAR)}" }
+            val logDateWithYear: String? = logDate?.let { "$it/${Calendar.getInstance().get(Calendar.YEAR)}" }
             if (!logDateWithYear.isNullOrEmpty()) {
                 val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val logDateFormatted = logDateFormat.parse(logDateWithYear)
 
-                if (startDate != null && endDate != null && logDateFormatted != null &&
-                    logDateFormatted >= startDate && logDateFormatted <= endDate
-                ) {
+                if (logDateFormatted != null && logDateFormatted >= startOfMonth && logDateFormatted <= endOfMonth) {
                     val activityName = logData[0]
 
                     // Check if the activity has already been displayed
@@ -217,9 +206,10 @@ class statsGoals : AppCompatActivity() {
                 }
             }
         }
-    }        // Display statistics for each activity
-    private fun activityStatistics(activityName : String, activityTime: String, activityCategory:String, activityColor : String) {
+    }
 
+    // Display statistics for each activity
+    private fun activityStatistics(activityName: String, activityTime: String, activityCategory: String, activityColor: String) {
         // Create TextView for the activity with its statistics
         val activityTextView = TextView(this)
         activityTextView.text = activityName
@@ -247,10 +237,6 @@ class statsGoals : AppCompatActivity() {
             intent.putExtra("category", activityCategory)
             intent.putExtra("color", activityColor)
             intent.putExtra("time", activityTime)
-
-            intent.putExtra("startDate", startDateMillis)
-            intent.putExtra("endDate", endDateMillis)
-
             startActivity(intent)
         }
 
@@ -258,4 +244,3 @@ class statsGoals : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.LinearActivities1).addView(activityTextView)
     }
 }
-
