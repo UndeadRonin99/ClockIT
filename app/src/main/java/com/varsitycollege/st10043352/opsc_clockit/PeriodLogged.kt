@@ -77,12 +77,11 @@ class PeriodLogged : AppCompatActivity() {
 
     }
 
-    private fun setupChart(logsData: List<Float>, minGoal: Float, maxGoal: Float) {
+    private fun setupChart(logsData: Map<String, Float>, minGoal: Float, maxGoal: Float) {
         val barChart = findViewById<BarChart>(R.id.barChart)
 
-        val labels = logsData.indices.map { (it + 1).toString() }
-
-        val entries = logsData.mapIndexed { index, hours -> BarEntry(index.toFloat(), hours) }
+        val labels = logsData.keys.toList()
+        val entries = logsData.entries.mapIndexed { index, entry -> BarEntry(index.toFloat(), entry.value) }
         val dataSet = BarDataSet(entries, "Logs")
         dataSet.color = Color.BLUE
 
@@ -139,10 +138,10 @@ class PeriodLogged : AppCompatActivity() {
         linearLayout.removeAllViews()
 
         allActivities = ActivityData
-        var allSessions = SessionData
+        val allSessions = SessionData
 
-        // List to hold the hours for the chart
-        val logsData = mutableListOf<Float>()
+        // Map to hold aggregated hours per day
+        val logsData = mutableMapOf<String, Float>()
 
         // Iterate through all activities + sessions and create TextViews
         if (allSessions != null) {
@@ -154,7 +153,7 @@ class PeriodLogged : AppCompatActivity() {
                 val logData = formatLogs(log as String)
 
                 if (logData[4] != "null") {
-                    var logDate = logData[3]
+                    val logDate = logData[3]
                     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
                     val logDateWithYear = "$logDate/$currentYear"
                     val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -162,17 +161,16 @@ class PeriodLogged : AppCompatActivity() {
 
                     if (startDate != null && endDate != null && logDateFormatted != null) {
                         if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
-                            if (logData[0].equals(intent.getStringExtra("activityName"))) {
+                            if (logData[0] == intent.getStringExtra("activityName")) {
 
                                 val activityTextView = TextView(this)
 
                                 val time = logData[5]
-                                val (hoursString, minutesString) = time.split(":")
-                                val hours = hoursString.toInt()
-                                val minutes = minutesString.toInt()
-                                val totalHours = hours + minutes / 60.0f
-                                logsData.add(totalHours)
-                                val formattedTime = "${hours} Hours ${minutes} Minutes"
+                                val totalHours = timeStringToFloat(time)
+
+                                logsData[logDate] = logsData.getOrDefault(logDate, 0f) + totalHours
+
+                                val formattedTime = "${totalHours} Hours"
 
                                 photo = logData[4]
                                 photos += ("$photo,$formattedTime,$activityName")
@@ -212,7 +210,7 @@ class PeriodLogged : AppCompatActivity() {
             }
         }
 
-        // Setup the chart with the logsData
+        // Setup the chart with the aggregated logsData
         setupChart(logsData, minGoal, maxGoal)
     }
 
@@ -313,7 +311,7 @@ class PeriodLogged : AppCompatActivity() {
                 }
 
                 dailyGoalsTextView.text = dailyGoalsText.toString()
-                setupChart(emptyList(), minGoal, maxGoal)
+                setupChart(emptyMap(), minGoal, maxGoal)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -321,6 +319,7 @@ class PeriodLogged : AppCompatActivity() {
             }
         })
     }
+
     private fun timeStringToFloat(time: String): Float {
         val (hoursString, minutesString) = time.split(":")
         val hours = hoursString.toFloat()
