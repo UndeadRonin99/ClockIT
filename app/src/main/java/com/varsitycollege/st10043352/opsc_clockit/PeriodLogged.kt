@@ -34,7 +34,6 @@ class PeriodLogged : AppCompatActivity() {
     private lateinit var allActivities: Map<String, Any>
     private var activityList: List<String> = mutableListOf("")
     private lateinit var photos: Array<String>
-    private var color : Int = 0
 
     private lateinit var sharedPreferences: SharedPreferences
     private var startDate: Date? = null
@@ -53,7 +52,7 @@ class PeriodLogged : AppCompatActivity() {
 
         activityName = intent.getStringExtra("activityName")
         category = intent.getStringExtra("category")
-        color = (intent.getStringExtra("color"))?.toInt() ?: 0
+        val color = intent.getStringExtra("color")
 
         val txtActivity = findViewById<TextView>(R.id.actName)
         val txtCategory = findViewById<TextView>(R.id.Category)
@@ -85,7 +84,7 @@ class PeriodLogged : AppCompatActivity() {
 
         val entries = logsData.mapIndexed { index, hours -> BarEntry(index.toFloat(), hours) }
         val dataSet = BarDataSet(entries, "Logs")
-        dataSet.color = color
+        dataSet.color = Color.BLUE
 
         val data = BarData(dataSet)
         barChart.data = data
@@ -296,18 +295,23 @@ class PeriodLogged : AppCompatActivity() {
                 val dailyGoalsText = StringBuilder()
                 if (!minGoalStr.isNullOrEmpty()) {
                     dailyGoalsText.append("Min goal: $minGoalStr\t\t\t\t\t")
+                    minGoal = timeStringToFloat(minGoalStr)
+                } else {
+                    minGoal = 0f
                 }
 
                 if (!maxGoalStr.isNullOrEmpty()) {
                     dailyGoalsText.append("Max goal: $maxGoalStr")
+                    maxGoal = timeStringToFloat(maxGoalStr)
+                } else {
+                    maxGoal = 0f
                 }
+
                 if (minGoalStr.isNullOrEmpty() && maxGoalStr.isNullOrEmpty()) {
                     dailyGoalsText.append("No goals have been set")
                 }
 
                 dailyGoalsTextView.text = dailyGoalsText.toString()
-                minGoal = minGoalStr?.toFloatOrNull() ?: 0f
-                maxGoal = maxGoalStr?.toFloatOrNull() ?: 0f
                 setupChart(emptyList(), minGoal, maxGoal)
             }
 
@@ -315,6 +319,12 @@ class PeriodLogged : AppCompatActivity() {
                 Log.e("FetchGoals", "Error fetching goals: ${error.message}")
             }
         })
+    }
+    private fun timeStringToFloat(time: String): Float {
+        val (hoursString, minutesString) = time.split(":")
+        val hours = hoursString.toFloat()
+        val minutes = minutesString.toFloat()
+        return hours + minutes / 60
     }
 
     fun formatSharedPref(activity: String?): CharSequence? {
