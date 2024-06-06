@@ -12,10 +12,11 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.ACTION_OPEN_DOCUMENT" />
-
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.any" android:required="true" />
 
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -26,8 +27,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OPSC_ClockIT"
-
         tools:targetApi="31">
+        <activity
+            android:name=".statsGoals"
+            android:exported="false" />
         <activity
             android:name=".ActivityInfo1"
             android:exported="false" />
@@ -75,7 +78,7 @@
             android:exported="false" />
         <activity
             android:name=".register_page"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
