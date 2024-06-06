@@ -19,6 +19,7 @@ class stats : AppCompatActivity() {
     private lateinit var calendarView: CalendarView
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     private lateinit var btnAddDate: Button
+    private lateinit var btnSearchGoals: Button
     private var selectedStartDate: Date? = null
     private var selectedEndDate: Date? = null
 
@@ -33,6 +34,7 @@ class stats : AppCompatActivity() {
         endDate = findViewById(R.id.EndDate)
         calendarView = findViewById(R.id.calendarView)
         btnAddDate = findViewById(R.id.btnAddDate)
+        btnSearchGoals = findViewById(R.id.btnSearchGoals)
 
         // Reset saved dates to null initially (or on some specific condition)
         selectedStartDate = null
@@ -57,21 +59,24 @@ class stats : AppCompatActivity() {
                 selectedEndDate = selectedDate
                 endDate.text = "End Date: ${dateFormat.format(selectedDate)}"
             }
-
         }
 
-        btnAddDate.setOnClickListener{
-            if(selectedStartDate != null && selectedEndDate != null) {
-
+        btnAddDate.setOnClickListener {
+            if (selectedStartDate != null && selectedEndDate != null) {
                 // Start the StatisticsPeriod activity
                 val intent = Intent(this, staticsticsPeriod::class.java)
                 // Pass the selected start and end dates to the next activity
                 intent.putExtra("startDate", selectedStartDate?.time ?: -1)
                 intent.putExtra("endDate", selectedEndDate?.time ?: -1)
                 startActivity(intent)
-            }else{
+            } else {
                 Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        btnSearchGoals.setOnClickListener {
+            val intent = Intent(this, statsGoals::class.java)
+            startActivity(intent)
         }
     }
 
@@ -86,15 +91,15 @@ class stats : AppCompatActivity() {
         startActivity(Intent(this, FunTime::class.java))
     }
 
-    fun navInsights(view: View){
+    fun navInsights(view: View) {
         startActivity(Intent(this, Insights::class.java))
     }
 
-    fun navGoals(view: View){
+    fun navGoals(view: View) {
         startActivity(Intent(this, goals::class.java))
     }
 
-    fun navHome(view: View){
+    fun navHome(view: View) {
         startActivity(Intent(this, home_page::class.java))
     }
 

@@ -10,7 +10,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-19dp">
 
-
     <ImageView
         android:id="@+id/ClockIT_background"
         android:layout_width="411dp"
@@ -175,6 +174,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddDate" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
