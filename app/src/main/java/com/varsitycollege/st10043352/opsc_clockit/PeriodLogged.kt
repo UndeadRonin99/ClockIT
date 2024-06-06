@@ -105,6 +105,7 @@ class PeriodLogged : AppCompatActivity() {
         val yAxisLeft = barChart.axisLeft
         yAxisLeft.setDrawGridLines(false)
         yAxisLeft.textColor = Color.WHITE
+        yAxisLeft.axisMaximum = 24f // Set the y-axis maximum to 24 hours
 
         // Add limit lines for min and max goals
         val llMin = LimitLine(minGoal, "Min Goal")
