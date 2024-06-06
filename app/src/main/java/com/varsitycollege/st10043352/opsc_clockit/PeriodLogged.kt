@@ -301,4 +301,3 @@ class PeriodLogged : AppCompatActivity() {
         finish()
     }
 }
-
