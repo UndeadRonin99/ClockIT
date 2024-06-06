@@ -1,4 +1,3 @@
-
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.annotation.SuppressLint
@@ -11,11 +10,17 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -30,7 +35,6 @@ class PeriodLogged : AppCompatActivity() {
     private var activityList: List<String> = mutableListOf("")
     private lateinit var photos: Array<String>
 
-
     private lateinit var sharedPreferences: SharedPreferences
     private var startDate: Date? = null
     private var endDate: Date? = null
@@ -39,7 +43,8 @@ class PeriodLogged : AppCompatActivity() {
     private var activityName : String? = null
     private var category : String? = null
     private var photo : String? = null
-
+    private var minGoal: Float = 0f
+    private var maxGoal: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +74,56 @@ class PeriodLogged : AppCompatActivity() {
 
         // Fetch daily goals
         fetchGoalsForActivity(activityName ?: "", findViewById(R.id.textView11))
+
+    }
+
+    private fun setupChart(logsData: List<Float>, minGoal: Float, maxGoal: Float) {
+        val barChart = findViewById<BarChart>(R.id.barChart)
+
+        val labels = logsData.indices.map { (it + 1).toString() }
+
+        val entries = logsData.mapIndexed { index, hours -> BarEntry(index.toFloat(), hours) }
+        val dataSet = BarDataSet(entries, "Logs")
+        dataSet.color = Color.BLUE
+
+        val data = BarData(dataSet)
+        barChart.data = data
+
+        // Customize x-axis
+        val xAxis = barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(true)
+        xAxis.granularity = 1f
+        xAxis.textColor = Color.WHITE
+
+        // Customize y-axis
+        val yAxisRight = barChart.axisRight
+        yAxisRight.isEnabled = false
+
+        val yAxisLeft = barChart.axisLeft
+        yAxisLeft.setDrawGridLines(false)
+        yAxisLeft.textColor = Color.WHITE
+
+        // Add limit lines for min and max goals
+        val llMin = LimitLine(minGoal, "Min Goal")
+        llMin.lineWidth = 2f
+        llMin.lineColor = Color.RED
+        llMin.textColor = Color.WHITE
+        llMin.textSize = 12f
+
+        val llMax = LimitLine(maxGoal, "Max Goal")
+        llMax.lineWidth = 2f
+        llMax.lineColor = Color.GREEN
+        llMax.textColor = Color.WHITE
+        llMax.textSize = 12f
+
+        yAxisLeft.addLimitLine(llMin)
+        yAxisLeft.addLimitLine(llMax)
+
+        // Refresh chart
+        barChart.invalidate()
     }
 
     override fun onResume() {
@@ -79,10 +134,14 @@ class PeriodLogged : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        findViewById<LinearLayout>(R.id.LinearActivities1).removeAllViews()
+        val linearLayout = findViewById<LinearLayout>(R.id.LinearActivities1)
+        linearLayout.removeAllViews()
 
         allActivities = ActivityData
         var allSessions = SessionData
+
+        // List to hold the hours for the chart
+        val logsData = mutableListOf<Float>()
 
         // Iterate through all activities + sessions and create TextViews
         if (allSessions != null) {
@@ -100,10 +159,8 @@ class PeriodLogged : AppCompatActivity() {
                     val logDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val logDateFormatted = logDateFormat.parse(logDateWithYear)
 
-                    if (startDate != null && endDate != null && logDateFormatted != null) if (startDate != null && endDate != null && logDateFormatted != null) {
+                    if (startDate != null && endDate != null && logDateFormatted != null) {
                         if (logDateFormatted >= startDate && logDateFormatted <= endDate) {
-                            //val activity = intent.getStringExtra()
-
                             if (logData[0].equals(intent.getStringExtra("activityName"))) {
 
                                 val activityTextView = TextView(this)
@@ -112,21 +169,19 @@ class PeriodLogged : AppCompatActivity() {
                                 val (hoursString, minutesString) = time.split(":")
                                 val hours = hoursString.toInt()
                                 val minutes = minutesString.toInt()
+                                val totalHours = hours + minutes / 60.0f
+                                logsData.add(totalHours)
                                 val formattedTime = "${hours} Hours ${minutes} Minutes"
-
-
 
                                 photo = logData[4]
                                 photos += ("$photo,$formattedTime,$activityName")
-
 
                                 activityTextView.text = formatSharedPref(formattedTime)
                                 activityTextView.setTextColor(Color.WHITE)
                                 activityTextView.setTextSize(20f)
                                 activityTextView.setBackgroundResource(R.drawable.round_buttons)
                                 activityTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-                                activityTextView.visibility =
-                                    View.VISIBLE // Make the TextView visible
+                                activityTextView.visibility = View.VISIBLE
                                 activityTextView.layoutParams = LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                     resources.getDimensionPixelSize(R.dimen.activity_box_height)
@@ -148,22 +203,22 @@ class PeriodLogged : AppCompatActivity() {
                                     startActivity(intent)
                                 }
 
-                                (findViewById<LinearLayout>(R.id.LinearActivities1)).addView(
-                                    activityTextView
-                                )
+                                linearLayout.addView(activityTextView)
                             }
                         }
                     }
-
                 }
             }
         }
+
+        // Setup the chart with the logsData
+        setupChart(logsData, minGoal, maxGoal)
     }
 
     @SuppressLint("RestrictedApi")
     private fun fetchActivitiesFromFirebaseDatabase() {
         val activitiesRef = database.getReference("activities")
-        Log.d("CategoryActivityInsights", "Database reference: ${activitiesRef.path}")  // Log the database reference path
+        Log.d("CategoryActivityInsights", "Database reference: ${activitiesRef.path}")
 
         activitiesRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -180,13 +235,13 @@ class PeriodLogged : AppCompatActivity() {
                 Log.e("CategoryActivityInsights", "Database error: ${error.message}")
             }
         })
-        Log.d("CategoryActivityInsights", "Listener attached to database reference")  // Confirm the listener is attached
+        Log.d("CategoryActivityInsights", "Listener attached to database reference")
     }
 
     @SuppressLint("RestrictedApi")
     private fun fetchSessionsFromFirebaseDatabase() {
         val activitiesRef = database.getReference("logged_sessions")
-        Log.d("CategoryActivityInsights", "Database reference: ${activitiesRef.path}")  // Log the database reference path
+        Log.d("CategoryActivityInsights", "Database reference: ${activitiesRef.path}")
 
         activitiesRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -203,12 +258,10 @@ class PeriodLogged : AppCompatActivity() {
                 Log.e("CategoryActivityInsights", "Database error: ${error.message}")
             }
         })
-        Log.d("CategoryActivityInsights", "Listener attached to database reference")  // Confirm the listener is attached
+        Log.d("CategoryActivityInsights", "Listener attached to database reference")
     }
 
     private fun formatActivityFirebaseData(activityData: Map<String, Any>): CharSequence {
-        // Format the activity data as needed
-        // Example:
         val name = activityData["activityName"]
         val category = activityData["categoryName"]
         val color = activityData["color"]
@@ -220,10 +273,8 @@ class PeriodLogged : AppCompatActivity() {
     }
 
     private fun formatSessionFirebaseData(sessionData: Map<String, Any>, sessionKey: String): CharSequence {
-        // Access the nested Map using the session key
         val nestedMap = sessionData[sessionKey] as? Map<String, Any>
 
-        // Access values using safe casting
         val name = nestedMap?.get("activityName") as? String ?: ""
         val category = nestedMap?.get("categoryName") as? String ?: ""
         val color = nestedMap?.get("categoryColor") as? String ?: ""
@@ -233,29 +284,30 @@ class PeriodLogged : AppCompatActivity() {
 
         return "$name,$category,$color,$date,$photoUri,$time"
     }
+
     private fun fetchGoalsForActivity(activityName: String, dailyGoalsTextView: TextView) {
         val goalsRef = database.getReference("goals")
         goalsRef.child(activityName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val minGoal = snapshot.child("min_goal").getValue(String::class.java)
-                val maxGoal = snapshot.child("max_goal").getValue(String::class.java)
+                val minGoalStr = snapshot.child("min_goal").getValue(String::class.java)
+                val maxGoalStr = snapshot.child("max_goal").getValue(String::class.java)
 
                 val dailyGoalsText = StringBuilder()
-                if (!minGoal.isNullOrEmpty()) {
-                    dailyGoalsText.append("Min goal: $minGoal\t\t\t\t\t")
+                if (!minGoalStr.isNullOrEmpty()) {
+                    dailyGoalsText.append("Min goal: $minGoalStr\t\t\t\t\t")
                 }
 
-
-                if (!maxGoal.isNullOrEmpty()) {
-                    dailyGoalsText.append("Max goal: $maxGoal")
+                if (!maxGoalStr.isNullOrEmpty()) {
+                    dailyGoalsText.append("Max goal: $maxGoalStr")
                 }
-                if(maxGoal.isNullOrEmpty()&&minGoal.isNullOrEmpty()){
+                if (minGoalStr.isNullOrEmpty() && maxGoalStr.isNullOrEmpty()) {
                     dailyGoalsText.append("No goals have been set")
-
-
                 }
 
                 dailyGoalsTextView.text = dailyGoalsText.toString()
+                minGoal = minGoalStr?.toFloatOrNull() ?: 0f
+                maxGoal = maxGoalStr?.toFloatOrNull() ?: 0f
+                setupChart(emptyList(), minGoal, maxGoal)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -263,7 +315,6 @@ class PeriodLogged : AppCompatActivity() {
             }
         })
     }
-
 
     fun formatSharedPref(activity: String?): CharSequence? {
         var activityDetails = ""
