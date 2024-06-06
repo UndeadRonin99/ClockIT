@@ -6,7 +6,6 @@
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Divider color -->
         <item name="colorControlNormal">@color/white</item>
-
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -20,6 +19,5 @@
     <style name="CalendarDateText">
         <item name="android:textColor">@color/white</item>
     </style>
-
 
 </resources>
