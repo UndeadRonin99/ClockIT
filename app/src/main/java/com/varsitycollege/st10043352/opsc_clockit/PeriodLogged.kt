@@ -5,6 +5,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -40,9 +43,9 @@ class PeriodLogged : AppCompatActivity() {
     private var endDate: Date? = null
     private var startDateMillis by Delegates.notNull<Long>()
     private var endDateMillis by Delegates.notNull<Long>()
-    private var activityName : String? = null
-    private var category : String? = null
-    private var photo : String? = null
+    private var activityName: String? = null
+    private var category: String? = null
+    private var photo: String? = null
     private var minGoal: Float = 0f
     private var maxGoal: Float = 0f
 
@@ -59,7 +62,7 @@ class PeriodLogged : AppCompatActivity() {
 
         txtActivity.text = activityName
         txtCategory.text = category
-        Log.e("color","$color")
+        Log.e("color", "$color")
         if (color != null) {
             txtCategory.setTextColor(color.toInt())
         }
@@ -74,7 +77,13 @@ class PeriodLogged : AppCompatActivity() {
 
         // Fetch daily goals
         fetchGoalsForActivity(activityName ?: "", findViewById(R.id.textView11))
+    }
 
+    private fun timeStringToFloat(time: String): Float {
+        val (hoursString, minutesString) = time.split(":")
+        val hours = hoursString.toFloat()
+        val minutes = minutesString.toFloat()
+        return hours + minutes / 60
     }
 
     private fun setupChart(logsData: Map<String, Float>, minGoal: Float, maxGoal: Float) {
@@ -96,6 +105,7 @@ class PeriodLogged : AppCompatActivity() {
         xAxis.setDrawAxisLine(true)
         xAxis.granularity = 1f
         xAxis.textColor = Color.WHITE
+        xAxis.labelRotationAngle = -45f // Rotate the labels to avoid squishing
 
         // Customize y-axis
         val yAxisRight = barChart.axisRight
@@ -107,13 +117,13 @@ class PeriodLogged : AppCompatActivity() {
         yAxisLeft.axisMaximum = 24f // Set the y-axis maximum to 24 hours
 
         // Add limit lines for min and max goals
-        val llMin = LimitLine(minGoal, "Min Goal")
+        val llMin = LimitLine(minGoal)
         llMin.lineWidth = 2f
         llMin.lineColor = Color.RED
         llMin.textColor = Color.WHITE
         llMin.textSize = 12f
 
-        val llMax = LimitLine(maxGoal, "Max Goal")
+        val llMax = LimitLine(maxGoal)
         llMax.lineWidth = 2f
         llMax.lineColor = Color.GREEN
         llMax.textColor = Color.WHITE
@@ -140,8 +150,16 @@ class PeriodLogged : AppCompatActivity() {
         allActivities = ActivityData
         val allSessions = SessionData
 
-        // Map to hold aggregated hours per day
-        val logsData = mutableMapOf<String, Float>()
+        // Calculate the date range
+        val dateRange = getDatesInRange(startDate!!, endDate!!)
+
+        // Map to hold the total hours for each date in the range
+        val logsData = mutableMapOf<String, Float>().apply {
+            dateRange.forEach { date ->
+                val formattedDate = SimpleDateFormat("dd/MM", Locale.getDefault()).format(date) // Removed the year
+                this[formattedDate] = 0f // Initialize with 0 for each date
+            }
+        }
 
         // Iterate through all activities + sessions and create TextViews
         if (allSessions != null) {
@@ -167,10 +185,12 @@ class PeriodLogged : AppCompatActivity() {
 
                                 val time = logData[5]
                                 val totalHours = timeStringToFloat(time)
+                                val hours = totalHours.toInt()
+                                val minutes = ((totalHours - hours) * 60).toInt()
+                                val formattedTime = "${hours} Hours ${minutes} Minutes"
 
-                                logsData[logDate] = logsData.getOrDefault(logDate, 0f) + totalHours
-
-                                val formattedTime = "${totalHours} Hours"
+                                val formattedDate = SimpleDateFormat("dd/MM", Locale.getDefault()).format(logDateFormatted) // Removed the year
+                                logsData[formattedDate] = logsData.getOrDefault(formattedDate, 0f) + totalHours
 
                                 photo = logData[4]
                                 photos += ("$photo,$formattedTime,$activityName")
@@ -291,26 +311,43 @@ class PeriodLogged : AppCompatActivity() {
                 val minGoalStr = snapshot.child("min_goal").getValue(String::class.java)
                 val maxGoalStr = snapshot.child("max_goal").getValue(String::class.java)
 
-                val dailyGoalsText = StringBuilder()
-                if (!minGoalStr.isNullOrEmpty()) {
-                    dailyGoalsText.append("Min goal: $minGoalStr\t\t\t\t\t")
-                    minGoal = timeStringToFloat(minGoalStr)
-                } else {
-                    minGoal = 0f
-                }
-
-                if (!maxGoalStr.isNullOrEmpty()) {
-                    dailyGoalsText.append("Max goal: $maxGoalStr")
-                    maxGoal = timeStringToFloat(maxGoalStr)
-                } else {
-                    maxGoal = 0f
-                }
-
                 if (minGoalStr.isNullOrEmpty() && maxGoalStr.isNullOrEmpty()) {
-                    dailyGoalsText.append("No goals have been set")
-                }
+                    dailyGoalsTextView.text = "No goals have been set"
+                } else {
+                    val minGoalText = if (!minGoalStr.isNullOrEmpty()) {
+                        "Min goal: $minGoalStr\t\t\t\t\t"
+                    } else {
+                        ""
+                    }
 
-                dailyGoalsTextView.text = dailyGoalsText.toString()
+                    val maxGoalText = if (!maxGoalStr.isNullOrEmpty()) {
+                        "Max goal: $maxGoalStr"
+                    } else {
+                        ""
+                    }
+
+                    val spannableString = SpannableString("$minGoalText$maxGoalText")
+
+                    if (!minGoalStr.isNullOrEmpty()) {
+                        val minGoalStart = 0
+                        val minGoalEnd = minGoalText.length
+                        spannableString.setSpan(ForegroundColorSpan(Color.RED), minGoalStart, minGoalEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        minGoal = timeStringToFloat(minGoalStr)
+                    } else {
+                        minGoal = 0f
+                    }
+
+                    if (!maxGoalStr.isNullOrEmpty()) {
+                        val maxGoalStart = spannableString.indexOf(maxGoalText)
+                        val maxGoalEnd = maxGoalStart + maxGoalText.length
+                        spannableString.setSpan(ForegroundColorSpan(Color.GREEN), maxGoalStart, maxGoalEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        maxGoal = timeStringToFloat(maxGoalStr)
+                    } else {
+                        maxGoal = 0f
+                    }
+
+                    dailyGoalsTextView.text = spannableString
+                }
                 setupChart(emptyMap(), minGoal, maxGoal)
             }
 
@@ -320,11 +357,17 @@ class PeriodLogged : AppCompatActivity() {
         })
     }
 
-    private fun timeStringToFloat(time: String): Float {
-        val (hoursString, minutesString) = time.split(":")
-        val hours = hoursString.toFloat()
-        val minutes = minutesString.toFloat()
-        return hours + minutes / 60
+    private fun getDatesInRange(startDate: Date, endDate: Date): List<Date> {
+        val dates = mutableListOf<Date>()
+        val calendar = Calendar.getInstance()
+        calendar.time = startDate
+
+        while (calendar.time <= endDate) {
+            dates.add(calendar.time)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        return dates
     }
 
     fun formatSharedPref(activity: String?): CharSequence? {

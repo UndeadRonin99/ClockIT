@@ -18,7 +18,6 @@ class ViewLog : AppCompatActivity() {
     private lateinit var txtCategory: TextView
     private lateinit var txtTime: TextView
     private lateinit var LogPhoto: ImageView
-    private var logList: List<String> = listOf("")
     private lateinit var txt404: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,51 +40,51 @@ class ViewLog : AppCompatActivity() {
         txtCategory.text = Category
         txtTime.text = time
 
-        if (photoUrls != null) {
-            if(photoUrls.isNotEmpty()){
-                for(key in photoUrls){
-                    val id = key.split(",")
-                    val photoUrl = id[0]
-                    val time1 = id[1]
-                    val act = id[2]
+        if (photoUrls != null && photoUrls.isNotEmpty()) {
+            var photoFound = false
+            for (key in photoUrls) {
+                val id = key.split(",")
+                val photoUrl = id[0]
+                val time1 = id[1]
+                val act = id[2]
 
-                    if(time1.equals(time) && act.equals(ActivityName)){
-                        if(!photoUrls.equals("")){
-                            loadLogImage(photoUrl)
-                        } else {
-                            txt404.isVisible = true
-                        }
+                if (time1 == time && act == ActivityName) {
+                    if (photoUrl.isNotEmpty()) {
+                        loadLogImage(photoUrl)
+                        photoFound = true
+                        break
                     }
                 }
             }
+            if (!photoFound) {
+                txt404.text = "No photo was added"
+                txt404.isVisible = true
+            }
+        } else {
+            txt404.text = "No photo was added"
+            txt404.isVisible = true
         }
-
 
         backButton.setOnClickListener {
             finish()
         }
     }
 
-    private fun loadLogImage(logList: String?) {
-
-            val logImageUri = Uri.parse(logList)
-            if (logImageUri.scheme != null && logImageUri.host != null) {
-                // Load image from Firebase Storage using Picasso
-                if (logList != null) {
-                    FirebaseStorage.getInstance().getReferenceFromUrl(logList).downloadUrl
-                        .addOnSuccessListener { uri ->
-                            Picasso.get().load(uri).into(LogPhoto)
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.e("ViewLog", "Failed to load image: $exception")
-                        }
+    private fun loadLogImage(photoUrl: String) {
+        val logImageUri = Uri.parse(photoUrl)
+        if (logImageUri.scheme != null && logImageUri.host != null) {
+            // Load image from Firebase Storage using Picasso
+            FirebaseStorage.getInstance().getReferenceFromUrl(photoUrl).downloadUrl
+                .addOnSuccessListener { uri ->
+                    Picasso.get().load(uri).into(LogPhoto)
                 }
-            } else {
-                Log.e("ViewLog", "Invalid URI: $logImageUri")
-            }
-
+                .addOnFailureListener { exception ->
+                    Log.e("ViewLog", "Failed to load image: $exception")
+                }
+        } else {
+            Log.e("ViewLog", "Invalid URI: $logImageUri")
+        }
     }
-
 
     companion object {
         fun formatLogs(log: String?): List<String> {
