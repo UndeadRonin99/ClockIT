@@ -193,7 +193,7 @@ data class LoggedSession(
     val activityName: String,
     val categoryName: String,
     val categoryColor: String,
-    val startTime: String,
+    val time: String,
     val date: String,
     val imageUrl: String
 )

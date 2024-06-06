@@ -42,7 +42,6 @@
         android:layout_width="93dp"
         android:layout_height="48dp"
         android:backgroundTint="#8076B0"
-        android:onClick="navigateToStatistics"
         android:text="Search"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
@@ -51,8 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
-        app:layout_constraintVertical_bias="0.882"
-        tools:ignore="OnClick" />
+        app:layout_constraintVertical_bias="0.888"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/StartDate"

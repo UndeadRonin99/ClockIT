@@ -2,24 +2,23 @@ package com.varsitycollege.st10043352.opsc_clockit
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class stats : AppCompatActivity() {
+
     private lateinit var startDate: TextView
     private lateinit var endDate: TextView
     private lateinit var calendarView: CalendarView
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
+    private lateinit var btnAddDate: Button
     private var selectedStartDate: Date? = null
     private var selectedEndDate: Date? = null
 
@@ -29,15 +28,18 @@ class stats : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
+
         startDate = findViewById(R.id.StartDate)
         endDate = findViewById(R.id.EndDate)
         calendarView = findViewById(R.id.calendarView)
+        btnAddDate = findViewById(R.id.btnAddDate)
 
         // Reset saved dates to null initially (or on some specific condition)
         selectedStartDate = null
         selectedEndDate = null
         startDate.text = "Start Date: Not selected"
         endDate.text = "End Date: Not selected"
+
         // Load saved dates from SharedPreferences
         loadSavedDates()
 
@@ -55,6 +57,21 @@ class stats : AppCompatActivity() {
                 selectedEndDate = selectedDate
                 endDate.text = "End Date: ${dateFormat.format(selectedDate)}"
             }
+
+        }
+
+        btnAddDate.setOnClickListener{
+            if(selectedStartDate != null && selectedEndDate != null) {
+
+                // Start the StatisticsPeriod activity
+                val intent = Intent(this, staticsticsPeriod::class.java)
+                // Pass the selected start and end dates to the next activity
+                intent.putExtra("startDate", selectedStartDate?.time ?: -1)
+                intent.putExtra("endDate", selectedEndDate?.time ?: -1)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -65,20 +82,20 @@ class stats : AppCompatActivity() {
         return calendar.time
     }
 
-    fun navigateToStatistics(view: View) {
-        // Save selected dates to SharedPreferences if it is not null
-        if(selectedStartDate != null && selectedEndDate != null) {
-            saveSelectedDates()
+    fun navFun(view: View) {
+        startActivity(Intent(this, FunTime::class.java))
+    }
 
-            // Start the StatisticsPeriod activity
-            val intent = Intent(this, staticsticsPeriod::class.java)
-            // Pass the selected start and end dates to the next activity
-            intent.putExtra("startDate", selectedStartDate?.time ?: -1)
-            intent.putExtra("endDate", selectedEndDate?.time ?: -1)
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
-        }
+    fun navInsights(view: View){
+        startActivity(Intent(this, Insights::class.java))
+    }
+
+    fun navGoals(view: View){
+        startActivity(Intent(this, goals::class.java))
+    }
+
+    fun navHome(view: View){
+        startActivity(Intent(this, home_page::class.java))
     }
 
     // Function to save selected dates to SharedPreferences
@@ -108,19 +125,9 @@ class stats : AppCompatActivity() {
         }
     }
 
-    fun navInsights(view: View) {
-        startActivity(Intent(this, Insights::class.java))
-    }
-
-    fun navFun(view: View){
-        startActivity(Intent(this, FunTime::class.java))
-    }
-
-    fun navGoals(view: View){
-        startActivity(Intent(this, goals::class.java))
-    }
-
-    fun navHome(view: View){
-        startActivity(Intent(this, home_page::class.java))
+    override fun onPause() {
+        super.onPause()
+        // Save selected dates to SharedPreferences when the activity is paused
+        saveSelectedDates()
     }
 }
