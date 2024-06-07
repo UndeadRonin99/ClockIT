@@ -1,3 +1,4 @@
+
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.annotation.SuppressLint
@@ -322,49 +323,48 @@ class CategoryActivityInsights : AppCompatActivity() {
 
                                 val activityData = formatActivityFirebaseData(value as Map<String, Any>)
                                 val activityInfo = formatActivity(activityData as String)
-                                    val activityTextView = TextView(this)
-                                    if (!currentActivities.contains(activityInfo[0])) {
-                                        if (logData[0] == activityInfo[0]) {
-                                            currentActivities.add(activityInfo[0])
+                                val activityTextView = TextView(this)
+                                if (!currentActivities.contains(activityInfo[0])) {
+                                    if (logData[0] == activityInfo[0]) {
+                                        currentActivities.add(activityInfo[0])
 
-                                            activityTextView.text = formatSharedPref(activityData)
-                                            activityTextView.setTextColor(Color.WHITE)
-                                            activityTextView.setTextSize(20f)
-                                            activityTextView.setBackgroundResource(R.drawable.round_buttons)
-                                            activityTextView.textAlignment =
-                                                View.TEXT_ALIGNMENT_TEXT_START
-                                            activityTextView.visibility = View.VISIBLE
-                                            activityTextView.layoutParams =
-                                                LinearLayout.LayoutParams(
-                                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                                    resources.getDimensionPixelSize(R.dimen.activity_box_height)
-                                                ).apply {
-                                                    setMargins(
-                                                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
-                                                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
-                                                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
-                                                        resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
-                                                    )
-                                                }
-                                            activityTextView.setOnClickListener {
-                                                val intent = Intent(this, ActivityInfo1::class.java)
-                                                intent.putExtra("activityName", activityInfo[0])
-                                                intent.putExtra("description", activityInfo[3])
-                                                intent.putExtra("category", activityInfo[1])
-                                                intent.putExtra("startTime", activityInfo[5])
-                                                intent.putExtra("endTime", activityInfo[4])
-                                                if (!activityInfo[6].equals("null")) {
-                                                    intent.putExtra("photoUri", activityInfo[6])
-                                                } else {
-                                                    intent.putExtra("photoUri", "")
-                                                }
-                                                startActivity(intent)
+                                        activityTextView.text = formatSharedPref(activityData)
+                                        activityTextView.setTextColor(Color.WHITE)
+                                        activityTextView.setTextSize(20f)
+                                        activityTextView.setBackgroundResource(R.drawable.round_buttons)
+                                        activityTextView.textAlignment =
+                                            View.TEXT_ALIGNMENT_TEXT_START
+                                        activityTextView.visibility = View.VISIBLE
+                                        activityTextView.layoutParams =
+                                            LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                                resources.getDimensionPixelSize(R.dimen.activity_box_height)
+                                            ).apply {
+                                                setMargins(
+                                                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
+                                                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
+                                                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
+                                                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
+                                                )
                                             }
-
-                                            findViewById<LinearLayout>(R.id.LinearActivities1).addView(
-                                                activityTextView
-                                            )
+                                        activityTextView.setOnClickListener {
+                                            val intent = Intent(this, ActivityInfo1::class.java)
+                                            intent.putExtra("activityName", activityInfo[0])
+                                            intent.putExtra("description", activityInfo[3])
+                                            intent.putExtra("category", activityInfo[1])
+                                            intent.putExtra("startTime", activityInfo[5])
+                                            intent.putExtra("endTime", activityInfo[4])
+                                            if (!activityInfo[6].equals("null")) {
+                                                intent.putExtra("photoUri", activityInfo[6])
+                                            } else {
+                                                intent.putExtra("photoUri", "")
+                                            }
+                                            startActivity(intent)
                                         }
+
+                                        findViewById<LinearLayout>(R.id.LinearActivities1).addView(
+                                            activityTextView
+                                        )
                                     }
                                 }
                             }
@@ -374,4 +374,4 @@ class CategoryActivityInsights : AppCompatActivity() {
             }
         }
     }
-
+}

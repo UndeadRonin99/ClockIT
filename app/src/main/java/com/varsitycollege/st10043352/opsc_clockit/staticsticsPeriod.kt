@@ -1,3 +1,4 @@
+
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.annotation.SuppressLint
@@ -217,44 +218,43 @@ class staticsticsPeriod : AppCompatActivity() {
             }
         }
     }        // Display statistics for each activity
-        private fun activityStatistics(activityName : String, activityTime: String, activityCategory:String, activityColor : String) {
+    private fun activityStatistics(activityName : String, activityTime: String, activityCategory:String, activityColor : String) {
 
-            // Create TextView for the activity with its statistics
-            val activityTextView = TextView(this)
-            activityTextView.text = activityName
-            activityTextView.setTextColor(Color.WHITE)
-            activityTextView.setTextSize(20f)
-            activityTextView.setBackgroundResource(R.drawable.round_buttons)
-            activityTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-            activityTextView.visibility = View.VISIBLE
-            activityTextView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                resources.getDimensionPixelSize(R.dimen.activity_box_height)
-            ).apply {
-                setMargins(
-                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
-                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
-                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
-                    resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
-                )
-            }
-
-            // Set click listener to view more details about the activity
-            activityTextView.setOnClickListener {
-                val intent = Intent(this, PeriodLogged::class.java)
-                intent.putExtra("activityName", activityName)
-                intent.putExtra("category", activityCategory)
-                intent.putExtra("color", activityColor)
-                intent.putExtra("time", activityTime)
-
-                intent.putExtra("startDate", startDateMillis)
-                intent.putExtra("endDate", endDateMillis)
-
-                startActivity(intent)
-            }
-
-            // Add the TextView to the layout
-            findViewById<LinearLayout>(R.id.LinearActivities1).addView(activityTextView)
+        // Create TextView for the activity with its statistics
+        val activityTextView = TextView(this)
+        activityTextView.text = activityName
+        activityTextView.setTextColor(Color.WHITE)
+        activityTextView.setTextSize(20f)
+        activityTextView.setBackgroundResource(R.drawable.round_buttons)
+        activityTextView.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+        activityTextView.visibility = View.VISIBLE
+        activityTextView.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            resources.getDimensionPixelSize(R.dimen.activity_box_height)
+        ).apply {
+            setMargins(
+                resources.getDimensionPixelSize(R.dimen.activity_box_margin_start),
+                resources.getDimensionPixelSize(R.dimen.activity_box_margin_top),
+                resources.getDimensionPixelSize(R.dimen.activity_box_margin_end),
+                resources.getDimensionPixelSize(R.dimen.activity_box_margin_bottom)
+            )
         }
-    }
 
+        // Set click listener to view more details about the activity
+        activityTextView.setOnClickListener {
+            val intent = Intent(this, PeriodLogged::class.java)
+            intent.putExtra("activityName", activityName)
+            intent.putExtra("category", activityCategory)
+            intent.putExtra("color", activityColor)
+            intent.putExtra("time", activityTime)
+
+            intent.putExtra("startDate", startDateMillis)
+            intent.putExtra("endDate", endDateMillis)
+
+            startActivity(intent)
+        }
+
+        // Add the TextView to the layout
+        findViewById<LinearLayout>(R.id.LinearActivities1).addView(activityTextView)
+    }
+}

@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "OPSC_ClockIT"
 include(":app")
- 

@@ -16,6 +16,9 @@
     <color name="magenta">#FF00FF</color> <!-- Magenta -->
 
 
+    <color name="gold">#FFD700</color> <!-- Gold -->
+
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
