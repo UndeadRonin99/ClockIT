@@ -12,9 +12,8 @@ class Howdoesfuntimework : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_howdoesfuntimework)
-
         }
     fun back(view: View) {
         finish()
-    }
+        }
     }

@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:backgroundTint="#000000"
     android:textAlignment="center"
     tools:context=".home_page">
-
 
     <ImageView
         android:id="@+id/ClockIT_background"
@@ -128,13 +126,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
         </LinearLayout>
     </ScrollView>
 
     <TextView
-
         android:id="@+id/textView3"
         android:layout_width="391dp"
         android:layout_height="61dp"
@@ -148,6 +143,5 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
