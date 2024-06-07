@@ -21,6 +21,7 @@ class stats : AppCompatActivity() {
     private lateinit var btnAddDate: Button
     private var selectedStartDate: Date? = null
     private var selectedEndDate: Date? = null
+    private lateinit var btnStatsGoals : Button
 
     // SharedPreferences file name
     private val PREF_NAME = "StatsPrefs"
@@ -33,6 +34,8 @@ class stats : AppCompatActivity() {
         endDate = findViewById(R.id.EndDate)
         calendarView = findViewById(R.id.calendarView)
         btnAddDate = findViewById(R.id.btnAddDate)
+        btnStatsGoals = findViewById(R.id.btnSearchGoals)
+
 
         // Reset saved dates to null initially (or on some specific condition)
         selectedStartDate = null
@@ -69,6 +72,20 @@ class stats : AppCompatActivity() {
                 intent.putExtra("startDate", selectedStartDate?.time ?: -1)
                 intent.putExtra("endDate", selectedEndDate?.time ?: -1)
                 startActivity(intent)
+            }else{
+                Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        btnStatsGoals.setOnClickListener{
+            if(selectedStartDate != null && selectedEndDate != null) {
+
+                // Start the StatisticsPeriod activity
+                val intent1 = Intent(this, statsGoals::class.java)
+                // Pass the selected start and end dates to the next activity
+                intent1.putExtra("startDate", selectedStartDate?.time ?: -1)
+                intent1.putExtra("endDate", selectedEndDate?.time ?: -1)
+                startActivity(intent1)
             }else{
                 Toast.makeText(this, "Please enter the date range you would like to view", Toast.LENGTH_SHORT).show()
             }

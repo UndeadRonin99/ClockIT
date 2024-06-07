@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:textAlignment="center"
-    tools:context=".home_page">
-
+    tools:context=".home_page"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-19dp">
 
     <ImageView
         android:id="@+id/ClockIT_background"
@@ -50,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
-        app:layout_constraintVertical_bias="0.888"
+        app:layout_constraintVertical_bias="0.843"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -67,7 +68,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ClockIT_background"
-        app:layout_constraintVertical_bias="0.299" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <TextView
         android:id="@+id/EndDate"
@@ -83,18 +84,18 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.313" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="335dp"
         android:layout_height="311dp"
-        android:layout_marginTop="145dp"
+        android:translationY="-75dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/EndDate">
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -160,5 +161,18 @@
         app:layout_constraintStart_toEndOf="@+id/btnStatistics"
         app:srcCompat="@drawable/nav_goals_unselected" />
 
+    <Button
+        android:id="@+id/btnSearchGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="79dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#7F76AF"
+        android:text="See all goal over the past month"
+        app:layout_constraintBottom_toTopOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

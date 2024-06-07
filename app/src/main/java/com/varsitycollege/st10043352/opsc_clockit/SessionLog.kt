@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.DatePicker
@@ -16,14 +15,11 @@ import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.util.*
 
 class SessionLog : AppCompatActivity() {
@@ -99,37 +95,27 @@ class SessionLog : AppCompatActivity() {
             val selectedYear = datePicker.year
             val selectedDate = String.format("%02d/%02d", day, selectedMonth, selectedYear)
 
-            val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
-            val uploadTask = photoUri?.let { storageRef.putFile(it) }
+            if (photoUri != null) {
+                val storageRef = storage.reference.child("session_images/${UUID.randomUUID()}.jpg")
+                val uploadTask = photoUri?.let { storageRef.putFile(it) }
 
-            uploadTask?.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
+                uploadTask?.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    storageRef.downloadUrl
+                }?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        saveSession(details, selectedTime, selectedDate, downloadUri.toString())
+                    } else {
+                        Toast.makeText(this, "Failed to upload photo", Toast.LENGTH_SHORT).show()
                     }
                 }
-                storageRef.downloadUrl
-            }?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    val logEntry = LoggedSession(
-                        details[0],
-                        details[2],
-                        details[3],
-                        selectedTime,
-                        selectedDate,
-                        downloadUri.toString()
-                    )
-
-                    activityRef.push().setValue(logEntry)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                        .addOnFailureListener { exception ->
-                            Toast.makeText(this, "Failed to log session: $exception", Toast.LENGTH_SHORT).show()
-                        }
-                }
+            } else {
+                saveSession(details, selectedTime, selectedDate, null)
             }
         }
 
@@ -141,6 +127,26 @@ class SessionLog : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun saveSession(details: List<String>, time: String, date: String, imageUrl: String?) {
+        val logEntry = LoggedSession(
+            details[0],
+            details[2],
+            details[3],
+            time,
+            date,
+            imageUrl ?: ""
+        )
+
+        activityRef.push().setValue(logEntry)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Session logged", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Failed to log session: $exception", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun dispatchTakePictureIntent() {
@@ -179,7 +185,6 @@ class SessionLog : AppCompatActivity() {
             }
         }
     }
-
 
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
