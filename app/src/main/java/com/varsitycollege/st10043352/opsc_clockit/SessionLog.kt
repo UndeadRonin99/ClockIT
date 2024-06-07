@@ -1,4 +1,3 @@
-
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.app.Activity
@@ -74,7 +73,7 @@ class SessionLog : AppCompatActivity() {
 
             txtActivity.text = activityName
             txtCategory.text = categoryName
-            txtCategory.setTextColor((details.get(3)).toInt())
+            txtCategory.setTextColor((details[3]).toInt())
         }
 
         btnAddPhoto.setOnClickListener {
@@ -194,12 +193,3 @@ class SessionLog : AppCompatActivity() {
         return Uri.parse(path)
     }
 }
-
-data class LoggedSession(
-    val activityName: String,
-    val categoryName: String,
-    val categoryColor: String,
-    val time: String,
-    val date: String,
-    val imageUrl: String
-)
