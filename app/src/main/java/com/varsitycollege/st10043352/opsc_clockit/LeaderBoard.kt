@@ -1,15 +1,15 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.*
 import androidx.core.content.ContextCompat
-import android.view.View
-import android.view.ViewGroup
+import com.google.firebase.database.*
 
 class LeaderBoard : AppCompatActivity() {
 
@@ -72,7 +72,6 @@ class LeaderBoard : AppCompatActivity() {
                 botPointsMap["bot9"] = 1061
                 botPointsMap["bot10"] = 846
 
-
                 val userPointsMap = mutableMapOf("Me" to totalUserPoints)
                 userPointsMap.putAll(botPointsMap)
 
@@ -117,6 +116,12 @@ class LeaderBoard : AppCompatActivity() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 ).apply {
                     setMargins(0, 8, 0, 8)
+                }
+                background = when (index) {
+                    0 -> ContextCompat.getDrawable(this@LeaderBoard, R.drawable.rank_first)
+                    1 -> ContextCompat.getDrawable(this@LeaderBoard, R.drawable.rank_second)
+                    2 -> ContextCompat.getDrawable(this@LeaderBoard, R.drawable.rank_third)
+                    else -> ContextCompat.getDrawable(this@LeaderBoard, R.drawable.ranked_background)
                 }
             }
 
