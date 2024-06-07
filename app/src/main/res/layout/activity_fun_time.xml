@@ -10,20 +10,34 @@
 
 
     <ImageView
-        android:id="@+id/ClockIT_background"
-        android:layout_width="457dp"
-        android:layout_height="225dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
+        android:id="@+id/btnHome"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navHome"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blue_snail" />
+        app:srcCompat="@drawable/nav_home_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="navGoals"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnStatistics"
+        app:srcCompat="@drawable/nav_goals_unselected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/btnInsights"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="24dp"
         android:onClick="navInsights"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +49,7 @@
         android:id="@+id/btnStatistics"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="28dp"
         android:layout_marginBottom="24dp"
         android:onClick="navStats"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +61,7 @@
         android:id="@+id/imageView7"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="28dp"
         android:layout_marginBottom="24dp"
         android:onClick="navFun"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,31 +70,19 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
-        android:id="@+id/btnHome"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/ClockIT_background"
+        android:layout_width="457dp"
+        android:layout_height="225dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/nav_home_selected" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="24dp"
-        android:onClick="navGoals"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnStatistics"
-        app:srcCompat="@drawable/nav_goals_unselected"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_snail" />
 
     <Button
         android:id="@+id/btnLeaderBoard"
-        android:layout_width="354dp"
-        android:layout_height="49dp"
+        android:layout_width="351dp"
+        android:layout_height="52dp"
         android:layout_marginTop="320dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
@@ -93,8 +95,8 @@
 
     <Button
         android:id="@+id/btnchallenges"
-        android:layout_width="354dp"
-        android:layout_height="49dp"
+        android:layout_width="352dp"
+        android:layout_height="52dp"
         android:layout_marginTop="392dp"
         android:backgroundTint="#1B232E"
         android:text="Challenges"
@@ -106,8 +108,8 @@
 
     <Button
         android:id="@+id/btnAwards"
-        android:layout_width="354dp"
-        android:layout_height="49dp"
+        android:layout_width="352dp"
+        android:layout_height="53dp"
         android:layout_marginTop="468dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
@@ -120,9 +122,9 @@
 
     <Button
         android:id="@+id/btnHowdoesfuntimework"
-        android:layout_width="354dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="552dp"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="544dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
         android:text="How does fun time work?"
@@ -144,7 +146,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"
+        app:layout_constraintHorizontal_bias="0.595"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
