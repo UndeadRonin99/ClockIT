@@ -75,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158"
+        app:layout_constraintVertical_bias="0.168"
         app:srcCompat="@drawable/img_alarm_clock" />
 
     <EditText
@@ -87,7 +87,7 @@
         android:focusableInTouchMode="false"
         android:gravity="start|top"
         android:inputType="none"
-        android:text=" Locked In                                    30 points                                      Log your 10th session"
+        android:text="Locked In                                    30 points                                      Log your 10th session"
         android:textColor="#FFFEFE"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
