@@ -1,6 +1,7 @@
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +16,12 @@ class LeaderBoard : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var activityRef: DatabaseReference
     private lateinit var leaderboardContainer: LinearLayout
+    private lateinit var firstPlaceName: TextView
+    private lateinit var secondPlaceName: TextView
+    private lateinit var thirdPlaceName: TextView
+    private lateinit var firstPlacePoints: TextView
+    private lateinit var secondPlacePoints: TextView
+    private lateinit var thirdPlacePoints: TextView
     private val botUsers = listOf("bot1", "bot2", "bot3", "bot4", "bot5")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +32,12 @@ class LeaderBoard : AppCompatActivity() {
         activityRef = database.getReference("logged_sessions")
 
         leaderboardContainer = findViewById(R.id.leaderboardContainer)
+        firstPlaceName = findViewById(R.id.firstPlaceName)
+        secondPlaceName = findViewById(R.id.secondPlaceName)
+        thirdPlaceName = findViewById(R.id.thirdPlaceName)
+        firstPlacePoints = findViewById(R.id.firstPlacePoints)
+        secondPlacePoints = findViewById(R.id.secondPlacePoints)
+        thirdPlacePoints = findViewById(R.id.thirdPlacePoints)
 
         fetchLeaderboardData()
     }
@@ -53,6 +66,12 @@ class LeaderBoard : AppCompatActivity() {
                 botPointsMap["bot3"] = 1241
                 botPointsMap["bot4"] = 1051
                 botPointsMap["bot5"] = 432
+                botPointsMap["bot6"] = 2014
+                botPointsMap["bot7"] = 1731
+                botPointsMap["bot8"] = 1642
+                botPointsMap["bot9"] = 1061
+                botPointsMap["bot10"] = 846
+
 
                 val userPointsMap = mutableMapOf("Me" to totalUserPoints)
                 userPointsMap.putAll(botPointsMap)
@@ -76,6 +95,19 @@ class LeaderBoard : AppCompatActivity() {
 
     private fun displayLeaderboard(userPointsList: List<Map.Entry<String, Int>>) {
         leaderboardContainer.removeAllViews() // Clear existing views if any
+
+        if (userPointsList.isNotEmpty()) {
+            firstPlaceName.text = userPointsList[0].key
+            firstPlacePoints.text = "${userPointsList[0].value} pts"
+        }
+        if (userPointsList.size > 1) {
+            secondPlaceName.text = userPointsList[1].key
+            secondPlacePoints.text = "${userPointsList[1].value} pts"
+        }
+        if (userPointsList.size > 2) {
+            thirdPlaceName.text = userPointsList[2].key
+            thirdPlacePoints.text = "${userPointsList[2].value} pts"
+        }
 
         for ((index, entry) in userPointsList.withIndex()) {
             val userLayout = LinearLayout(this).apply {
