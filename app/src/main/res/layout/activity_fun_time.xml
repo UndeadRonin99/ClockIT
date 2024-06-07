@@ -97,7 +97,6 @@
         android:layout_height="49dp"
         android:layout_marginTop="392dp"
         android:backgroundTint="#1B232E"
-        android:onClick="navAddActivity"
         android:text="Challenges"
         android:textColor="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"

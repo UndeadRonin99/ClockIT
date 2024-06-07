@@ -3,12 +3,8 @@ package com.varsitycollege.st10043352.opsc_clockit
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class FunTime : AppCompatActivity() {
     private lateinit var btnLeaderBoard: TextView
@@ -16,72 +12,52 @@ class FunTime : AppCompatActivity() {
     private lateinit var btnAwards: TextView
     private lateinit var btnHowdoesfuntimework: TextView
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fun_time)
 
         btnLeaderBoard = findViewById(R.id.btnLeaderBoard)
-
         btnLeaderBoard.setOnClickListener {
             val intent = Intent(this, LeaderBoard::class.java)
             startActivity(intent)
         }
 
-
         btnchallenges = findViewById(R.id.btnchallenges)
-
         btnchallenges.setOnClickListener {
             val intent = Intent(this, Challenges::class.java)
             startActivity(intent)
         }
 
         btnAwards = findViewById(R.id.btnAwards)
-
         btnAwards.setOnClickListener {
             val intent = Intent(this, Awards::class.java)
             startActivity(intent)
         }
 
         btnHowdoesfuntimework = findViewById(R.id.btnHowdoesfuntimework)
-
         btnHowdoesfuntimework.setOnClickListener {
             val intent = Intent(this, Howdoesfuntimework::class.java)
             startActivity(intent)
         }
-
-
-
-
-
-
-
     }
 
-                fun navInsights(view: View) {
-                    startActivity(Intent(this, Insights::class.java))
-                }
+    fun navInsights(view: View) {
+        startActivity(Intent(this, Insights::class.java))
+    }
 
-                fun navStats(view: View) {
-                    startActivity(Intent(this, stats::class.java))
-                }
+    fun navStats(view: View) {
+        startActivity(Intent(this, stats::class.java))
+    }
 
-                fun navGoals(view: View) {
-                    startActivity(Intent(this, goals::class.java))
-                }
+    fun navGoals(view: View) {
+        startActivity(Intent(this, goals::class.java))
+    }
 
-                fun navHome(view: View) {
-                    startActivity(Intent(this, home_page::class.java))
-                }
+    fun navHome(view: View) {
+        startActivity(Intent(this, home_page ::class.java))
+    }
 
-
-                fun navChallenges(view: View) {
-                    startActivity(Intent(this, Challenges::class.java))
-                }
-
-            }
-
-
-
+    fun navChallenges(view: View) {
+        startActivity(Intent(this, Challenges::class.java))
+    }
+}
