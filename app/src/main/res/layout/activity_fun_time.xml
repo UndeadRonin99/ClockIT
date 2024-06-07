@@ -84,7 +84,7 @@
         android:layout_marginTop="320dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
-        android:text="LeaderBoard"
+        android:text="Leaderboard"
         android:textColor="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
