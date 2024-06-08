@@ -50,7 +50,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="201dp"
+                        android:layout_height="128dp"
                         android:contentDescription="Locked"
                         android:src="@drawable/img_locked" />
 
@@ -59,7 +59,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Locked In "
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,8 +71,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="172dp"
-                        android:layout_height="206dp"
+                        android:layout_width="178dp"
+                        android:layout_height="127dp"
                         android:contentDescription="Alarm Clock"
                         android:src="@drawable/img_alarm_clock" />
 
@@ -80,7 +81,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Early Bird"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -98,8 +100,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="174dp"
+                        android:layout_height="113dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="Owl"
                         android:src="@drawable/img_owl" />
@@ -109,7 +111,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text=" Night Owl"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,8 +123,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="190dp"
+                        android:layout_height="114dp"
                         android:layout_marginStart="8dp"
                         android:contentDescription="Bug"
                         android:src="@drawable/img_bug" />
@@ -131,7 +134,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Book Worm"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -149,8 +153,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="190dp"
+                        android:layout_height="127dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="Open Book"
                         android:src="@drawable/img_open_book" />
@@ -160,7 +164,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Workaholic"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -171,8 +176,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="174dp"
+                        android:layout_height="120dp"
                         android:layout_marginStart="8dp"
                         android:contentDescription="Crown"
                         android:src="@drawable/img_crown_72x72" />
@@ -182,7 +187,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="I am the King"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -200,8 +206,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="190dp"
+                        android:layout_height="122dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="3rd Place Medal"
                         android:src="@drawable/img_3rd_place_medal" />
@@ -211,7 +217,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="3rd Place"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -222,8 +229,8 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="161dp"
+                        android:layout_height="122dp"
                         android:layout_marginStart="8dp"
                         android:contentDescription="2nd Place"
                         android:src="@drawable/img_2nd_place_medal" />
@@ -232,8 +239,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="2nd Place Medal"
-                        android:textColor="#FFFFFF" />
+                        android:text="2nd Place"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -252,7 +260,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="116dp"
                         android:layout_marginEnd="8dp"
                         android:contentDescription="1st Place Medal"
                         android:src="@drawable/img_1" />
@@ -262,7 +270,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="1st Place"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -274,7 +283,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="116dp"
                         android:layout_marginStart="8dp"
                         android:contentDescription="Legendary"
                         android:src="@drawable/legendary" />
@@ -284,7 +293,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Legendary"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -296,12 +306,11 @@
         android:layout_height="wrap_content"
         android:text="Awards"
         android:textColor="#FBFBFB"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.023" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
