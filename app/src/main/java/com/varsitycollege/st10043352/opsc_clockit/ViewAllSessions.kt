@@ -38,7 +38,7 @@ class ViewAllSessions : AppCompatActivity() {
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
             // Navigate back to the home page
-            val intent = Intent(this, stats::class.java)
+            val intent = Intent(this, home_page::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // Clear the back stack
             startActivity(intent)
             finish() // Finish current activity

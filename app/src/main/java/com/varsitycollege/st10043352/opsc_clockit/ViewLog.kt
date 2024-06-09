@@ -35,9 +35,15 @@ class ViewLog : AppCompatActivity() {
         val Category = intent.getStringExtra("category")
         val time = intent.getStringExtra("time")
         val photoUrls = intent.getStringArrayExtra("photos")
+        val color = intent.getStringExtra("color")
+
 
         txtName.text = ActivityName
         txtCategory.text = Category
+        Log.e("color", "$color")
+        if (color != null) {
+            txtCategory.setTextColor(color.toInt())
+        }
         txtTime.text = time
 
         if (photoUrls != null && photoUrls.isNotEmpty()) {

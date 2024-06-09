@@ -48,12 +48,18 @@ class ViewAllSessions2 : AppCompatActivity() {
 
         activityName = intent.getStringExtra("activityName")
         category = intent.getStringExtra("category")
+        val color = intent.getStringExtra("color")
 
         val txtActivity = findViewById<TextView>(R.id.actName)
         val txtCategory = findViewById<TextView>(R.id.Category)
 
         txtActivity.text = activityName
         txtCategory.text = category
+
+        Log.e("color", "$color")
+        if (color != null) {
+            txtCategory.setTextColor(color.toInt())
+            }
     }
 
     private fun timeStringToFloat(time: String): Float {
@@ -106,6 +112,7 @@ class ViewAllSessions2 : AppCompatActivity() {
 
 
                                 photo = logData[4]
+                                val color = logData[2]
                                 photos += ("$photo,$formattedTime,$activityName")
 
                                 activityTextView.text = formatSharedPref(formattedTime)
@@ -130,6 +137,7 @@ class ViewAllSessions2 : AppCompatActivity() {
                                     intent.putExtra("photos", photos)
                                     intent.putExtra("activityName", activityName)
                                     intent.putExtra("category", category)
+                                    intent.putExtra("color", color)
                                     intent.putExtra("time", formattedTime)
 
                                     startActivity(intent)
