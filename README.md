@@ -1,6 +1,35 @@
 # ClockIT
 ClockIT is an advanced time management and tracking system designed to help users efficiently manage their tasks and time. This README file provides an overview of the features offered by ClockIT, making it accessible to both technical and non-technical stakeholders.
 
+### FeedBack from lecture
+*Comment*
+
+The user can view list of entries in a period however it would have been better if the user can view those entries at first glance
+
+*Change*
+
+There now is a button on the homepage where a user can click on it and view all the logs for each activity and these logs will display all the data including hours done and the images for the logs
+
+*Comment*
+
+User can set minimum and maximum daily goals
+
+Goals-did not get full marks
+(no comment though)
+
+*Change*
+
+added a button to set the goals as one instea of clicking ste min and set max goals separately. the user is now able to view the goals before actually putting them in firebase
+
+*Comment*
+
+Excellent user interface
+
+UI- did not get full marks
+(no comment though)
+
+*Change*
+Added more consistant use of layout, fonts, and colours. Added more user friendly features such as add goals,logs,activities and categorys. Made some buttons different colours so it is easy to distinguish what does what.
 
 ## Features
 ### Leaderboard (feature 1)
