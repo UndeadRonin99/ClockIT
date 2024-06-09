@@ -1,7 +1,11 @@
 # ClockIT
 ClockIT is an advanced time management and tracking system designed to help users efficiently manage their tasks and time. This README file provides an overview of the features offered by ClockIT, making it accessible to both technical and non-technical stakeholders.
 
-### FeedBack from lecture
+### FeedBack from lecture -
+
+Remember to implement your lecturer’s feedback on the prototype before adding the new features. Pay special attention to the feedback on the user interface. Marks will be awarded for that again in this part, so you now have the opportunity to improve on what you did before.
+
+
 *Comment*
 
 The user can view list of entries in a period however it would have been better if the user can view those entries at first glance
