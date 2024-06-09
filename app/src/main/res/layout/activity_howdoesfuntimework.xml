@@ -41,94 +41,32 @@
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
-        android:layout_width="327dp"
-        android:layout_height="172dp"
+        android:layout_width="354dp"
+        android:layout_height="557dp"
         android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="start|top"
         android:inputType="none"
-        android:text="Want to see your name shining on the leaderboard? It's easy! By taking on challenges, earning awards and even logging your study hours, you'll gather points that'll boost your ranking. Challenges and Awards: Engage in challenges and bag those awards to score valuable points. Each accomplishment brings you closer to climbing higher on the leaderboard. Logging Study Hours: Need another way to earn points? Simply log your study hours! For every hour you dedicate, you'll rack up 20 points. It's a surefire way to steadily climb up the ranks."
+        android:text="The LeaderBoard feature in the app allows users to see their ranking based on the points they have accumulated from logging activities. Here's how it works:
+        \n\n1. Data Retrieval: When you open the leaderboard, the app connects to a Firebase Realtime Database to fetch all logged activity sessions.
+        \n\n2. Points Calculation: For each logged session, the app calculates points based on the duration of the activity. Each minute of logged activity counts as one point.
+        \n\n3. User and Bot Points: The app distinguishes between real users and predefined bot users. Bot users have fixed points for illustration purposes, making the leaderboard more competitive.
+        \n\n4. Leaderboard Display:      \n- The app calculates the total points for the user and combines this with the points of bot users.
+        \n- It then sorts all users by their total points in descending order.
+        \n- The top three users are highlighted at the top of the leaderboard with special backgrounds, showing their names and points prominently.
+        \n- The rest of the users are listed below, showing their rank, names, and points.
+        \n\n5. Updating the Leaderboard: The leaderboard dynamically updates each time you open it, reflecting the most recent data from the database. This ensures that your latest activities and points are always included.
+        \n\nBy logging your study hours and activities, you can accumulate points and see your name rise on the leaderboard. The top spots are highlighted, motivating users to engage more and earn more points."
+
         android:textColor="#FBFBFB"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.207"
-        tools:ignore="Autofill,HardcodedText,LabelFor" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        android:text="Challenges"
-        android:textColor="#F6F3F3"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.451"
-        tools:ignore="HardcodedText" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine8"
-        android:layout_width="326dp"
-        android:layout_height="142dp"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="start|top"
-        android:inputType="none"
-        android:text="Challenge Yourself, Earn Points and Climb the Leaderboard! Discover Challenges: Explore tasks like completing weekly hours, finishing projects early or logging time daily. Earn Points: Completing challenges earns you points with tougher tasks yielding more points. Climb the Leaderboard: Accumulate points to rise on the leaderboard and compete with others."
-        android:textColor="#F4F2F2"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.423"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585"
-        tools:ignore="Autofill,HardcodedText,LabelFor" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        android:text="Awards"
-        android:textColor="#F6F5F5"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73"
-        tools:ignore="HardcodedText" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine9"
-        android:layout_width="292dp"
-        android:layout_height="142dp"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="start|top"
-        android:inputType="none"
-        android:text="Challenge Completion: When you successfully tackle a challenge, whether it's meeting your study hour goal, finishing a project ahead of schedule or consistently logging your time, you'll receive an award. Recognition and Rewards: These awards not only recognize your achievement but also come with valuable rewards such as bonus points or virtual trophies that contribute to your overall point tally."
-        android:textColor="#F8F5F5"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.302"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918"
+        app:layout_constraintVertical_bias="0.712"
         tools:ignore="Autofill,HardcodedText,LabelFor" />
 
     <TextView

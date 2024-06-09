@@ -82,40 +82,13 @@
         android:id="@+id/btnLeaderBoard"
         android:layout_width="351dp"
         android:layout_height="52dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="336dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
         android:text="Leaderboard"
         android:textColor="#FEFEFE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnchallenges"
-        android:layout_width="352dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="392dp"
-        android:backgroundTint="#1B232E"
-        android:text="Challenges"
-        android:textColor="#FEFEFE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnAwards"
-        android:layout_width="352dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="468dp"
-        android:backgroundTint="#1B232E"
-        android:onClick="navAddActivity"
-        android:text="Awards"
-        android:textColor="#FEFEFE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,7 +96,7 @@
         android:id="@+id/btnHowdoesfuntimework"
         android:layout_width="350dp"
         android:layout_height="52dp"
-        android:layout_marginTop="544dp"
+        android:layout_marginTop="416dp"
         android:backgroundTint="#1B232E"
         android:onClick="navAddActivity"
         android:text="How does fun time work?"

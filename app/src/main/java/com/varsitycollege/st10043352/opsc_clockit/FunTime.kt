@@ -22,18 +22,6 @@ class FunTime : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnchallenges = findViewById(R.id.btnchallenges)
-        btnchallenges.setOnClickListener {
-            val intent = Intent(this, Challenges::class.java)
-            startActivity(intent)
-        }
-
-        btnAwards = findViewById(R.id.btnAwards)
-        btnAwards.setOnClickListener {
-            val intent = Intent(this, Awards::class.java)
-            startActivity(intent)
-        }
-
         btnHowdoesfuntimework = findViewById(R.id.btnHowdoesfuntimework)
         btnHowdoesfuntimework.setOnClickListener {
             val intent = Intent(this, Howdoesfuntimework::class.java)
