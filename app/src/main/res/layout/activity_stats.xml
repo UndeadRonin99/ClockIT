@@ -169,7 +169,7 @@
         android:layout_marginEnd="79dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="#7F76AF"
-        android:text="See all goal over the past month"
+        android:text="See all goals over the past month"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

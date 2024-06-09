@@ -93,6 +93,10 @@ class home_page : AppCompatActivity() {
         return "$name\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$category\n$startTime\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t$endTime"
     }
 
+    fun navViewAllSessions(view: View){
+        startActivity(Intent(this, ViewAllSessions::class.java))
+    }
+
     // Functions for navigation
     fun navAddCategory(view: View) {
         startActivity(Intent(this, Add_Category::class.java))

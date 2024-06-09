@@ -29,6 +29,12 @@
         android:theme="@style/Theme.OPSC_ClockIT"
         tools:targetApi="31">
         <activity
+            android:name=".ViewAllSessions2"
+            android:exported="false" />
+        <activity
+            android:name=".ViewAllSessions"
+            android:exported="false" />
+        <activity
             android:name=".LeaderBoard"
             android:exported="false" />
         <activity
@@ -99,6 +105,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
