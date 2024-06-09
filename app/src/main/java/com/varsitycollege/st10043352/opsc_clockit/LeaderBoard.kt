@@ -61,16 +61,16 @@ class LeaderBoard : AppCompatActivity() {
                 }
 
                 // Adding bot users with fixed points for illustration
-                botPointsMap["bot1"] = 2019
-                botPointsMap["bot2"] = 1431
-                botPointsMap["bot3"] = 1241
-                botPointsMap["bot4"] = 1051
-                botPointsMap["bot5"] = 432
-                botPointsMap["bot6"] = 2014
-                botPointsMap["bot7"] = 1731
-                botPointsMap["bot8"] = 1642
-                botPointsMap["bot9"] = 1061
-                botPointsMap["bot10"] = 846
+                botPointsMap["Tyler"] = 2019
+                botPointsMap["Emily"] = 1731
+                botPointsMap["Shira"] = 1241
+                botPointsMap["Sarah"] = 1051
+                botPointsMap["Reece"] = 432
+                botPointsMap["Nic"] = 2014
+                botPointsMap["David"] = 1431
+                botPointsMap["James"] = 1642
+                botPointsMap["Daniel"] = 1061
+                botPointsMap["Matteo"] = 846
 
                 val userPointsMap = mutableMapOf("Me" to totalUserPoints)
                 userPointsMap.putAll(botPointsMap)
