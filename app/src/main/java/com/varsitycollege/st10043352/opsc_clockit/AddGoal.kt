@@ -1,4 +1,3 @@
-
 package com.varsitycollege.st10043352.opsc_clockit
 
 import android.os.Bundle
@@ -15,6 +14,7 @@ class AddGoal : AppCompatActivity() {
     private lateinit var txtCategory: TextView
     private lateinit var btnMin: Button
     private lateinit var btnMax: Button
+    private lateinit var btnSetGoals: Button
     private lateinit var txtMin: TextView
     private lateinit var txtMax: TextView
     private lateinit var minPicker: TimePicker
@@ -29,6 +29,7 @@ class AddGoal : AppCompatActivity() {
         txtCategory = findViewById(R.id.txtCategory1)
         btnMin = findViewById(R.id.btnAddMin)
         btnMax = findViewById(R.id.btnAddMax)
+        btnSetGoals = findViewById(R.id.btnAddAllGoals)
         txtMin = findViewById(R.id.txtMin)
         txtMax = findViewById(R.id.txtMax)
         minPicker = findViewById(R.id.spnrTime)
@@ -50,9 +51,6 @@ class AddGoal : AppCompatActivity() {
             val selectedMinute = minPicker.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
             txtMin.text = "Minimum goal: $selectedTime"
-
-            // Pass the activity name when saving min goal
-            saveMinGoal(txtActivity.text.toString(), selectedTime)
         }
 
         btnMax.setOnClickListener {
@@ -60,11 +58,13 @@ class AddGoal : AppCompatActivity() {
             val selectedMinute = minPicker.minute
             val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
             txtMax.text = "Maximum goal: $selectedTime"
-
-            // Pass the activity name when saving max goal
-            saveMaxGoal(txtActivity.text.toString(), selectedTime)
         }
 
+        btnSetGoals.setOnClickListener {
+            val minGoal = txtMin.text.toString().replace("Minimum goal: ", "")
+            val maxGoal = txtMax.text.toString().replace("Maximum goal: ", "")
+            saveGoals(txtActivity.text.toString(), minGoal, maxGoal)
+        }
     }
 
     private fun splitActivityData(activityData: String?): List<String>? {
@@ -75,16 +75,11 @@ class AddGoal : AppCompatActivity() {
         finish()
     }
 
-    private fun saveMinGoal(activity: String, minGoal: String) {
+    private fun saveGoals(activity: String, minGoal: String, maxGoal: String) {
         val ref = database.getReference("goals")
         val minGoalKey = "$activity/min_goal"
-        ref.child(minGoalKey).setValue(minGoal)
-    }
-
-    private fun saveMaxGoal(activity: String, maxGoal: String) {
-        val ref = database.getReference("goals")
         val maxGoalKey = "$activity/max_goal"
+        ref.child(minGoalKey).setValue(minGoal)
         ref.child(maxGoalKey).setValue(maxGoal)
     }
-
 }

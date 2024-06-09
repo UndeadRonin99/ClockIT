@@ -11,7 +11,6 @@
     tools:context=".home_page"
     tools:ignore="OnClick">
 
-
     <TimePicker
         android:id="@+id/spnrTime"
         android:layout_width="169dp"
@@ -29,7 +28,7 @@
         android:layout_width="185dp"
         android:layout_height="48dp"
         android:backgroundTint="#1B232E"
-        android:text="Add mimimum goal"
+        android:text="Add minimum goal"
         android:textColorHighlight="#1B232E"
         android:textColorHint="#1B232E"
         android:textColorLink="#1B232E"
@@ -119,5 +118,16 @@
         app:layout_constraintStart_toStartOf="@+id/txtMin"
         app:layout_constraintTop_toBottomOf="@+id/txtMin" />
 
+    <Button
+        android:id="@+id/btnAddAllGoals"
+        android:layout_width="214dp"
+        android:layout_height="47dp"
+        android:backgroundTint="#1B232E"
+        android:text="Set goals"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
