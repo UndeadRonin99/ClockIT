@@ -94,4 +94,4 @@ Provides insights into user productivity based on time-tracking data.
 If you need any more information or troubleshooting, please refer to the documentation provided within the project or contact the project maintainers.
 
 ## Link to YouTube video
-You can find the video of our app running [here](https://www.youtube.com/watch?v=Q9zIdVPtHmU).
+You can find the video of our app running [here](https://www.youtube.com/watch?v=waPscszF9Eo).
